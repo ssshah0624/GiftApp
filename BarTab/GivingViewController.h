@@ -23,6 +23,8 @@
 #import <TOMSMorphingLabel.h>
 #import <BDKNotifyHUD.h>
 #import "RoseGiftScreen.h"
+#import "ChocolateGiftScreen.h"
+#import "DrinkGiftScreen.h"
 
 @interface GivingViewController : UIViewController <STPViewDelegate, MCSwipeTableViewCellDelegate>
 
@@ -50,6 +52,8 @@
 @property MCSwipeTableViewCell* cellToDelete;
 
 @property NSIndexPath* selectedRowIndex;
+
+@property UIDynamicAnimator* animator;
 
 
 #pragma mark - MCSwipeTableViewCellDelegate

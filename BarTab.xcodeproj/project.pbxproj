@@ -88,6 +88,8 @@
 		4120C526199E704C004704F5 /* Thumbs.db in Resources */ = {isa = PBXBuildFile; fileRef = 4120C514199E704C004704F5 /* Thumbs.db */; };
 		4120C529199EB0BB004704F5 /* RoseGiftScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120C528199EB0BB004704F5 /* RoseGiftScreen.m */; };
 		4120C52B199F1D07004704F5 /* rose_background cropped.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C52A199F1D07004704F5 /* rose_background cropped.png */; };
+		4120C52E19A273E2004704F5 /* ChocolateGiftScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120C52D19A273E2004704F5 /* ChocolateGiftScreen.m */; };
+		4120C53119A27D41004704F5 /* DrinkGiftScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4120C53019A27D41004704F5 /* DrinkGiftScreen.m */; };
 		41310B0A1983136900ABCC0D /* KLCPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 41310B091983136900ABCC0D /* KLCPopup.m */; };
 		41310B0C1985F7EA00ABCC0D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41310B0B1985F7EA00ABCC0D /* MediaPlayer.framework */; };
 		41310B0E1985F8FE00ABCC0D /* myvid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 41310B0D1985F8A900ABCC0D /* myvid.m4v */; };
@@ -239,6 +241,10 @@
 		4120C527199EB0BB004704F5 /* RoseGiftScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoseGiftScreen.h; sourceTree = "<group>"; };
 		4120C528199EB0BB004704F5 /* RoseGiftScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoseGiftScreen.m; sourceTree = "<group>"; };
 		4120C52A199F1D07004704F5 /* rose_background cropped.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rose_background cropped.png"; sourceTree = "<group>"; };
+		4120C52C19A273E2004704F5 /* ChocolateGiftScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChocolateGiftScreen.h; sourceTree = "<group>"; };
+		4120C52D19A273E2004704F5 /* ChocolateGiftScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChocolateGiftScreen.m; sourceTree = "<group>"; };
+		4120C52F19A27D41004704F5 /* DrinkGiftScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrinkGiftScreen.h; sourceTree = "<group>"; };
+		4120C53019A27D41004704F5 /* DrinkGiftScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrinkGiftScreen.m; sourceTree = "<group>"; };
 		41310B081983136900ABCC0D /* KLCPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLCPopup.h; sourceTree = "<group>"; };
 		41310B091983136900ABCC0D /* KLCPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLCPopup.m; sourceTree = "<group>"; };
 		41310B0B1985F7EA00ABCC0D /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -571,8 +577,12 @@
 				414D4EA31981613900FBE74C /* ReceivingViewController.m */,
 				41BDB335197A10530043AA8A /* GivingViewController.h */,
 				41BDB336197A10530043AA8A /* GivingViewController.m */,
+				4120C52F19A27D41004704F5 /* DrinkGiftScreen.h */,
+				4120C53019A27D41004704F5 /* DrinkGiftScreen.m */,
 				4120C527199EB0BB004704F5 /* RoseGiftScreen.h */,
 				4120C528199EB0BB004704F5 /* RoseGiftScreen.m */,
+				4120C52C19A273E2004704F5 /* ChocolateGiftScreen.h */,
+				4120C52D19A273E2004704F5 /* ChocolateGiftScreen.m */,
 				41310B071983136900ABCC0D /* KLCPopup */,
 				41BDB3471980B5B80043AA8A /* page4.png */,
 				41BDB3481980B5B80043AA8A /* page3.png */,
@@ -859,6 +869,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4120C53119A27D41004704F5 /* DrinkGiftScreen.m in Sources */,
 				414D4EA71982DA5800FBE74C /* ConfirmGiftViewController.m in Sources */,
 				41310B0A1983136900ABCC0D /* KLCPopup.m in Sources */,
 				4120C529199EB0BB004704F5 /* RoseGiftScreen.m in Sources */,
@@ -867,6 +878,7 @@
 				41BDB30F197A07C10043AA8A /* BarTabAppDelegate.m in Sources */,
 				41BDB3511980B5F10043AA8A /* RootTutorialViewController.m in Sources */,
 				41BDB30B197A07C10043AA8A /* main.m in Sources */,
+				4120C52E19A273E2004704F5 /* ChocolateGiftScreen.m in Sources */,
 				41310B111986B74500ABCC0D /* YHCPickerView.m in Sources */,
 				41BDB3461980B32A0043AA8A /* PageContentViewController.m in Sources */,
 				414D4EA41981613900FBE74C /* ReceivingViewController.m in Sources */,

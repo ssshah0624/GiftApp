@@ -140,19 +140,38 @@
 -(void)chocolateButtonPressed:(id)sender
 {
     NSLog(@"Chocolate pressed");
+    ChocolateGiftScreen* chocGiftScreen = [[ChocolateGiftScreen alloc] initWithFrame:CGRectMake(0,mainNavBar.frame.size.height * 0.5,screenRect.size.width,screenRect.size.height) andADictionary:selectedCellInfo];
+    [self.view addSubview:chocGiftScreen];
+    
+    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [chocGiftScreen addGestureRecognizer:pan];
+    
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
 
 -(void)roseButtonPressed:(id)sender
 {
-    NSLog(@"Rose pressed");
-    
     RoseGiftScreen *roseGiftScreen = [[RoseGiftScreen alloc] initWithFrame:CGRectMake(0,mainNavBar.frame.size.height * 0.5,screenRect.size.width,screenRect.size.height) andADictionary:selectedCellInfo];
     [self.view addSubview:roseGiftScreen];
+    
+    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [roseGiftScreen addGestureRecognizer:pan];
+    
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
+
+
 
 -(void)drinkButtonPressed:(id)sender
 {
     NSLog(@"Drink pressed");
+    DrinkGiftScreen* drinkGiftScreen = [[DrinkGiftScreen alloc] initWithFrame:CGRectMake(0,mainNavBar.frame.size.height * 0.5,screenRect.size.width,screenRect.size.height) andADictionary:selectedCellInfo];
+    [self.view addSubview:drinkGiftScreen];
+    
+    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [drinkGiftScreen addGestureRecognizer:pan];
+    
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
 
 
@@ -1773,6 +1792,113 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
          [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
          */
     }
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)gesture
+{
+    static UIAttachmentBehavior *attachment;
+    static CGPoint               startCenter;
+    
+    // variables for calculating angular velocity
+    
+    static CFAbsoluteTime        lastTime;
+    static CGFloat               lastAngle;
+    static CGFloat               angularVelocity;
+    
+    if (gesture.state == UIGestureRecognizerStateBegan)
+    {
+        [self.animator removeAllBehaviors];
+        
+        startCenter = gesture.view.center;
+        
+        // calculate the center offset and anchor point
+        
+        CGPoint pointWithinAnimatedView = [gesture locationInView:gesture.view];
+        
+        UIOffset offset = UIOffsetMake(pointWithinAnimatedView.x - gesture.view.bounds.size.width / 2.0,
+                                       pointWithinAnimatedView.y - gesture.view.bounds.size.height / 2.0);
+        
+        CGPoint anchor = [gesture locationInView:gesture.view.superview];
+        
+        // create attachment behavior
+        
+        attachment = [[UIAttachmentBehavior alloc] initWithItem:gesture.view
+                                               offsetFromCenter:offset
+                                               attachedToAnchor:anchor];
+        
+        // code to calculate angular velocity (seems curious that I have to calculate this myself, but I can if I have to)
+        
+        lastTime = CFAbsoluteTimeGetCurrent();
+        lastAngle = [self angleOfView:gesture.view];
+        
+        attachment.action = ^{
+            CFAbsoluteTime time = CFAbsoluteTimeGetCurrent();
+            CGFloat angle = [self angleOfView:gesture.view];
+            if (time > lastTime) {
+                angularVelocity = (angle - lastAngle) / (time - lastTime);
+                lastTime = time;
+                lastAngle = angle;
+            }
+        };
+        
+        // add attachment behavior
+        
+        [self.animator addBehavior:attachment];
+    }
+    else if (gesture.state == UIGestureRecognizerStateChanged)
+    {
+        // as user makes gesture, update attachment behavior's anchor point, achieving drag 'n' rotate
+        
+        CGPoint anchor = [gesture locationInView:gesture.view.superview];
+        attachment.anchorPoint = anchor;
+    }
+    else if (gesture.state == UIGestureRecognizerStateEnded)
+    {
+        [self.animator removeAllBehaviors];
+        
+        CGPoint velocity = [gesture velocityInView:gesture.view.superview];
+        
+        // if we aren't dragging it down, just snap it back and quit
+        
+        if (fabs(atan2(velocity.y, velocity.x) - M_PI_2) > M_PI_4) {
+            UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gesture.view snapToPoint:startCenter];
+            [self.animator addBehavior:snap];
+            
+            return;
+        }
+        
+        // otherwise, create UIDynamicItemBehavior that carries on animation from where the gesture left off (notably linear and angular velocity)
+        
+        UIDynamicItemBehavior *dynamic = [[UIDynamicItemBehavior alloc] initWithItems:@[gesture.view]];
+        [dynamic addLinearVelocity:velocity forItem:gesture.view];
+        [dynamic addAngularVelocity:angularVelocity forItem:gesture.view];
+        [dynamic setAngularResistance:2];
+        
+        // when the view no longer intersects with its superview, go ahead and remove it
+        
+        dynamic.action = ^{
+            if (!CGRectIntersectsRect(gesture.view.superview.bounds, gesture.view.frame)) {
+                [self.animator removeAllBehaviors];
+                [gesture.view removeFromSuperview];
+                
+                //[[[UIAlertView alloc] initWithTitle:nil message:@"View is gone!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }
+        };
+        [self.animator addBehavior:dynamic];
+        
+        // add a little gravity so it accelerates off the screen (in case user gesture was slow)
+        
+        UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[gesture.view]];
+        gravity.magnitude = 0.7;
+        [self.animator addBehavior:gravity];
+    }
+}
+
+- (CGFloat)angleOfView:(UIView *)view
+{
+    // http://stackoverflow.com/a/2051861/1271826
+    
+    return atan2(view.transform.b, view.transform.a);
 }
 
 

@@ -1,16 +1,15 @@
 //
-//  RoseGiftScreen.m
+//  DrinkGiftScreen.m
 //  BarTab
 //
-//  Created by Sunny Shah on 8/15/14.
+//  Created by Sunny Shah on 8/18/14.
 //  Copyright (c) 2014 Sunny Shah. All rights reserved.
 //
 
-#import "RoseGiftScreen.h"
-
+#import "DrinkGiftScreen.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@implementation RoseGiftScreen
+@implementation DrinkGiftScreen
 {
     CGRect screenRect;
     UILabel* description;
@@ -24,21 +23,12 @@
     UIButton* twoDoz;
     UIButton* threeDoz;
     
+    UIImageView* martiniImageView1;
+    UIImageView* martiniImageView2;
+    UIImageView* martiniImageView3;
+    
 }
 
-//Slated for removal...
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        screenRect = [[UIScreen mainScreen] bounds];
-        [self setBackgroundColor:[UIColor clearColor]];
-        [self setBackgroundImage:@"rose_background cropped.png"];
-        [self addDrawerImage:@"drawer.png"];
-    }
-    return self;
-}
 
 -(id)initWithFrame:(CGRect)frame andADictionary:(NSDictionary*)dict
 {
@@ -115,7 +105,7 @@
     characterCount.textColor = UIColorFromRGB(0x3cb878);
     characterCount.textAlignment = NSTextAlignmentCenter;
     [self addSubview:characterCount];
-
+    
     
     //[myTextView sizeToFit];
 }
@@ -130,82 +120,100 @@
     [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:button];
     
-    //One dozen
-    oneDoz = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    oneDoz.frame = CGRectMake(10,screenRect.size.height*0.72,100,60);
-    [oneDoz setTitle:@"One dozen" forState:UIControlStateNormal];
-    [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [oneDoz addTarget:self action:@selector(flowerAmountSelected:) forControlEvents:UIControlEventTouchUpInside];
-    oneDoz.tag = 1;
-    [self addSubview:oneDoz];
+    UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(20,screenRect.size.height*0.72,screenRect.size.width-50,60)];
+    [martiniSlider addTarget:self action:@selector(martiniValueChanged:) forControlEvents:UIControlEventValueChanged];
+    martiniSlider.minimumValue = 0;
+    martiniSlider.maximumValue = 100;
+    martiniSlider.continuous = YES;
+    [self addSubview:martiniSlider];
     
-    //Two dozen
-    twoDoz = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    twoDoz.frame = CGRectMake(screenRect.size.width*0.5-50,screenRect.size.height*0.72,100,60);
-    [twoDoz setTitle:@"Two dozen" forState:UIControlStateNormal];
-    [twoDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [twoDoz setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateSelected];
-    [twoDoz addTarget:self action:@selector(flowerAmountSelected:) forControlEvents:UIControlEventTouchUpInside];
-    twoDoz.tag = 2;
-    [self addSubview:twoDoz];
+    martiniImageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
+    martiniImageView1.frame = CGRectMake((self.frame.size.width/2)-(0.5*100),screenRect.size.height*0.26,100,100);
+    [self addSubview:martiniImageView1];
     
-    //Three dozen
-    threeDoz = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    threeDoz.frame = CGRectMake(screenRect.size.width-110,screenRect.size.height*0.72,100,60);
-    [threeDoz setTitle:@"Three dozen" forState:UIControlStateNormal];
-    [threeDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [threeDoz setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateSelected];
-    [threeDoz addTarget:self action:@selector(flowerAmountSelected:) forControlEvents:UIControlEventTouchUpInside];
-    threeDoz.tag = 3;
-    [self addSubview:threeDoz];
+    martiniImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
+    martiniImageView2.frame = CGRectMake(screenRect.size.width,screenRect.size.height*0.26,100,100);
+    [self addSubview:martiniImageView2];
     
+    martiniImageView3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
+    martiniImageView3.frame = CGRectMake(screenRect.size.width,screenRect.size.height*0.26,100,100);
+    [self addSubview:martiniImageView3];
+}
+
+-(void)martiniValueChanged:(id)sender
+{
+    NSLog(@"Martini value changing...");
+    UISlider* martiniSliderHelper = (UISlider*)sender;
     
+    if(martiniSliderHelper.value < 33){
+        NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value];
+        NSString* imageName = [NSString stringWithFormat:@"martini_icon%@.png",iconNumber];
+        martiniImageView1.image = [UIImage imageNamed:imageName];
+        
+        //Get the second martini out of the picture!
+        if(martiniImageView2.frame.origin.x < screenRect.size.width){
+            martiniImageView2.frame = CGRectMake(martiniImageView2.frame.origin.x+10,
+                                              martiniImageView2.frame.origin.y,
+                                              martiniImageView2.frame.size.width,
+                                              martiniImageView2.frame.size.height);
+        }
+        
+        //move first martini glass towards center
+        if(martiniImageView1.frame.origin.x < 110){
+            martiniImageView1.frame = CGRectMake(martiniImageView1.frame.origin.x+4,
+                                              martiniImageView1.frame.origin.y,
+                                              martiniImageView1.frame.size.width,
+                                              martiniImageView1.frame.size.height);
+        }
+    }else if(martiniSliderHelper.value >= 33 && martiniSliderHelper.value < 66){
+        //Start moving the first martini glass to the left
+        if(martiniImageView1.frame.origin.x > 25){
+            martiniImageView1.frame = CGRectMake(martiniImageView1.frame.origin.x-4,
+                                              martiniImageView1.frame.origin.y,
+                                              martiniImageView1.frame.size.width,
+                                              martiniImageView1.frame.size.height);
+        }
+        //Get the second martini glass to the first glass's old position
+        if(martiniImageView2.frame.origin.x > 110){
+            martiniImageView2.frame = CGRectMake(martiniImageView2.frame.origin.x-10,
+                                              martiniImageView2.frame.origin.y,
+                                              martiniImageView2.frame.size.width,
+                                              martiniImageView2.frame.size.height);
+        }
+        //Start filling the second glass
+        NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value-33];
+        NSString* imageName = [NSString stringWithFormat:@"martini_icon%@.png",iconNumber];
+        martiniImageView2.image = [UIImage imageNamed:imageName];
+        
+        //Get the third glass out of here!
+        if(martiniImageView3.frame.origin.x < screenRect.size.width){
+            martiniImageView3.frame = CGRectMake(martiniImageView3.frame.origin.x+10,
+                                              martiniImageView3.frame.origin.y,
+                                              martiniImageView3.frame.size.width,
+                                              martiniImageView3.frame.size.height);
+        }
+        
+    }else{
+        //Move third glass in
+        if(martiniImageView3.frame.origin.x > 200){
+            martiniImageView3.frame = CGRectMake(martiniImageView3.frame.origin.x-10,
+                                              martiniImageView3.frame.origin.y,
+                                              martiniImageView3.frame.size.width,
+                                              martiniImageView3.frame.size.height);
+        }
+        
+        //Fill the third glass
+        NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value-66];
+        NSString* imageName = [NSString stringWithFormat:@"martini_icon%@.png",iconNumber];
+        martiniImageView3.image = [UIImage imageNamed:imageName];
+    }
+
 }
 
 -(void)sendPressed:(id)sender
 {
     NSLog(@"Send pressed");
 }
-
--(void)flowerAmountSelected:(id)sender
-{
-    UIButton* button = (UIButton*)sender;
-    if(button.tag == 1){
-        [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
-        [twoDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [threeDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [selectedFlowerAmounts replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:YES]];
-        [selectedFlowerAmounts replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:NO]];
-        [selectedFlowerAmounts replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:NO]];
-        description.text = [NSString stringWithFormat:@"Send Roses to %@ ($15)",self.firstName];
-    }else if(button.tag == 2){
-        [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
-        [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [threeDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [selectedFlowerAmounts replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:NO]];
-        [selectedFlowerAmounts replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:YES]];
-        [selectedFlowerAmounts replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:NO]];
-        description.text = [NSString stringWithFormat:@"Send Roses to %@ ($30)",self.firstName];
-    }else if(button.tag == 3){
-        [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
-        [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [twoDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [selectedFlowerAmounts replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:NO]];
-        [selectedFlowerAmounts replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:NO]];
-        [selectedFlowerAmounts replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:YES]];
-        description.text = [NSString stringWithFormat:@"Send Roses to %@ ($40)",self.firstName];
-    }
-}
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 //Textfield editing
 #pragma mark TextFieldDelegates
@@ -228,7 +236,7 @@
     }
     return YES;
 }
-         
+
 
 -(void)performAnimations:(float)bywhat
 {
@@ -264,6 +272,5 @@
     [myTextView resignFirstResponder];
     
 }
-
 
 @end
