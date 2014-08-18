@@ -50,7 +50,7 @@
         [selectedFlowerAmounts addObject:[NSNumber numberWithBool:NO]];
         
         [self setBackgroundColor:[UIColor clearColor]];
-        [self setBackgroundImage:@"rose_background cropped.png"];
+        [self setBackgroundImage:@"bar bg image.png"];
         [self addDrawerImage:@"drawer.png"];
         [self addDescription];
         [self addTextView];
@@ -61,7 +61,7 @@
 
 -(void)setBackgroundImage:(NSString*)name
 {
-    UIImageView* backgroundImage = [[UIImageView alloc]initWithFrame:self.frame];
+    UIImageView* backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.origin.x,self.frame.origin.y-0,self.frame.size.width,self.frame.size.height)];
     [backgroundImage setImage:[UIImage imageNamed:name]];
     [self addSubview:backgroundImage];
 }
@@ -76,7 +76,7 @@
 -(void)addDescription
 {
     description = [[UILabel alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.47,screenRect.size.width, screenRect.size.height*0.1)];
-    description.text = [NSString stringWithFormat:@"Send Roses to %@",self.firstName];
+    description.text = [NSString stringWithFormat:@"Fill %@'s bar tab",self.firstName];
     description.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f]; //Mess with font
     description.numberOfLines = 1;
     description.adjustsFontSizeToFitWidth = YES;
@@ -125,6 +125,8 @@
     martiniSlider.minimumValue = 0;
     martiniSlider.maximumValue = 100;
     martiniSlider.continuous = YES;
+    martiniSlider.tintColor = UIColorFromRGB(0x3cb878);
+    martiniSlider.thumbTintColor = UIColorFromRGB(0x3cb878);
     [self addSubview:martiniSlider];
     
     martiniImageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
@@ -142,8 +144,8 @@
 
 -(void)martiniValueChanged:(id)sender
 {
-    NSLog(@"Martini value changing...");
     UISlider* martiniSliderHelper = (UISlider*)sender;
+    description.text = [NSString stringWithFormat:@"Fill %@'s bar tab ($%.0f)",self.firstName,martiniSliderHelper.value];
     
     if(martiniSliderHelper.value < 33){
         NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value];

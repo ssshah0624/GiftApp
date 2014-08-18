@@ -21,6 +21,7 @@
     CGFloat origin_y;
     NSMutableArray* selectedFlowerAmounts;
     
+    UIImageView* backgroundImage;
     UIButton* oneDoz;
     UIButton* twoDoz;
     UIButton* threeDoz;
@@ -57,7 +58,7 @@
 
 -(void)setBackgroundImage:(NSString*)name
 {
-    UIImageView* backgroundImage = [[UIImageView alloc]initWithFrame:self.frame];
+    backgroundImage = [[UIImageView alloc]initWithFrame:self.frame];
     [backgroundImage setImage:[UIImage imageNamed:name]];
     [self addSubview:backgroundImage];
 }
@@ -164,6 +165,7 @@
         [selectedFlowerAmounts replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:NO]];
         [selectedFlowerAmounts replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:NO]];
         description.text = [NSString stringWithFormat:@"Send Chocolate to %@ ($20)",self.firstName];
+        backgroundImage.image = [UIImage imageNamed:@"18ct.png"];
     }else if(button.tag == 2){
         [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
         [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -172,6 +174,7 @@
         [selectedFlowerAmounts replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:YES]];
         [selectedFlowerAmounts replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:NO]];
         description.text = [NSString stringWithFormat:@"Send Chocolate to %@ ($25)",self.firstName];
+        backgroundImage.image = [UIImage imageNamed:@"24ct.png"];
     }else if(button.tag == 3){
         [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
         [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -180,6 +183,7 @@
         [selectedFlowerAmounts replaceObjectAtIndex:1 withObject:[NSNumber numberWithBool:NO]];
         [selectedFlowerAmounts replaceObjectAtIndex:2 withObject:[NSNumber numberWithBool:YES]];
         description.text = [NSString stringWithFormat:@"Send Chocolate to %@ ($30)",self.firstName];
+        backgroundImage.image = [UIImage imageNamed:@"36ct.png"];
     }
 }
 
