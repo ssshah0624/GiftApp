@@ -1,0 +1,1 @@
+PODS_BARTAB_BDKNOTIFYHUD_OTHER_LDFLAGS = -framework QuartzCore
