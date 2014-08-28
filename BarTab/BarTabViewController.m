@@ -26,10 +26,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Make sure your segue name in storyboard is the same as this line
+    
+    
     if ([[segue identifier] isEqualToString:@"toMain"])
     {
-        GivingViewController *vc = [segue destinationViewController];
-        vc.facebookUser = self.facebookUser;
+        NSLog(@"In to Main method");
+        //GivingViewController *vc = [segue destinationViewController];
+        //vc.facebookUser = self.facebookUser;
     }
 }
 
@@ -57,22 +60,27 @@
      [self.view addSubview:_paymentViewController.view];
      [self.paymentViewController didMoveToParentViewController:self];
  */
-     
-    
+
+    //TEMPORARY SLATE
+    /*
     self.givingViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
      self.givingViewController.facebookUser = self.facebookUser;
     [self addChildViewController:_givingViewController];
     [self.view addSubview:_givingViewController.view];
     [self.givingViewController didMoveToParentViewController:self];
+     */
+    
+    self.masterRootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+    //self.givingViewController.facebookUser = self.facebookUser;
+    [self addChildViewController:_masterRootViewController];
+    [self.view addSubview:_masterRootViewController.view];
+    [self.masterRootViewController didMoveToParentViewController:self];
     
 }
 
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
     NSLog(@"We lost one!");
 }
-
-/*END FACEBOOK HANDLING*/
-
 
 - (void)didReceiveMemoryWarning
 {

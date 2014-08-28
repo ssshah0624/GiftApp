@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1C11003074594E1AB86BA25F"
+               BlueprintIdentifier = "9380B6F0C5BE4CBBABCA3ED1"
                BuildableName = "libPods-BarTab-AMPopTip.a"
                BlueprintName = "Pods-BarTab-AMPopTip"
                ReferencedContainer = "container:Pods.xcodeproj">

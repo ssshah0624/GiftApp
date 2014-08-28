@@ -11,6 +11,7 @@
 #import "GivingViewController.h"
 #import "PageContentViewController.h"
 #import "GivingViewController.h"
+#import "MasterRootViewController.h"
 
 
 @interface BarTabViewController : UIViewController <FBLoginViewDelegate>
@@ -23,6 +24,7 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) GivingViewController *givingViewController;
+@property (strong, nonatomic) MasterRootViewController *masterRootViewController;
 
 
 @property (strong, nonatomic) NSArray *pageTitles;

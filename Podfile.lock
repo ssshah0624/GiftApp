@@ -1,5 +1,5 @@
 PODS:
-  - AMPopTip (0.2)
+  - AMPopTip (0.2.2)
   - AMWaveTransition (0.5.1)
   - BDKNotifyHUD (1.1.0)
   - BFPaperTableViewCell (1.0.3):
@@ -33,7 +33,7 @@ DEPENDENCIES:
   - TOMSMorphingLabel (~> 0.2.2)
 
 SPEC CHECKSUMS:
-  AMPopTip: 2087970b123e2150af46c682ad83bb31bff54862
+  AMPopTip: 96d3a16bdbd8195e291d3cb95f9a43e31226b760
   AMWaveTransition: c934f942f1a05217a8adf56afc7b5e4582d70d08
   BDKNotifyHUD: dd7c23043da457c72056fb4a0c8bae9967acff28
   BFPaperTableViewCell: fb29cc00ee2f7b6cafd602eda71e0fce335849e5

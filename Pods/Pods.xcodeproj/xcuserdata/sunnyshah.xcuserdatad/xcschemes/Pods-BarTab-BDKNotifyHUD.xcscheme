@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "64673F2852764F92BFD25BC8"
+               BlueprintIdentifier = "246BCC37FC764DEE8888A701"
                BuildableName = "libPods-BarTab-BDKNotifyHUD.a"
                BlueprintName = "Pods-BarTab-BDKNotifyHUD"
                ReferencedContainer = "container:Pods.xcodeproj">

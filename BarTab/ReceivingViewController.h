@@ -11,11 +11,18 @@
 #import <AMWaveTransition.h>
 #import "KLCPopup.h"
 #import <AMPopTip.h>
+#import <MCSwipeTableViewCell.h>
+#import "RoseGiftScreen.h"
+#import "ChocolateGiftScreen.h"
+#import "DrinkGiftScreen.h"
 
+@interface ReceivingViewController : UIViewController <MCSwipeTableViewCellDelegate>
 
-@interface ReceivingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property NSUInteger pageIndex;
 
-@property (strong, nonatomic) IBOutlet UITableView *giftWindow;
+@property (strong, nonatomic) IBOutlet UITableView *infoTable;
+@property MCSwipeTableViewCell* cellToDelete;
 @property (strong, nonatomic) IBOutlet AMWaveTransition *interactive;
+@property UIDynamicAnimator* animator;
 
 @end

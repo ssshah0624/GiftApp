@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5C2B1526AB59484B9B86704F"
+               BlueprintIdentifier = "3FF960EC15494E759A1E4A6D"
                BuildableName = "libPods-BarTab-EFCircularSlider.a"
                BlueprintName = "Pods-BarTab-EFCircularSlider"
                ReferencedContainer = "container:Pods.xcodeproj">

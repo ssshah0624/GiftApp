@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Fancy Pixel. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 typedef NS_ENUM(NSInteger, AMPopTipDirection) {
     AMPopTipDirectionUp,
     AMPopTipDirectionDown,
@@ -20,6 +22,10 @@ typedef NS_ENUM(NSInteger, AMPopTipDirection) {
  * -----------------------------------------------------------------------------
  */
 
+/** Create a popotip
+ *
+ * Create a new popotip object
+ */
 + (instancetype)popTip;
 
 /** Show the popover

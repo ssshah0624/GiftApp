@@ -13,5 +13,6 @@
 @property NSString* firstName;
 
 -(id)initWithFrame:(CGRect)frame andADictionary:(NSDictionary*)dict;
+@property UIDynamicAnimator* animator;
 
 @end

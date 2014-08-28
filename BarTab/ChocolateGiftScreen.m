@@ -10,10 +10,18 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+#define kSending 0
+#define kSent 1
+#define kReceived 2
+
+#define kQuantity0 0
+#define kQuantity1 1
+#define kQuantity2 2
 
 @implementation ChocolateGiftScreen
 {
     CGRect screenRect;
+    UIImageView* backgroundImage;
     UILabel* description;
     UITextView *myTextView;
     UILabel* characterCount;
@@ -21,11 +29,9 @@
     CGFloat origin_y;
     NSMutableArray* selectedFlowerAmounts;
     
-    UIImageView* backgroundImage;
     UIButton* oneDoz;
     UIButton* twoDoz;
-    UIButton* threeDoz;
-}
+    UIButton* threeDoz;}
 
 -(id)initWithFrame:(CGRect)frame andADictionary:(NSDictionary*)dict
 {
@@ -33,8 +39,14 @@
     if (self) {
         // Initialization code
         screenRect = [[UIScreen mainScreen] bounds];
+        
         UILabel* label = [dict objectForKey:@"friendName"];
-        self.firstName = [[label.text componentsSeparatedByString:@" "]objectAtIndex:0];
+        if([label isKindOfClass:[NSString class]]){
+            self.firstName = [[[dict objectForKey:@"friendName"] componentsSeparatedByString:@" "]objectAtIndex:0];
+        }else{
+            self.firstName = [[label.text componentsSeparatedByString:@" "]objectAtIndex:0];
+        }
+        
         origin_x = frame.origin.x;
         origin_y = frame.origin.y;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -45,35 +57,97 @@
         [selectedFlowerAmounts addObject:[NSNumber numberWithBool:NO]];
         [selectedFlowerAmounts addObject:[NSNumber numberWithBool:NO]];
         [selectedFlowerAmounts addObject:[NSNumber numberWithBool:NO]];
-        
         [self setBackgroundColor:[UIColor clearColor]];
-        [self setBackgroundImage:@"rose_background cropped.png"];
-        [self addDrawerImage:@"drawer.png"];
-        [self addDescription];
-        [self addTextView];
-        [self addButtons];
+        
+        
+        [self handleLayout:dict];
     }
     return self;
 }
 
--(void)setBackgroundImage:(NSString*)name
+-(void)handleLayout:(NSDictionary*)dict
 {
-    backgroundImage = [[UIImageView alloc]initWithFrame:self.frame];
-    [backgroundImage setImage:[UIImage imageNamed:name]];
-    [self addSubview:backgroundImage];
+    switch ([[dict objectForKey:@"giftStatus"] intValue]) {
+        case kSending:
+            [self setBackgroundImage:@"18ct.png"];
+            [self addDrawerImage:@"drawer.png"];
+            [self addNavBar:dict];
+            [self addDescription:[NSString stringWithFormat:@"Send Chocolates to %@",self.firstName]];
+            [self addTextView];
+            [self addButtons];
+            break;
+        case kSent:
+            NSLog(@"Sent");
+            switch ([[dict objectForKey:@"giftQuantity"] intValue]) {
+                case kQuantity0:
+                    [self setBackgroundImage:@"18ct.png"];
+                    [self addDrawerImage:@"drawer.png"];
+                    [self addNavBar:dict];
+                    [self addDescription:[NSString stringWithFormat:@"Sent 18-piece Chocolate Set to %@",self.firstName]];
+                    [self addTextView:[dict objectForKey:@"customMessage"]];
+                    [self addButtons];
+                    break;
+                case kQuantity1:
+                    [self setBackgroundImage:@"24ct.png"];
+                    [self addDrawerImage:@"drawer.png"];
+                    [self addNavBar:dict];
+                    [self addDescription:[NSString stringWithFormat:@"Sent 24-piece Chocolate Set to %@",self.firstName]];
+                    [self addTextView:[dict objectForKey:@"customMessage"]];
+                    [self addButtons];
+                    break;
+                case kQuantity2:
+                    [self setBackgroundImage:@"48ct.png"];
+                    [self addDrawerImage:@"drawer.png"];
+                    [self addNavBar:dict];
+                    [self addDescription:[NSString stringWithFormat:@"Sent 48-piece Chocolate Set to %@",self.firstName]];
+                    [self addTextView:[dict objectForKey:@"customMessage"]];
+                    [self addButtons];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case kReceived:
+            NSLog(@"Received");
+            switch ([[dict objectForKey:@"giftQuantity"] intValue]) {
+                case kQuantity0:
+                    [self setBackgroundImage:@"18ct.png"];
+                    [self addDrawerImage:@"drawer.png"];
+                    [self addNavBar:dict];
+                    [self addDescription:[NSString stringWithFormat:@"Received 18-piece Chocolate Set from %@",self.firstName]];
+                    [self addTextView:[dict objectForKey:@"customMessage"]];
+                    [self addButtons];
+                    break;
+                case kQuantity1:
+                    [self setBackgroundImage:@"24ct.png"];
+                    [self addDrawerImage:@"drawer.png"];
+                    [self addNavBar:dict];
+                    [self addDescription:[NSString stringWithFormat:@"Received 24-piece Chocolate Set from %@",self.firstName]];
+                    [self addTextView:[dict objectForKey:@"customMessage"]];
+                    [self addButtons];
+                    break;
+                case kQuantity2:
+                    [self setBackgroundImage:@"48ct.png"];
+                    [self addDrawerImage:@"drawer.png"];
+                    [self addNavBar:dict];
+                    [self addDescription:[NSString stringWithFormat:@"Received 48-piece Chocolate Set from %@",self.firstName]];
+                    [self addTextView:[dict objectForKey:@"customMessage"]];
+                    [self addButtons];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        default:
+            break;
+    }
+    
 }
 
--(void)addDrawerImage:(NSString*)name
-{
-    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.43,screenRect.size.width, screenRect.size.height*0.57)];
-    [imageView setImage:[UIImage imageNamed:name]];
-    [self addSubview:imageView];
-}
-
--(void)addDescription
+-(void)addDescription:(NSString*)text
 {
     description = [[UILabel alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.47,screenRect.size.width, screenRect.size.height*0.1)];
-    description.text = [NSString stringWithFormat:@"Send Chocolates to %@",self.firstName];
+    description.text = text;
     description.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f]; //Mess with font
     description.numberOfLines = 1;
     description.adjustsFontSizeToFitWidth = YES;
@@ -84,6 +158,21 @@
     description.textColor = UIColorFromRGB(0x3cb878);
     description.textAlignment = NSTextAlignmentCenter;
     [self addSubview:description];
+}
+
+
+-(void)setBackgroundImage:(NSString*)name
+{
+    backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.origin.x,-screenRect.origin.y-35,self.frame.size.width,self.frame.size.height)];
+    [backgroundImage setImage:[UIImage imageNamed:name]];
+    [self addSubview:backgroundImage];
+}
+
+-(void)addDrawerImage:(NSString*)name
+{
+    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.43,screenRect.size.width, screenRect.size.height*0.57)];
+    [imageView setImage:[UIImage imageNamed:name]];
+    [self addSubview:imageView];
 }
 
 -(void)addTextView
@@ -105,6 +194,17 @@
     
     
     //[myTextView sizeToFit];
+}
+
+-(void)addTextView:(NSString*)withText
+{
+    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.60, screenRect.size.width, screenRect.size.height*0.12)];
+    myTextView.text = withText;
+    myTextView.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:16.0];
+    myTextView.textColor = [UIColor grayColor];
+    [myTextView setEditable:NO];
+    myTextView.delegate = self;
+    [self addSubview:myTextView];
 }
 
 -(void)addButtons
@@ -252,7 +352,54 @@
 
 -(void)dismissKeyboard {
     [myTextView resignFirstResponder];
-    
 }
+
+-(void)addNavBar:(NSDictionary*)dict
+{
+    UIView* mainNavBar = [[UIView alloc]init];
+    if([[dict valueForKey:@"giftStatus"] isEqualToString:@"0"]){
+        //UIView* mainNavBar = [[UIView alloc]initWithFrame:CGRectMake(0,-screenRect.origin.y-35,screenRect.size.width, 70)];
+        mainNavBar.frame = CGRectMake(0,-screenRect.origin.y-35,screenRect.size.width, 70);
+    }else{
+        mainNavBar.frame = CGRectMake(0,-screenRect.origin.y,screenRect.size.width, 70);
+    }
+    
+    float stdYoffset =screenRect.origin.y+20;
+    
+    UIImageView* logoIcon = [[UIImageView alloc]initWithFrame:CGRectMake(screenRect.origin.x,stdYoffset, 150, 40)];
+    [logoIcon setImage:[UIImage imageNamed:@"gift.png"]];
+    //[mainNavBar addSubview:logoIcon];
+    
+    float half = (screenRect.origin.x + screenRect.size.width) * 0.5;
+    
+    UIButton *profPicButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    profPicButton.frame = CGRectMake(20, stdYoffset, 40, 40);
+    NSString *imageName = [NSString stringWithFormat:@"person_solid.png"];
+    UIImage *btnImage = [UIImage imageNamed:imageName];
+    [profPicButton setImage:btnImage forState:UIControlStateNormal];
+    [profPicButton addTarget:self action:@selector(profilePictureButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [mainNavBar addSubview:profPicButton];
+    
+    UIButton *giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    giftButton.frame = CGRectMake(half-20, stdYoffset, 40, 40);
+    imageName = [NSString stringWithFormat:@"gift_outline.png"];
+    btnImage = [UIImage imageNamed:imageName];
+    [giftButton setImage:btnImage forState:UIControlStateNormal];
+    [giftButton addTarget:self action:@selector(giftButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [mainNavBar addSubview:giftButton];
+    
+    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchButton.frame = CGRectMake(screenRect.size.width - 60, stdYoffset, 40, 40);
+    imageName = [NSString stringWithFormat:@"search_outline.png"];
+    btnImage = [UIImage imageNamed:imageName];
+    [searchButton setImage:btnImage forState:UIControlStateNormal];
+    [searchButton addTarget:self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [mainNavBar addSubview:searchButton];
+    
+    [mainNavBar setBackgroundColor:UIColorFromRGB(0x3cb878)];
+    
+    [self addSubview:mainNavBar];
+}
+
 
 @end

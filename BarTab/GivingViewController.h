@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "KLCPopup.h"
-#import "YHCPickerView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AMPopTip.h>
 #import <MBAlertView.h>
@@ -27,6 +26,10 @@
 #import "DrinkGiftScreen.h"
 
 @interface GivingViewController : UIViewController <STPViewDelegate, MCSwipeTableViewCellDelegate>
+
+
+//FOR PAGE CONTENT VIEW CONTROLLER
+@property NSUInteger pageIndex;
 
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (strong, nonatomic) IBOutlet UIImageView *mainImage;
