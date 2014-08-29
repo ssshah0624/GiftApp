@@ -53,6 +53,7 @@
 		4107FB1B199887F700FBC6BE /* hallmark_card_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4107FB18199887F700FBC6BE /* hallmark_card_icon.png */; };
 		4107FB1C199887F700FBC6BE /* martini_white_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4107FB19199887F700FBC6BE /* martini_white_icon.png */; };
 		4107FB1D199887F700FBC6BE /* plate_cutlery_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4107FB1A199887F700FBC6BE /* plate_cutlery_icon.png */; };
+		411B15B119AED7CA00202F37 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B15B019AED7CA00202F37 /* SettingsViewController.m */; };
 		4120C4DC199B2D1A004704F5 /* card_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4D7199B2D1A004704F5 /* card_red.png */; };
 		4120C4DE199B2D1A004704F5 /* chocolate_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4D9199B2D1A004704F5 /* chocolate_red.png */; };
 		4120C4DF199B2D1A004704F5 /* life is like.png in Resources */ = {isa = PBXBuildFile; fileRef = 4120C4DA199B2D1A004704F5 /* life is like.png */; };
@@ -118,6 +119,9 @@
 		41310B0C1985F7EA00ABCC0D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41310B0B1985F7EA00ABCC0D /* MediaPlayer.framework */; };
 		41310B0E1985F8FE00ABCC0D /* myvid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 41310B0D1985F8A900ABCC0D /* myvid.m4v */; };
 		414D4EA41981613900FBE74C /* ReceivingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414D4EA31981613900FBE74C /* ReceivingViewController.m */; };
+		417463EE19B03E4100BAE23F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417463ED19B03E4100BAE23F /* MessageUI.framework */; };
+		417463F019B1052400BAE23F /* PrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 417463EF19B1052400BAE23F /* PrivacyPolicy.txt */; };
+		417463F219B1083200BAE23F /* TermsAndConditions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 417463F119B1083200BAE23F /* TermsAndConditions.txt */; };
 		41A4D9F01990838F0079C7BC /* qr1.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A4D9EC1990838F0079C7BC /* qr1.png */; };
 		41A4D9F11990838F0079C7BC /* qr2.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A4D9ED1990838F0079C7BC /* qr2.png */; };
 		41A4D9F21990838F0079C7BC /* qr3.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A4D9EE1990838F0079C7BC /* qr3.png */; };
@@ -227,6 +231,8 @@
 		4107FB18199887F700FBC6BE /* hallmark_card_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hallmark_card_icon.png; sourceTree = "<group>"; };
 		4107FB19199887F700FBC6BE /* martini_white_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = martini_white_icon.png; sourceTree = "<group>"; };
 		4107FB1A199887F700FBC6BE /* plate_cutlery_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plate_cutlery_icon.png; sourceTree = "<group>"; };
+		411B15AF19AED7CA00202F37 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		411B15B019AED7CA00202F37 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4120C4D7199B2D1A004704F5 /* card_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card_red.png; sourceTree = "<group>"; };
 		4120C4D9199B2D1A004704F5 /* chocolate_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chocolate_red.png; sourceTree = "<group>"; };
 		4120C4DA199B2D1A004704F5 /* life is like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "life is like.png"; sourceTree = "<group>"; };
@@ -298,6 +304,9 @@
 		41310B0D1985F8A900ABCC0D /* myvid.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = myvid.m4v; path = ../../../../../Downloads/myvid.m4v; sourceTree = "<group>"; };
 		414D4EA21981613900FBE74C /* ReceivingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivingViewController.h; sourceTree = "<group>"; };
 		414D4EA31981613900FBE74C /* ReceivingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivingViewController.m; sourceTree = "<group>"; };
+		417463ED19B03E4100BAE23F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		417463EF19B1052400BAE23F /* PrivacyPolicy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PrivacyPolicy.txt; sourceTree = "<group>"; };
+		417463F119B1083200BAE23F /* TermsAndConditions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TermsAndConditions.txt; sourceTree = "<group>"; };
 		41A4D9EC1990838F0079C7BC /* qr1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr1.png; sourceTree = "<group>"; };
 		41A4D9ED1990838F0079C7BC /* qr2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr2.png; sourceTree = "<group>"; };
 		41A4D9EE1990838F0079C7BC /* qr3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr3.png; sourceTree = "<group>"; };
@@ -366,6 +375,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				417463EE19B03E4100BAE23F /* MessageUI.framework in Frameworks */,
 				41310B0C1985F7EA00ABCC0D /* MediaPlayer.framework in Frameworks */,
 				41BDB301197A07C10043AA8A /* CoreGraphics.framework in Frameworks */,
 				41BDB334197A0BC10043AA8A /* FacebookSDK.framework in Frameworks */,
@@ -631,6 +641,7 @@
 		41BDB2FD197A07C10043AA8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				417463ED19B03E4100BAE23F /* MessageUI.framework */,
 				41310B0B1985F7EA00ABCC0D /* MediaPlayer.framework */,
 				41BDB333197A0BC10043AA8A /* FacebookSDK.framework */,
 				41BDB2FE197A07C10043AA8A /* Foundation.framework */,
@@ -651,6 +662,8 @@
 				4107FACF19987DBD00FBC6BE /* martini */,
 				41310B0D1985F8A900ABCC0D /* myvid.m4v */,
 				41BDB310197A07C10043AA8A /* Main.storyboard */,
+				411B15AF19AED7CA00202F37 /* SettingsViewController.h */,
+				411B15B019AED7CA00202F37 /* SettingsViewController.m */,
 				41BDB30D197A07C10043AA8A /* BarTabAppDelegate.h */,
 				41BDB30E197A07C10043AA8A /* BarTabAppDelegate.m */,
 				41BDB34F1980B5F10043AA8A /* RootTutorialViewController.h */,
@@ -671,6 +684,8 @@
 				4120C528199EB0BB004704F5 /* RoseGiftScreen.m */,
 				4120C52C19A273E2004704F5 /* ChocolateGiftScreen.h */,
 				4120C52D19A273E2004704F5 /* ChocolateGiftScreen.m */,
+				417463EF19B1052400BAE23F /* PrivacyPolicy.txt */,
+				417463F119B1083200BAE23F /* TermsAndConditions.txt */,
 				41310B071983136900ABCC0D /* KLCPopup */,
 				41BDB3471980B5B80043AA8A /* page4.png */,
 				41BDB3481980B5B80043AA8A /* page3.png */,
@@ -875,6 +890,7 @@
 				4120C55019A3D518004704F5 /* chocolate_circle.png in Resources */,
 				4120C4F7199C5D0A004704F5 /* what its telling you.png in Resources */,
 				4107FB17199883CE00FBC6BE /* martini_icon34.png in Resources */,
+				417463F019B1052400BAE23F /* PrivacyPolicy.txt in Resources */,
 				4120C4F3199C5D0A004704F5 /* chocolate_faded.png in Resources */,
 				4120C519199E704C004704F5 /* rose_icon.png in Resources */,
 				41A4DA01199347890079C7BC /* paris4.jpg in Resources */,
@@ -926,6 +942,7 @@
 				41A9AB50198AC52700768C2C /* plus.png in Resources */,
 				4120C4F2199C5D0A004704F5 /* checkmark.png in Resources */,
 				41B4E89919907BE40016F5F9 /* reclogo4.png in Resources */,
+				417463F219B1083200BAE23F /* TermsAndConditions.txt in Resources */,
 				41A4DA00199347890079C7BC /* paris3.jpg in Resources */,
 				4107FA8819970B9C00FBC6BE /* people_icon.png in Resources */,
 				4120C515199E704C004704F5 /* card.png in Resources */,
@@ -992,6 +1009,7 @@
 				4120C52E19A273E2004704F5 /* ChocolateGiftScreen.m in Sources */,
 				41BDB3461980B32A0043AA8A /* PageContentViewController.m in Sources */,
 				414D4EA41981613900FBE74C /* ReceivingViewController.m in Sources */,
+				411B15B119AED7CA00202F37 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

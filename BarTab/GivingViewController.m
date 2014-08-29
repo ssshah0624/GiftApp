@@ -236,7 +236,6 @@
     NSString *imageName = [NSString stringWithFormat:@"settings_solid.png"];
     UIImage *btnImage = [UIImage imageNamed:imageName];
     [profPicButton setImage:btnImage forState:UIControlStateNormal];
-    [profPicButton addTarget:self action:@selector(profilePictureButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [mainNavBar addSubview:profPicButton];
     
     UIButton *giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -275,11 +274,6 @@
 
 -(void)searchButtonPressed:(id)sender{
     NSLog(@"Search functionality coming soon =)");
-}
-
--(void)profilePictureClicked:(id)sender{
-    NSLog(@"PROFILE PICTURE CLICKED");
-    [self performSegueWithIdentifier:@"toReceive" sender:self];
 }
 
 -(void)promptPaymentInfo{

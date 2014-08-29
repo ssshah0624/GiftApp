@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "SettingsViewController.h"
 #import "GivingViewController.h"
 #import "ReceivingViewController.h"
 
@@ -16,6 +18,8 @@
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;
 @property (strong, nonatomic) NSArray *pageImages;
+
+@property (strong, nonatomic) SettingsViewController *settingVC;
 @property (strong, nonatomic) GivingViewController *givingVC;
 
 @end

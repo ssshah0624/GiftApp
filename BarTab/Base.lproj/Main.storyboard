@@ -216,6 +216,27 @@
             </objects>
             <point key="canvasLocation" x="2118" y="-18"/>
         </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="hSw-yq-gde">
+            <objects>
+                <viewController storyboardIdentifier="SettingsViewController" id="l8g-GL-gN5" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lTA-Lh-9k0"/>
+                        <viewControllerLayoutGuide type="bottom" id="fzt-un-SCE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kCp-2S-dcr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="tvS-Rm-ML3" kind="modal" identifier="logOutTransition" modalTransitionStyle="crossDissolve" id="xGy-fa-NjH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zni-9E-ovd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1638" y="657"/>
+        </scene>
         <!--Giving View Controller-->
         <scene sceneID="TT8-Df-fje">
             <objects>
@@ -296,6 +317,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="xGy-fa-NjH"/>
         <segue reference="uvv-BE-ZIt"/>
     </inferredMetricsTieBreakers>
 </document>

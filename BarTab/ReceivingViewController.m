@@ -9,11 +9,9 @@
 #import "ReceivingViewController.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-//#define kMasterColor 0x3cb878
-#define kMasterColor 0x51B0BD
+#define kMasterColor 0x25CCA5
 #define kBackgroundColor 0xE9E9E9
-//#define kSupportingColor 0x5dca92
-#define kSupportingColor 0x51bdb8
+#define kSupportingColor 0x25CCA5
 #define kCellHeight 120
 #define kAchievementFont 20.0f
 #define kAchievementFontType @"GillSans-Light"
@@ -70,12 +68,12 @@
 {
     [super viewDidLoad];
     masterArrayOfDictionaries = [[NSMutableArray alloc]init];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Deepika P." giftType:@"flower" giftQuantity:@"1" giftStatus:@"2" customMessage:@"Hey Sunny- here are some flowers!!" deliveryDate:@"9/2/2014" gifterImage:@"N/A" venueImage:@"N/A"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Dilip" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"1" customMessage:@"Eat something Dilip....." deliveryDate:@"9/1/2014" gifterImage:@"N/A" venueImage:@"N/A"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Kishan Shah" giftType:@"drink" giftQuantity:@"100" giftStatus:@"1" customMessage:@"Drink up Kishan!" deliveryDate:@"8/31/2014" gifterImage:@"N/A" venueImage:@"N/A"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ronak Gandhi" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"2" customMessage:@"Congrats on the new apt sunny!" deliveryDate:@"8/30/2014" gifterImage:@"N/A" venueImage:@"N/A"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ankur Goyal" giftType:@"drink" giftQuantity:@"1" giftStatus:@"3" customMessage:@"NJSP -> M&T -> REAL WORLD" deliveryDate:@"8/29/2014" gifterImage:@"N/A" venueImage:@"N/A"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ricky Hong" giftType:@"flower" giftQuantity:@"1" giftStatus:@"3" customMessage:@"For the salsa adventures" deliveryDate:@"8/25/2014" gifterImage:@"N/A" venueImage:@"N/A"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Deepika P." giftType:@"flower" giftQuantity:@"1" giftStatus:@"2" customMessage:@"Hey Sunny- here are some flowers!!" deliveryDate:@"9/2/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Dilip" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"1" customMessage:@"Chocolates from Dilip" deliveryDate:@"9/1/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Kishan Shah" giftType:@"drink" giftQuantity:@"100" giftStatus:@"1" customMessage:@"Drink up Kishan!" deliveryDate:@"8/31/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ronak Gandhi" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"2" customMessage:@"Congrats on the new apt sunny!" deliveryDate:@"8/30/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ankur Goyal" giftType:@"drink" giftQuantity:@"1" giftStatus:@"3" customMessage:@"NJSP -> M&T -> REAL WORLD" deliveryDate:@"8/29/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ricky Hong" giftType:@"flower" giftQuantity:@"1" giftStatus:@"3" customMessage:@"For the salsa adventures" deliveryDate:@"8/25/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
     
     cellToGiftView = [[NSMutableDictionary alloc]init];
     
@@ -143,6 +141,15 @@
     [[cell.contentView viewWithTag:31] removeFromSuperview];
     [[cell.contentView viewWithTag:32] removeFromSuperview];
     
+    //For gift box
+    /*
+    [[cell.contentView viewWithTag:33] removeFromSuperview];
+    [[cell.contentView viewWithTag:34] removeFromSuperview];
+    [[cell.contentView viewWithTag:35] removeFromSuperview];
+    [[cell.contentView viewWithTag:36] removeFromSuperview];
+    [[cell.contentView viewWithTag:37] removeFromSuperview];
+     */
+    
     cell.textLabel.text=@"";
     cell.detailTextLabel.text = @"";
     
@@ -176,7 +183,10 @@
     
     
     //Profile picture in circle
-    NSString* imageNameHelper = [NSString stringWithFormat:@"%@.jpg",[friendName.text lowercaseString]];
+    
+    NSString* tempNameHelper = [[masterArrayOfDictionaries objectAtIndex:indexPath.row]objectForKey:@"friendName"];
+    NSString* firstName = [NSString stringWithFormat:@"%@",[[tempNameHelper componentsSeparatedByString:@" "]objectAtIndex:0]];
+    NSString* imageNameHelper = [NSString stringWithFormat:@"%@.jpg",[firstName lowercaseString]];
     UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNameHelper]];
     imageView.frame = CGRectMake(10,5,110,110);
     imageView.layer.cornerRadius = imageView.frame.size.height*0.5;;
@@ -202,10 +212,11 @@
     achievement.tag=31;
     [cell.contentView addSubview:achievement];
     
-    if([[[masterArrayOfDictionaries objectAtIndex:indexPath.row]objectForKey:@"giftQuantity"] isEqualToString:@"1"]
+    /*
+    if([[[masterArrayOfDictionaries objectAtIndex:indexPath.row]objectForKey:@"giftOpened"] isEqualToString:@"n"]
        && [cellToGiftView objectForKey:[NSNumber numberWithInteger:indexPath.row]] == nil){
         //[self loadCellGiftView:cell :indexPath];
-        
+        NSLog(@"Index path row: %li",(long)indexPath.row);
         UIView* bigGiftBox = [[UIView alloc]initWithFrame:cell.contentView.frame];
         [bigGiftBox setBackgroundColor:[UIColor whiteColor]];
         
@@ -224,12 +235,20 @@
         [bigGiftBox addSubview:bottomLeft];
         [bigGiftBox addSubview:bottomRight];
         
+        bigGiftBox.tag=33;
+        topLeft.tag=34;
+        topRight.tag=35;
+        bottomLeft.tag=36;
+        bottomRight.tag=37;
+        
         bigGiftBox.alpha=0.98;
         bigGiftBox.tag=33;
-        [cell addSubview:bigGiftBox];
+        [cell.contentView addSubview:bigGiftBox];
         [cellToGiftView setObject:@[bigGiftBox,topLeft,topRight,bottomLeft,bottomRight] forKey:[NSNumber numberWithInteger:indexPath.row]];
-        NSLog(@"Adding gift background at row: %i",indexPath.row);
+        //[[masterArrayOfDictionaries objectAtIndex:indexPath.row]setObject:@"y" forKey:@"giftOpened"];
+        NSLog(@"Adding gift background at row: %li",(long)indexPath.row);
     }
+     */
     
     return cell;
 }
@@ -267,9 +286,9 @@
 {
     
     if([cellToGiftView objectForKey:[NSNumber numberWithInteger:indexPath.row]]!= nil){
-        NSLog(@"Removing gift for row: %i",indexPath.row);
+        NSLog(@"Removing gift for row: %li",(long)indexPath.row);
         NSArray* helperArray = [cellToGiftView objectForKey:[NSNumber numberWithInteger:indexPath.row]];
-        NSLog(@"Row: %i, Helper array length: %i",indexPath.row,helperArray.count);
+        NSLog(@"Row: %li, Helper array length: %lu",(long)indexPath.row,(unsigned long)helperArray.count);
         UIView* bigGiftBox =[helperArray objectAtIndex:0];
         UIView* topLeft = [helperArray objectAtIndex:1];
         UIView* topRight = [helperArray objectAtIndex:2];
@@ -389,7 +408,8 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
     
     [self.view addSubview:mainNavBar];
     
-    mainNavBarOriginY = mainNavBar.frame.origin.y;}
+    mainNavBarOriginY = mainNavBar.frame.origin.y;
+}
 
 -(void)profilePictureButtonPressed:(id)sender{
     NSLog(@"Settings functionality coming soon =)");
@@ -602,6 +622,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
                   deliveryDate:(NSString*)deliveryDate
                    gifterImage:(NSString*)gifterImage
                     venueImage:(NSString*)venueImage
+                    giftOpened:(NSString*)giftOpened
 {
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
                           friendName, @"friendName",
@@ -612,6 +633,7 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
                           deliveryDate, @"deliveryDate",
                           gifterImage, @"gifterImage",
                           venueImage,@"venueImage",
+                          giftOpened,@"giftOpened",
                           nil];
     return dict;
 }

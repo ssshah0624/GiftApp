@@ -28,14 +28,14 @@
 {
     [super viewDidLoad];
     // Create the data model
-    _pageTitles = @[@"Giving View Controller", @"Receiving View Controller"];
-    _pageImages = @[@"paris2.jpg", @"paris3.jpg"];
+    _pageTitles = @[@"Settings View Controller", @"Giving View Controller", @"Receiving View Controller"];
+    _pageImages = @[@"paris2.jpg", @"paris2.jpg", @"paris3.jpg"];
     
     // Create page view controller
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterPageViewController"];
     self.pageViewController.dataSource = self;
     
-    GivingViewController *startingViewController = (GivingViewController*)[self viewControllerAtIndex:0];
+    GivingViewController *startingViewController = (GivingViewController*)[self viewControllerAtIndex:1];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
@@ -101,6 +101,25 @@
         return nil;
     }
 
+    
+    if(index==0){
+        SettingsViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+        pageContentViewController.pageIndex = index;
+        return pageContentViewController;
+    }else if(index==1){
+        GivingViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
+        pageContentViewController.pageIndex = index;
+        return pageContentViewController;
+    }else if(index==2){
+        ReceivingViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ReceivingViewController"];
+        pageContentViewController.pageIndex = index;
+        return pageContentViewController;
+    }else{
+        NSLog(@"Not sure wtf is happening...");
+    }
+
+    
+    /*
     if(index==0){
         GivingViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
         pageContentViewController.pageIndex = index;
@@ -112,6 +131,7 @@
     }else{
         NSLog(@"Not sure wtf is happening...");
     }
+     */
     
     //Dead code
     GivingViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
