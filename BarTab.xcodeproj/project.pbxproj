@@ -122,6 +122,9 @@
 		417463EE19B03E4100BAE23F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 417463ED19B03E4100BAE23F /* MessageUI.framework */; };
 		417463F019B1052400BAE23F /* PrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = 417463EF19B1052400BAE23F /* PrivacyPolicy.txt */; };
 		417463F219B1083200BAE23F /* TermsAndConditions.txt in Resources */ = {isa = PBXBuildFile; fileRef = 417463F119B1083200BAE23F /* TermsAndConditions.txt */; };
+		417463F519B11B7E00BAE23F /* cardtypes.png in Resources */ = {isa = PBXBuildFile; fileRef = 417463F419B11B7E00BAE23F /* cardtypes.png */; };
+		417463F719B2DBE600BAE23F /* backarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 417463F619B2DBE600BAE23F /* backarrow.png */; };
+		417463F919B2DDE400BAE23F /* backarrow2.png in Resources */ = {isa = PBXBuildFile; fileRef = 417463F819B2DDE400BAE23F /* backarrow2.png */; };
 		41A4D9F01990838F0079C7BC /* qr1.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A4D9EC1990838F0079C7BC /* qr1.png */; };
 		41A4D9F11990838F0079C7BC /* qr2.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A4D9ED1990838F0079C7BC /* qr2.png */; };
 		41A4D9F21990838F0079C7BC /* qr3.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A4D9EE1990838F0079C7BC /* qr3.png */; };
@@ -307,6 +310,9 @@
 		417463ED19B03E4100BAE23F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		417463EF19B1052400BAE23F /* PrivacyPolicy.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PrivacyPolicy.txt; sourceTree = "<group>"; };
 		417463F119B1083200BAE23F /* TermsAndConditions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TermsAndConditions.txt; sourceTree = "<group>"; };
+		417463F419B11B7E00BAE23F /* cardtypes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardtypes.png; sourceTree = "<group>"; };
+		417463F619B2DBE600BAE23F /* backarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backarrow.png; sourceTree = "<group>"; };
+		417463F819B2DDE400BAE23F /* backarrow2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backarrow2.png; sourceTree = "<group>"; };
 		41A4D9EC1990838F0079C7BC /* qr1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr1.png; sourceTree = "<group>"; };
 		41A4D9ED1990838F0079C7BC /* qr2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr2.png; sourceTree = "<group>"; };
 		41A4D9EE1990838F0079C7BC /* qr3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qr3.png; sourceTree = "<group>"; };
@@ -468,6 +474,7 @@
 		4120C4FF199E704B004704F5 /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				417463F319B11B7E00BAE23F /* settings_page */,
 				4120C55F19A6F3EB004704F5 /* Prof Pics */,
 				41A9AB5D198B313A00768C2C /* sampleNisha.jpg */,
 				41A9AB5B198AE5FB00768C2C /* sampleSunny.jpg */,
@@ -575,6 +582,16 @@
 			);
 			name = KLCPopup;
 			path = "../../../../../Downloads/KLCPopup-master/KLCPopup";
+			sourceTree = "<group>";
+		};
+		417463F319B11B7E00BAE23F /* settings_page */ = {
+			isa = PBXGroup;
+			children = (
+				417463F419B11B7E00BAE23F /* cardtypes.png */,
+				417463F619B2DBE600BAE23F /* backarrow.png */,
+				417463F819B2DDE400BAE23F /* backarrow2.png */,
+			);
+			path = settings_page;
 			sourceTree = "<group>";
 		};
 		41A9AB40198AC52700768C2C /* VenueLogos */ = {
@@ -810,6 +827,7 @@
 				41A4D9F21990838F0079C7BC /* qr3.png in Resources */,
 				4107FB0919987DBD00FBC6BE /* martini_icon29.png in Resources */,
 				4120C51B199E704C004704F5 /* gift_outline.png in Resources */,
+				417463F519B11B7E00BAE23F /* cardtypes.png in Resources */,
 				4107FAFC19987DBD00FBC6BE /* martini_icon17.png in Resources */,
 				4120C54B19A3CADC004704F5 /* 3dozen.png in Resources */,
 				4120C51A199E704C004704F5 /* Thumbs.db in Resources */,
@@ -927,6 +945,7 @@
 				4120C55E19A6EA35004704F5 /* logo.png in Resources */,
 				4120C4F5199C5D0A004704F5 /* chocolate_red.png in Resources */,
 				4107FB0C19987DBD00FBC6BE /* martini_icon31.png in Resources */,
+				417463F719B2DBE600BAE23F /* backarrow.png in Resources */,
 				4120C57419A7A543004704F5 /* ricky.jpg in Resources */,
 				4120C56519A6F3EB004704F5 /* apoorva.jpg in Resources */,
 				4107FB0819987DBD00FBC6BE /* martini_icon28.png in Resources */,
@@ -946,6 +965,7 @@
 				41A4DA00199347890079C7BC /* paris3.jpg in Resources */,
 				4107FA8819970B9C00FBC6BE /* people_icon.png in Resources */,
 				4120C515199E704C004704F5 /* card.png in Resources */,
+				417463F919B2DDE400BAE23F /* backarrow2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

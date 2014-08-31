@@ -19,7 +19,10 @@
 @property (strong, nonatomic) NSArray *pageTitles;
 @property (strong, nonatomic) NSArray *pageImages;
 
-@property (strong, nonatomic) SettingsViewController *settingVC;
-@property (strong, nonatomic) GivingViewController *givingVC;
+//@property (strong, nonatomic) GivingViewController *settingVC;
+//@property (strong, nonatomic) GivingViewController *givingVC;
+//@property (strong, nonatomic) ReceivingViewController *receivingVC;
+
+@property NSString* startingIndex;
 
 @end

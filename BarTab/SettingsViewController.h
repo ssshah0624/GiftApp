@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <MessageUI/MessageUI.h>
+#import "STPView.h"
 #import "KLCPopup.h"
+
+#import "MasterRootViewController.h"
 
 
 @interface SettingsViewController : UIViewController <MFMailComposeViewControllerDelegate>
 
-
+@property STPView* stripeView;
 @property NSUInteger pageIndex;
 
 @end

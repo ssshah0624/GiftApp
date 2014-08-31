@@ -9,9 +9,9 @@
 #import "ReceivingViewController.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-#define kMasterColor 0x25CCA5
+#define kMasterColor 0x51B0BD
 #define kBackgroundColor 0xE9E9E9
-#define kSupportingColor 0x25CCA5
+#define kSupportingColor 0x51bdb8
 #define kCellHeight 120
 #define kAchievementFont 20.0f
 #define kAchievementFontType @"GillSans-Light"
@@ -33,7 +33,6 @@
     NSString *selectedValue;
     KLCPopup *popup;
     BOOL popTipShowing;
-    AMPopTip* popTip;
     
     //For Nav Bar + Buttons
     UIView* mainNavBar;
@@ -381,19 +380,14 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
     
     UIButton *profPicButton = [UIButton buttonWithType:UIButtonTypeCustom];
     profPicButton.frame = CGRectMake(20, stdYoffset, 40, 40);
-    NSString *imageName = [NSString stringWithFormat:@"logo_simplified.png"];
+    NSString *imageName = [NSString stringWithFormat:@"backarrow.png"];
     UIImage *btnImage = [UIImage imageNamed:imageName];
     [profPicButton setImage:btnImage forState:UIControlStateNormal];
     [profPicButton addTarget:self action:@selector(profilePictureButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [mainNavBar addSubview:profPicButton];
     
-    UIButton *giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImageView* giftButton = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gift_solid.png"]];
     giftButton.frame = CGRectMake(half-20, stdYoffset, 40, 40);
-    //imageName = [NSString stringWithFormat:@"logo.png"];
-    imageName = [NSString stringWithFormat:@"gift_solid.png"];
-    btnImage = [UIImage imageNamed:imageName];
-    [giftButton setImage:btnImage forState:UIControlStateNormal];
-    [giftButton addTarget:self action:@selector(giftButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [mainNavBar addSubview:giftButton];
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -412,16 +406,20 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 }
 
 -(void)profilePictureButtonPressed:(id)sender{
-    NSLog(@"Settings functionality coming soon =)");
-}
-
--(void)giftButtonPressed:(id)sender{
-    NSLog(@"Gift button selected");
-    [self performSegueWithIdentifier:@"toGive" sender:self];
+    /*
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+    //vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:vc animated:YES completion:NULL];
+     */
+    
+    MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+    vc.startingIndex = @"1";
+    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:vc animated:YES completion:NULL];
 }
 
 -(void)searchButtonPressed:(id)sender{
-    NSLog(@"Search functionality coming soon =)");
+    [self performSegueWithIdentifier:@"toGive" sender:self];
 }
 
 

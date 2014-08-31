@@ -9,8 +9,6 @@
 #import "GivingViewController.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-//#define kMasterColor 0x3cb878
-//#define kSupportingColor 0x5dca92
 #define kMasterColor 0x51B0BD
 #define kBackgroundColor 0xE9E9E9
 #define kSupportingColor 0x51bdb8
@@ -35,8 +33,6 @@
     NSMutableDictionary* cellToViewItems;
     UIButton *giftOKButton;
     UIButton *giftCancelButton;
-    EFCircularSlider* sliderHelper;
-    TOMSMorphingLabel* moneyHelper;
     UIImageView* martiniHelper1;
     UIImageView* martiniHelper2;
     UIImageView* martiniHelper3;
@@ -53,7 +49,6 @@
     UISlider *slider;
     UILabel *sliderValueLabel;
     BOOL popTipShowing;
-    AMPopTip* popTip0;
     
     //Tab value
     UILabel *giftValue;
@@ -160,8 +155,21 @@
     screenRect = [[UIScreen mainScreen] bounds];
     fixedBottomDistance = screenRect.size.height - tableHomeY - self.infoTable.frame.size.height;
     
+    /*
     BOOL newUser = true;
     if(newUser) [self promptPaymentInfo];
+     */
+    
+    //Splash View
+    /*
+    UIImage *icon = [UIImage imageNamed:@"gift.png"];
+    UIColor *color = [UIColor blueColor];
+    CBZSplashView *splashView = [[CBZSplashView alloc] initWithIcon:icon backgroundColor:color];
+    [self.view addSubview:splashView];
+    [splashView startAnimation];
+     */
+    
+    [self loadMainNavBar];
     
     //Configure new gift giving screen
     tableRowSelected = [[NSMutableArray alloc]init];
@@ -182,21 +190,16 @@
     ChocolateGiftScreen* chocGiftScreen = [[ChocolateGiftScreen alloc] initWithFrame:CGRectMake(0,mainNavBar.frame.size.height * 0.5,screenRect.size.width,screenRect.size.height) andADictionary:selectedCellInfo];
     [self.view addSubview:chocGiftScreen];
     
-    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [chocGiftScreen addGestureRecognizer:pan];
-    
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
 
 -(void)roseButtonPressed:(id)sender
 {
-    //RoseGiftScreen *roseGiftScreen = [[RoseGiftScreen alloc] initWithFrame:CGRectMake(0,mainNavBar.frame.size.height * 0.5,screenRect.size.width,screenRect.size.height) andADictionary:selectedCellInfo];
-    
     RoseGiftScreen *roseGiftScreen = [[RoseGiftScreen alloc] initWithFrame:self.view.frame andADictionary:selectedCellInfo];
     [self.view addSubview:roseGiftScreen];
     
-    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [roseGiftScreen addGestureRecognizer:pan];
+//    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+//    [roseGiftScreen addGestureRecognizer:pan];
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
@@ -236,14 +239,11 @@
     NSString *imageName = [NSString stringWithFormat:@"settings_solid.png"];
     UIImage *btnImage = [UIImage imageNamed:imageName];
     [profPicButton setImage:btnImage forState:UIControlStateNormal];
+    [profPicButton addTarget:self action:@selector(profilePictureButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [mainNavBar addSubview:profPicButton];
     
-    UIButton *giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    giftButton.frame = CGRectMake(half-70, stdYoffset, 140, 40);
-    imageName = [NSString stringWithFormat:@"logo.png"];
-    btnImage = [UIImage imageNamed:imageName];
-    [giftButton setImage:btnImage forState:UIControlStateNormal];
-    [giftButton addTarget:self action:@selector(giftButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView*giftButton = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"logo.png"]];
+    giftButton.frame = CGRectMake(half-(90*1.2*0.5), stdYoffset, 90*1.5, 40*1.1);
     [mainNavBar addSubview:giftButton];
     
     UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -264,67 +264,17 @@
 
 //NAV BAR BUTTON FUNCTIONS
 -(void)profilePictureButtonPressed:(id)sender{
-    NSLog(@"Settings functionality coming soon =)");
-}
-
--(void)giftButtonPressed:(id)sender{
-    NSLog(@"Gift button selected");
-    [self performSegueWithIdentifier:@"toReceive" sender:self];
+    MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+    vc.startingIndex = @"0";
+    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:vc animated:YES completion:NULL];
 }
 
 -(void)searchButtonPressed:(id)sender{
-    NSLog(@"Search functionality coming soon =)");
-}
-
--(void)promptPaymentInfo{
-    
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    
-    
-    tableCloth = [[UIView alloc]init];
-    tableCloth.frame = CGRectMake(0,0,screenRect.size.width,screenRect.size.height);
-    [tableCloth setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:tableCloth];
-    
-    
-    self.stripeView = [[STPView alloc] initWithFrame:CGRectMake(15,20,290,55)
-                                              andKey:@"pk_test_6pRNASCoBOKtIshFeQd4XMUh"];
-    self.stripeView.delegate = self;
-    [self.view addSubview:self.stripeView];
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btn.frame = CGRectMake(screenRect.size.width/2 - 40,120,60,60);
-    [btn setTitle:@"Skip" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(paymentInformationSkipped:) forControlEvents:UIControlEventTouchUpInside];
-    [tableCloth addSubview:btn];
-    
-    self.saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.saveButton.frame = CGRectMake(screenRect.size.width/2+20,120,60,60);
-    [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
-    [self.saveButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    [self.saveButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.saveButton addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
-    self.saveButton.enabled=false;
-    [tableCloth addSubview:self.saveButton];
-}
-
--(void)paymentInformationSkipped:(id)sender
-{
-    NSLog(@"Skip recognized");
-    [self.stripeView removeFromSuperview];
-    [tableCloth removeFromSuperview];
-    
-    UIImage *icon = [UIImage imageNamed:@"gift.png"];
-    UIColor *color = [UIColor blueColor];
-    CBZSplashView *splashView = [[CBZSplashView alloc] initWithIcon:icon backgroundColor:color];
-    
-    // customize duration, icon size, or icon color here;
-    
-    [self loadMainNavBar];
-    [self.view addSubview:splashView];
-    [splashView startAnimation];
-    
+    MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+    vc.startingIndex = @"2";
+    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:vc animated:YES completion:NULL];
 }
 
 //STRIPE INTEGRATION
@@ -560,33 +510,6 @@
     imageView.tag=32;
     [cell.contentView addSubview:imageView];
     
-    //Money label
-    TOMSMorphingLabel* moneyValueLabel = [[TOMSMorphingLabel alloc] initWithFrame:CGRectMake(cell.frame.size.width-80, 10, 80, 42)];
-    moneyValueLabel.font = [UIFont boldSystemFontOfSize:20];
-    moneyValueLabel.text = @"$0.00";
-    moneyValueLabel.tag = 33;
-    moneyValueLabel.hidden=YES;
-    [cell.contentView addSubview:moneyValueLabel];
-    
-    //Circle Slider
-    CGRect sliderFrame = CGRectMake((cell.frame.size.width/2)-(0.5*190),50,190,190);
-    EFCircularSlider* circularSlider = [[EFCircularSlider alloc] initWithFrame:sliderFrame];
-    circularSlider.minimumValue=0.0f;
-    circularSlider.maximumValue=100.0f;
-    circularSlider.lineWidth = 6;
-    circularSlider.handleType = doubleCircleWithClosedCenter;
-    CGFloat hue = ( arc4random() % 256 / 256.0 );
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
-    circularSlider.handleColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-    circularSlider.unfilledColor = [UIColor grayColor];
-    [circularSlider setFilledColor:UIColorFromRGB(0x006400)];
-    [circularSlider addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventValueChanged];
-    circularSlider.tag=34;
-    circularSlider.hidden=YES;
-    [cell.contentView addSubview:circularSlider];
-    
-    
     //Martini Glasses
     UIImageView* martiniImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
     martiniImageView.frame = CGRectMake((self.view.frame.size.width/2)-(0.5*100),60,100,100);
@@ -659,8 +582,6 @@
                           friendName, @"friendName",
                           achievement, @"achievement",
                           imageView, @"imageView",
-                          moneyValueLabel, @"moneyValueLabel",
-                          circularSlider, @"circularSlider",
                           martiniImageView, @"martiniImageView",
                           martiniSlider, @"martiniSlider",
                           martiniImageView2, @"martiniImageView2",
@@ -670,7 +591,7 @@
                           @"Custom Message",@"customMessage",
                           nil];
     
-    NSMutableArray* viewObjects = [[NSMutableArray alloc]initWithObjects:friendName, achievement,imageView, moneyValueLabel, circularSlider, martiniImageView, martiniSlider, martiniImageView2, martiniImageView3, dict, nil];
+    NSMutableArray* viewObjects = [[NSMutableArray alloc]initWithObjects:friendName, achievement,imageView, martiniImageView, martiniSlider, martiniImageView2, martiniImageView3, dict, nil];
     
     [cellToViewItems setObject:viewObjects forKey:[NSNumber numberWithInt:indexPath.row]];
     

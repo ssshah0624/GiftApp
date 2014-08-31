@@ -41,10 +41,6 @@ install_resource()
       ;;
   esac
 }
-install_resource "PaperFold/PaperFold/PaperFold/PaperFold/PaperFoldResources.bundle/swipe_guide_left.png"
-install_resource "PaperFold/PaperFold/PaperFold/PaperFold/PaperFoldResources.bundle/swipe_guide_left@2x.png"
-install_resource "PaperFold/PaperFold/PaperFold/PaperFold/PaperFoldResources.bundle/swipe_guide_right.png"
-install_resource "PaperFold/PaperFold/PaperFold/PaperFold/PaperFoldResources.bundle/swipe_guide_right@2x.png"
 install_resource "PaymentKit/PaymentKit/Resources/Cards/amex.png"
 install_resource "PaymentKit/PaymentKit/Resources/Cards/amex@2x.png"
 install_resource "PaymentKit/PaymentKit/Resources/Cards/cvc-amex.png"

@@ -6,17 +6,11 @@
 // project.
 
 
-// AMPopTip
-#define COCOAPODS_POD_AVAILABLE_AMPopTip
-#define COCOAPODS_VERSION_MAJOR_AMPopTip 0
-#define COCOAPODS_VERSION_MINOR_AMPopTip 2
-#define COCOAPODS_VERSION_PATCH_AMPopTip 2
-
 // AMWaveTransition
 #define COCOAPODS_POD_AVAILABLE_AMWaveTransition
 #define COCOAPODS_VERSION_MAJOR_AMWaveTransition 0
 #define COCOAPODS_VERSION_MINOR_AMWaveTransition 5
-#define COCOAPODS_VERSION_PATCH_AMWaveTransition 1
+#define COCOAPODS_VERSION_PATCH_AMWaveTransition 2
 
 // BDKNotifyHUD
 #define COCOAPODS_POD_AVAILABLE_BDKNotifyHUD
@@ -24,41 +18,17 @@
 #define COCOAPODS_VERSION_MINOR_BDKNotifyHUD 1
 #define COCOAPODS_VERSION_PATCH_BDKNotifyHUD 0
 
-// BFPaperTableViewCell
-#define COCOAPODS_POD_AVAILABLE_BFPaperTableViewCell
-#define COCOAPODS_VERSION_MAJOR_BFPaperTableViewCell 1
-#define COCOAPODS_VERSION_MINOR_BFPaperTableViewCell 0
-#define COCOAPODS_VERSION_PATCH_BFPaperTableViewCell 3
-
 // CBZSplashView
 #define COCOAPODS_POD_AVAILABLE_CBZSplashView
 #define COCOAPODS_VERSION_MAJOR_CBZSplashView 0
 #define COCOAPODS_VERSION_MINOR_CBZSplashView 1
 #define COCOAPODS_VERSION_PATCH_CBZSplashView 1
 
-// EFCircularSlider
-#define COCOAPODS_POD_AVAILABLE_EFCircularSlider
-#define COCOAPODS_VERSION_MAJOR_EFCircularSlider 0
-#define COCOAPODS_VERSION_MINOR_EFCircularSlider 1
-#define COCOAPODS_VERSION_PATCH_EFCircularSlider 0
-
 // MBAlertView
 #define COCOAPODS_POD_AVAILABLE_MBAlertView
 #define COCOAPODS_VERSION_MAJOR_MBAlertView 1
 #define COCOAPODS_VERSION_MINOR_MBAlertView 1
 #define COCOAPODS_VERSION_PATCH_MBAlertView 0
-
-// MCSwipeTableViewCell
-#define COCOAPODS_POD_AVAILABLE_MCSwipeTableViewCell
-#define COCOAPODS_VERSION_MAJOR_MCSwipeTableViewCell 2
-#define COCOAPODS_VERSION_MINOR_MCSwipeTableViewCell 1
-#define COCOAPODS_VERSION_PATCH_MCSwipeTableViewCell 0
-
-// PaperFold
-#define COCOAPODS_POD_AVAILABLE_PaperFold
-#define COCOAPODS_VERSION_MAJOR_PaperFold 1
-#define COCOAPODS_VERSION_MINOR_PaperFold 1
-#define COCOAPODS_VERSION_PATCH_PaperFold 0
 
 // PaymentKit
 #define COCOAPODS_POD_AVAILABLE_PaymentKit
@@ -77,18 +47,6 @@
 #define COCOAPODS_VERSION_MAJOR_Stripe 1
 #define COCOAPODS_VERSION_MINOR_Stripe 1
 #define COCOAPODS_VERSION_PATCH_Stripe 4
-
-// TOMSMorphingLabel
-#define COCOAPODS_POD_AVAILABLE_TOMSMorphingLabel
-#define COCOAPODS_VERSION_MAJOR_TOMSMorphingLabel 0
-#define COCOAPODS_VERSION_MINOR_TOMSMorphingLabel 2
-#define COCOAPODS_VERSION_PATCH_TOMSMorphingLabel 2
-
-// UIColor+BFPaperColors
-#define COCOAPODS_POD_AVAILABLE_UIColor_BFPaperColors
-#define COCOAPODS_VERSION_MAJOR_UIColor_BFPaperColors 1
-#define COCOAPODS_VERSION_MINOR_UIColor_BFPaperColors 1
-#define COCOAPODS_VERSION_PATCH_UIColor_BFPaperColors 0
 
 // pop
 #define COCOAPODS_POD_AVAILABLE_pop

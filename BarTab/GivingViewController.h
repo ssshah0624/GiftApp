@@ -10,22 +10,18 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "KLCPopup.h"
 #import <QuartzCore/QuartzCore.h>
-#import <AMPopTip.h>
 #import <MBAlertView.h>
 #import <AMWaveTransition.h>
 #import "ReceivingViewController.h"
 #import "STPView.h"
 #import <CBZSplashView.h>
-#import <BFPaperTableViewCell.h>
-#import <EFCircularSlider.h>
-#import <MCSwipeTableViewCell.h>
-#import <TOMSMorphingLabel.h>
 #import <BDKNotifyHUD.h>
 #import "RoseGiftScreen.h"
 #import "ChocolateGiftScreen.h"
 #import "DrinkGiftScreen.h"
+#import "MasterRootViewController.h"
 
-@interface GivingViewController : UIViewController <STPViewDelegate, MCSwipeTableViewCellDelegate>
+@interface GivingViewController : UIViewController <STPViewDelegate>
 
 
 //FOR PAGE CONTENT VIEW CONTROLLER
@@ -46,28 +42,14 @@
 @property (strong, nonatomic) IBOutlet UITableView *infoTable;
 @property (strong, nonatomic) IBOutlet UITableViewCell *infoCell;
 
-@property ReceivingViewController* rvc;
+@property GivingViewController* rvc;
 @property (strong, nonatomic) IBOutlet AMWaveTransition *interactive;
 
 @property STPView* stripeView;
 @property UIButton* saveButton;
 
-@property MCSwipeTableViewCell* cellToDelete;
-
 @property NSIndexPath* selectedRowIndex;
 
 @property UIDynamicAnimator* animator;
-
-
-#pragma mark - MCSwipeTableViewCellDelegate
-
-// Called when the user starts swiping the cell.
-- (void)swipeTableViewCellDidStartSwiping:(MCSwipeTableViewCell *)cell;
-
-// Called when the user ends swiping the cell.
-- (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell;
-
-// Called during a swipe.
-- (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didSwipeWithPercentage:(CGFloat)percentage;
 
 @end

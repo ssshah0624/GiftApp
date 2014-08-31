@@ -9,6 +9,8 @@
 #import "RoseGiftScreen.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+#define degreesToRadians(x) (M_PI * x / 180.0)
+
 #define kSending 0
 #define kSent 1
 #define kReceived 2
@@ -17,6 +19,12 @@
 #define kQuantity1 1
 #define kQuantity2 2
 
+#define kMasterColor 0x51B0BD
+#define kBackgroundColor 0xE9E9E9
+#define kSupportingColor 0x51bdb8
+#define kCellHeight 120
+#define kAchievementFont 20.0f
+#define kAchievementFontType @"GillSans-Light"
 
 
 @implementation RoseGiftScreen
@@ -155,30 +163,30 @@
 
 -(void)addDrawerImage:(NSString*)name
 {
-    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.43,screenRect.size.width, screenRect.size.height*0.57)];
+    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.49,screenRect.size.width, screenRect.size.height*0.57)];
     [imageView setImage:[UIImage imageNamed:name]];
     [self addSubview:imageView];
 }
 
 -(void)addDescription:(NSString*)text
 {
-    description = [[UILabel alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.47,screenRect.size.width, screenRect.size.height*0.1)];
+    description = [[UILabel alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.53,screenRect.size.width, screenRect.size.height*0.1)];
     description.text = text;
-    description.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f]; //Mess with font
+    description.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f];
     description.numberOfLines = 1;
     description.adjustsFontSizeToFitWidth = YES;
     description.adjustsLetterSpacingToFitWidth = YES;
     description.minimumScaleFactor = 10.0f/12.0f;
     description.clipsToBounds = YES;
     description.backgroundColor = [UIColor clearColor];
-    description.textColor = UIColorFromRGB(0x3cb878);
+    description.textColor = UIColorFromRGB(kSupportingColor);
     description.textAlignment = NSTextAlignmentCenter;
     [self addSubview:description];
 }
 
 -(void)addTextView
 {
-    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.60, screenRect.size.width, screenRect.size.height*0.12)];
+    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.66, screenRect.size.width, screenRect.size.height*0.12)];
     myTextView.text = @"Custom Message";
     myTextView.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:16.0];
     myTextView.textColor = [UIColor grayColor];
@@ -186,10 +194,10 @@
     myTextView.delegate = self;
     [self addSubview:myTextView];
     
-    characterCount = [[UILabel alloc]initWithFrame:CGRectMake(screenRect.size.width-50,screenRect.size.height*0.66,50, screenRect.size.height*0.1)];
+    characterCount = [[UILabel alloc]initWithFrame:CGRectMake(screenRect.size.width-50,screenRect.size.height*0.72,50, screenRect.size.height*0.1)];
     characterCount.text = @"104";
     characterCount.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0f]; //Mess with font
-    characterCount.textColor = UIColorFromRGB(0x3cb878);
+    characterCount.textColor = UIColorFromRGB(kSupportingColor);
     characterCount.textAlignment = NSTextAlignmentCenter;
     [self addSubview:characterCount];
     
@@ -199,7 +207,7 @@
 
 -(void)addTextView:(NSString*)withText
 {
-    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.60, screenRect.size.width, screenRect.size.height*0.12)];
+    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.66, screenRect.size.width, screenRect.size.height*0.12)];
     myTextView.text = withText;
     myTextView.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:16.0];
     myTextView.textColor = [UIColor grayColor];
@@ -211,7 +219,7 @@
 -(void)addButtons
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(screenRect.size.width * 0.5 - (300*0.5*0.5), screenRect.size.height*0.84, 300*0.5, 80*0.5);
+    button.frame = CGRectMake(screenRect.size.width * 0.5 - (300*0.5*0.5), screenRect.size.height*0.9, 300*0.5, 80*0.5);
     NSString *imageName = [NSString stringWithFormat:@"send_button.png"];
     UIImage *btnImage = [UIImage imageNamed:imageName];
     [button setImage:btnImage forState:UIControlStateNormal];
@@ -220,7 +228,7 @@
     
     //One dozen
     oneDoz = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    oneDoz.frame = CGRectMake(10,screenRect.size.height*0.72,100,60);
+    oneDoz.frame = CGRectMake(10,screenRect.size.height*0.78,100,60);
     [oneDoz setTitle:@"One dozen" forState:UIControlStateNormal];
     [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [oneDoz addTarget:self action:@selector(flowerAmountSelected:) forControlEvents:UIControlEventTouchUpInside];
@@ -229,7 +237,7 @@
     
     //Two dozen
     twoDoz = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    twoDoz.frame = CGRectMake(screenRect.size.width*0.5-50,screenRect.size.height*0.72,100,60);
+    twoDoz.frame = CGRectMake(screenRect.size.width*0.5-50,screenRect.size.height*0.78,100,60);
     [twoDoz setTitle:@"Two dozen" forState:UIControlStateNormal];
     [twoDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [twoDoz setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateSelected];
@@ -239,7 +247,7 @@
     
     //Three dozen
     threeDoz = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    threeDoz.frame = CGRectMake(screenRect.size.width-110,screenRect.size.height*0.72,100,60);
+    threeDoz.frame = CGRectMake(screenRect.size.width-110,screenRect.size.height*0.78,100,60);
     [threeDoz setTitle:@"Three dozen" forState:UIControlStateNormal];
     [threeDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [threeDoz setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateSelected];
@@ -259,7 +267,7 @@
 {
     UIButton* button = (UIButton*)sender;
     if(button.tag == 1){
-        [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
+        [button setTitleColor:UIColorFromRGB(kSupportingColor) forState:UIControlStateNormal];
         [twoDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [threeDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [selectedFlowerAmounts replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:YES]];
@@ -268,7 +276,7 @@
         [backgroundImage setImage:[UIImage imageNamed:@"1dozen.png"]];
         description.text = [NSString stringWithFormat:@"Send Roses to %@ ($15)",self.firstName];
     }else if(button.tag == 2){
-        [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
+        [button setTitleColor:UIColorFromRGB(kSupportingColor) forState:UIControlStateNormal];
         [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [threeDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [selectedFlowerAmounts replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:NO]];
@@ -277,7 +285,7 @@
         [backgroundImage setImage:[UIImage imageNamed:@"2dozen.png"]];
         description.text = [NSString stringWithFormat:@"Send Roses to %@ ($30)",self.firstName];
     }else if(button.tag == 3){
-        [button setTitleColor:UIColorFromRGB(0x3cb878) forState:UIControlStateNormal];
+        [button setTitleColor:UIColorFromRGB(kSupportingColor) forState:UIControlStateNormal];
         [oneDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [twoDoz setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [selectedFlowerAmounts replaceObjectAtIndex:0 withObject:[NSNumber numberWithBool:NO]];
@@ -349,50 +357,46 @@
 -(void)addNavBar:(NSDictionary*)dict
 {
     UIView* mainNavBar = [[UIView alloc]init];
-    if([[dict valueForKey:@"giftStatus"] isEqualToString:@"0"]){
-        //UIView* mainNavBar = [[UIView alloc]initWithFrame:CGRectMake(0,-screenRect.origin.y-35,screenRect.size.width, 70)];
-        mainNavBar.frame = CGRectMake(0,-screenRect.origin.y,screenRect.size.width, 70);
-    }else{
-        mainNavBar.frame = CGRectMake(0,-screenRect.origin.y,screenRect.size.width, 70);
-    }
-    
-    
+    mainNavBar.frame = CGRectMake(0,-screenRect.origin.y,screenRect.size.width, 70);
+    [mainNavBar setBackgroundColor:UIColorFromRGB(kMasterColor)];
+    mainNavBar.alpha=0.95;
     float stdYoffset =screenRect.origin.y+20;
     
     UIImageView* logoIcon = [[UIImageView alloc]initWithFrame:CGRectMake(screenRect.origin.x,stdYoffset, 150, 40)];
     [logoIcon setImage:[UIImage imageNamed:@"gift.png"]];
-    //[mainNavBar addSubview:logoIcon];
     
     float half = (screenRect.origin.x + screenRect.size.width) * 0.5;
     
-    UIButton *profPicButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    profPicButton.frame = CGRectMake(20, stdYoffset, 40, 40);
-    NSString *imageName = [NSString stringWithFormat:@"person_solid.png"];
-    UIImage *btnImage = [UIImage imageNamed:imageName];
-    [profPicButton setImage:btnImage forState:UIControlStateNormal];
-    [profPicButton addTarget:self action:@selector(profilePictureButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [mainNavBar addSubview:profPicButton];
-    
-    UIButton *giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    giftButton.frame = CGRectMake(half-20, stdYoffset, 40, 40);
-    imageName = [NSString stringWithFormat:@"gift_outline.png"];
-    btnImage = [UIImage imageNamed:imageName];
-    [giftButton setImage:btnImage forState:UIControlStateNormal];
-    [giftButton addTarget:self action:@selector(giftButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [mainNavBar addSubview:giftButton];
-    
-    UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchButton.frame = CGRectMake(screenRect.size.width - 60, stdYoffset, 40, 40);
-    imageName = [NSString stringWithFormat:@"search_outline.png"];
-    btnImage = [UIImage imageNamed:imageName];
-    [searchButton setImage:btnImage forState:UIControlStateNormal];
-    [searchButton addTarget:self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [mainNavBar addSubview:searchButton];
-    
-    [mainNavBar setBackgroundColor:UIColorFromRGB(0x3cb878)];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20, stdYoffset, 40, 40);
+    [backButton setTitle:@"Back" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [mainNavBar addSubview:backButton];
     
     [self addSubview:mainNavBar];
 }
+
+-(void)backButtonPressed:(id)sender
+{
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         [self setTransform:CGAffineTransformMakeRotation(degreesToRadians(20))];
+                         self.frame = CGRectMake(0,50,self.frame.size.width, self.frame.size.height);
+                     }
+                     completion:^(BOOL finished){
+                         // code to run when animation completes
+                         // (in this case, another animation:)
+                         [UIView animateWithDuration:1.0
+                                          animations:^{
+                                              self.frame = CGRectMake(0,screenRect.size.height,self.frame.size.width, self.frame.size.height);
+                                          }
+                                          completion:^(BOOL finished){
+                                              [self removeFromSuperview];
+                                          }];
+                     }];
+}
+
 
 
 

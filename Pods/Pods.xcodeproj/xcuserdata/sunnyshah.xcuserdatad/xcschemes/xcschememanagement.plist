@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-BarTab-AMPopTip.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-BarTab-AMWaveTransition.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -19,32 +14,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-BarTab-BFPaperTableViewCell.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-BarTab-CBZSplashView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-BarTab-EFCircularSlider.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-BarTab-MBAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-BarTab-MCSwipeTableViewCell.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-BarTab-PaperFold.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -64,16 +39,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-BarTab-TOMSMorphingLabel.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-BarTab-UIColor+BFPaperColors.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-BarTab-pop.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -87,82 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>246BCC37FC764DEE8888A701</key>
+		<key>265A0CE450574B40A143A88C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3FF960EC15494E759A1E4A6D</key>
+		<key>27D4A84EB1F5422AB9311508</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>40C8F0E283D0430BAA1052AA</key>
+		<key>82032B11C7164DF7B8AD0282</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>720A0C09740F43A0944969FD</key>
+		<key>8800F9E622E040C394FC05B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7CB9823884694D3AABF51D09</key>
+		<key>888147D8760B43A5829CFF7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9380B6F0C5BE4CBBABCA3ED1</key>
+		<key>8F2FA1AD59E84344B25BFF17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B714E8BECF646F2B4BC34A8</key>
+		<key>A6502A94BE20463CBE1AB439</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD5D601BE14F4E60870B72BF</key>
+		<key>DC2EA95E07C24B2A8CD5826D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B6B75825C88D433998EE3B05</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C8421D517C49446FAD34E2F6</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D4FF236CB5164169A4928A40</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D6FFE355010749F9959E28F0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E455D2795CD841348146C68A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F034A26A1A61456D834C5CBF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F2FAAB7EC0FD4D89A203801A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F5037D33ACB9469B827E6E31</key>
+		<key>E5BE1C8C345D480D894C6261</key>
 		<dict>
 			<key>primary</key>
 			<true/>

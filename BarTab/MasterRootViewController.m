@@ -35,7 +35,61 @@
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterPageViewController"];
     self.pageViewController.dataSource = self;
     
-    GivingViewController *startingViewController = (GivingViewController*)[self viewControllerAtIndex:1];
+    
+    //GivingViewController *startingViewController = (GivingViewController*)[self viewControllerAtIndex:1];
+    
+    //potential override for starting VC
+    if(self.startingIndex == nil){
+        NSLog(@"THIS STRING IS EMPTY");
+        GivingViewController* startingViewController = (GivingViewController*)[self viewControllerAtIndex:1];
+        NSArray *viewControllers = @[startingViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height+100);
+        [self addChildViewController:_pageViewController];
+        [self.view addSubview:_pageViewController.view];
+        [self.pageViewController didMoveToParentViewController:self];
+        [self.view sendSubviewToBack:self.pageViewController.view];
+        
+        //Splash View
+        UIImage *icon = [UIImage imageNamed:@"gift.png"];
+        UIColor *color = [UIColor blueColor];
+        CBZSplashView *splashView = [[CBZSplashView alloc] initWithIcon:icon backgroundColor:color];
+        //[self loadMainNavBar];
+        [self.view addSubview:splashView];
+        [splashView startAnimation];
+    }else if([self.startingIndex intValue] == 0)
+    {
+        SettingsViewController* startingViewController = (SettingsViewController*)[self viewControllerAtIndex:0];
+        NSArray *viewControllers = @[startingViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height+100);
+        [self addChildViewController:_pageViewController];
+        [self.view addSubview:_pageViewController.view];
+        [self.pageViewController didMoveToParentViewController:self];
+        [self.view sendSubviewToBack:self.pageViewController.view];
+    }else if([self.startingIndex intValue] == 1)
+    {
+        GivingViewController* startingViewController = (GivingViewController*)[self viewControllerAtIndex:1];
+        NSArray *viewControllers = @[startingViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height+100);
+        [self addChildViewController:_pageViewController];
+        [self.view addSubview:_pageViewController.view];
+        [self.pageViewController didMoveToParentViewController:self];
+        [self.view sendSubviewToBack:self.pageViewController.view];
+    }else if([self.startingIndex intValue] == 2)
+    {
+        ReceivingViewController* startingViewController = (ReceivingViewController*)[self viewControllerAtIndex:2];
+        NSArray *viewControllers = @[startingViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height+100);
+        [self addChildViewController:_pageViewController];
+        [self.view addSubview:_pageViewController.view];
+        [self.pageViewController didMoveToParentViewController:self];
+        [self.view sendSubviewToBack:self.pageViewController.view];
+    }
+    
+    /*
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
@@ -46,6 +100,7 @@
     [self.pageViewController didMoveToParentViewController:self];
     
     [self.view sendSubviewToBack:self.pageViewController.view];
+     */
     
 }
 
@@ -57,10 +112,12 @@
 
 - (IBAction)startWalkthrough:(id)sender {
     NSLog(@"START WALKTHROUGH");
+    /*
     self.givingVC = [self.storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
     [self addChildViewController:self.givingVC];
     [self.view addSubview:self.givingVC.view];
     [self.givingVC didMoveToParentViewController:self];
+     */
 }
 
 #pragma mark - Page View Controller Data Source

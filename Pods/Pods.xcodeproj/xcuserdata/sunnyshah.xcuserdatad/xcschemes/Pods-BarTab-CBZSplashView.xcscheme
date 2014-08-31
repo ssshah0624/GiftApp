@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C8421D517C49446FAD34E2F6"
+               BlueprintIdentifier = "265A0CE450574B40A143A88C"
                BuildableName = "libPods-BarTab-CBZSplashView.a"
                BlueprintName = "Pods-BarTab-CBZSplashView"
                ReferencedContainer = "container:Pods.xcodeproj">

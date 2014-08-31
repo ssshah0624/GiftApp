@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7CB9823884694D3AABF51D09"
+               BlueprintIdentifier = "888147D8760B43A5829CFF7E"
                BuildableName = "libPods-BarTab-MBAlertView.a"
                BlueprintName = "Pods-BarTab-MBAlertView"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -1,52 +1,31 @@
 PODS:
-  - AMPopTip (0.2.2)
-  - AMWaveTransition (0.5.1)
+  - AMWaveTransition (0.5.2)
   - BDKNotifyHUD (1.1.0)
-  - BFPaperTableViewCell (1.0.3):
-    - UIColor+BFPaperColors
   - CBZSplashView (0.1.1)
-  - EFCircularSlider (0.1.0)
   - MBAlertView (1.1.0)
-  - MCSwipeTableViewCell (2.1.0)
-  - PaperFold (1.1)
   - PaymentKit (1.0.5)
   - pop (1.0.6)
   - RCLighting (0.1):
     - pop
   - Stripe (1.1.4):
     - PaymentKit (~> 1.0.4)
-  - TOMSMorphingLabel (0.2.2)
-  - UIColor+BFPaperColors (1.1)
 
 DEPENDENCIES:
-  - AMPopTip
   - AMWaveTransition
   - BDKNotifyHUD
-  - BFPaperTableViewCell (~> 1.0.3)
   - CBZSplashView (~> 0.1.1)
-  - EFCircularSlider (~> 0.1.0)
   - MBAlertView (~> 1.1.0)
-  - MCSwipeTableViewCell
-  - PaperFold (~> 1.1)
   - RCLighting
   - Stripe
-  - TOMSMorphingLabel (~> 0.2.2)
 
 SPEC CHECKSUMS:
-  AMPopTip: 96d3a16bdbd8195e291d3cb95f9a43e31226b760
-  AMWaveTransition: c934f942f1a05217a8adf56afc7b5e4582d70d08
+  AMWaveTransition: bb1ee1c4d55d88c9ebda9e69b3ece78d150d20c4
   BDKNotifyHUD: dd7c23043da457c72056fb4a0c8bae9967acff28
-  BFPaperTableViewCell: fb29cc00ee2f7b6cafd602eda71e0fce335849e5
   CBZSplashView: 010064ee72396c6d9c9293b72416152ca1636c27
-  EFCircularSlider: 562fa7fe850a272f4cd7ffbf27f39fd927da0721
   MBAlertView: 0044095d026308882a807e55dd2b4f89f8be5702
-  MCSwipeTableViewCell: 713086e29ce3c2171a0102fc594bf583fa7dd323
-  PaperFold: 75ccf7b5a7471d828c7c304f947ab2eca36ef4c5
   PaymentKit: 14b54835f57ae9e2bf5628140fcd67001740cba2
   pop: e518794da38942c05255eb64b36d894e70cb4f00
   RCLighting: eb725aa0d4ece8b43b80123e2cf2734d0322a478
   Stripe: a0ed1c0675a3c36f6e8d575820cfec1dc9335f53
-  TOMSMorphingLabel: b0ef90ad7a660a3a30bdf626cfc23028fa0b67f9
-  UIColor+BFPaperColors: 1245016a9cf4f2c1c7c03c90d40869dab5bebf4a
 
 COCOAPODS: 0.33.1
