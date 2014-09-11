@@ -40,7 +40,7 @@
 
 -(void)loadFacebookLogin
 {
-    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions: @[@"public_profile", @"email", @"user_friends", @"user_birthday", @"read_friendlists", @"user_status", @"user_photos"]];
+    FBLoginView *loginView = [[FBLoginView alloc] initWithReadPermissions: @[@"public_profile", @"email", @"read_stream", @"user_friends", @"user_birthday", @"read_friendlists", @"user_status", @"user_photos", @"friends_birthday"]];
     loginView.delegate = self;
     // Align the button in the center horizontally
     loginView.frame = CGRectOffset(loginView.frame, (self.view.center.x - (loginView.frame.size.width / 2)), (4*self.view.center.y/3));
@@ -51,6 +51,11 @@
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
                             user:(id<FBGraphUser>)user {
     self.facebookUser = user;
+    
+    NSLog(@"About to post to server...");
+    ServerCalls *server = [[ServerCalls alloc]init];
+    [server postFBAuthToken:[NSString stringWithFormat:@"%@",[FBSession activeSession].accessTokenData]];
+    
     
     /*SEND ACCESS TOKEN TO SERVER*/
     

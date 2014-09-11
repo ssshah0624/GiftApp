@@ -622,8 +622,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //Update master dictionary values
-    selectedCellInfo = [[cellToViewItems objectForKey:[NSNumber numberWithInt:indexPath.row]]objectAtIndex:9];
-    
+    selectedCellInfo = [[cellToViewItems objectForKey:[NSNumber numberWithInt:indexPath.row]]objectAtIndex:7];
     selectedValue = [tableData objectAtIndex:indexPath.row];
     UITableViewCell* tempCell = [tableView cellForRowAtIndexPath:indexPath];
     
@@ -632,13 +631,13 @@
     
     if([[tableRowSelected objectAtIndex:indexPath.row]boolValue]){
         
-        NSDictionary* dict = [[cellToViewItems objectForKey:[NSNumber numberWithInt:indexPath.row]]objectAtIndex:9];
+        NSDictionary* dict = [[cellToViewItems objectForKey:[NSNumber numberWithInt:indexPath.row]]objectAtIndex:7];
         UIView* greenView = [dict objectForKey:@"greenTableCloth"];
         greenView.hidden=NO;
         [tempCell addSubview:greenView];
         
     }else{
-        NSDictionary* dict = [[cellToViewItems objectForKey:[NSNumber numberWithInt:indexPath.row]]objectAtIndex:9];
+        NSDictionary* dict = [[cellToViewItems objectForKey:[NSNumber numberWithInt:indexPath.row]]objectAtIndex:7];
         UIView* greenView = [dict objectForKey:@"greenTableCloth"];
         greenView.hidden=YES;
         [greenView removeFromSuperview];

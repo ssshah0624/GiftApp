@@ -8,6 +8,9 @@
 
 #import "MasterRootViewController.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define kMasterColor 0x51B0BD
+
 @interface MasterRootViewController ()
 
 @end
@@ -27,6 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:UIColorFromRGB(kMasterColor)];
+    
     // Create the data model
     _pageTitles = @[@"Settings View Controller", @"Giving View Controller", @"Receiving View Controller"];
     _pageImages = @[@"paris2.jpg", @"paris2.jpg", @"paris3.jpg"];

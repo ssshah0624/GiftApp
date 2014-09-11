@@ -67,12 +67,12 @@
 {
     [super viewDidLoad];
     masterArrayOfDictionaries = [[NSMutableArray alloc]init];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Deepika P." giftType:@"flower" giftQuantity:@"1" giftStatus:@"2" customMessage:@"Hey Sunny- here are some flowers!!" deliveryDate:@"9/2/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Dilip" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"1" customMessage:@"Chocolates from Dilip" deliveryDate:@"9/1/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Kishan Shah" giftType:@"drink" giftQuantity:@"100" giftStatus:@"1" customMessage:@"Drink up Kishan!" deliveryDate:@"8/31/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ronak Gandhi" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"2" customMessage:@"Congrats on the new apt sunny!" deliveryDate:@"8/30/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ankur Goyal" giftType:@"drink" giftQuantity:@"1" giftStatus:@"3" customMessage:@"NJSP -> M&T -> REAL WORLD" deliveryDate:@"8/29/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ricky Hong" giftType:@"flower" giftQuantity:@"1" giftStatus:@"3" customMessage:@"For the salsa adventures" deliveryDate:@"8/25/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Deepika P." giftType:@"flower" giftQuantity:@"1" giftStatus:@"2" customMessage:@"Congrats on the new movie, Sunny! Shahrukh doesn't stand a chance with you on the set." deliveryDate:@"9/2/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Dilip" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"1" customMessage:@"I'll trade you designs for chocolates. Not a bad deal?" deliveryDate:@"9/1/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Kishan Shah" giftType:@"drink" giftQuantity:@"100" giftStatus:@"1" customMessage:@"Good luck in India! Come visit SF when you get a chance." deliveryDate:@"8/31/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ronak Gandhi" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"2" customMessage:@"WOOO NEW APT" deliveryDate:@"8/30/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ankur Goyal" giftType:@"drink" giftQuantity:@"1" giftStatus:@"1" customMessage:@"Living in NJ 4ever" deliveryDate:@"8/29/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ricky Hong" giftType:@"flower" giftQuantity:@"1" giftStatus:@"1" customMessage:@"Nice job on the Salsa award Jungwoo" deliveryDate:@"8/25/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
     
     cellToGiftView = [[NSMutableDictionary alloc]init];
     
@@ -139,15 +139,7 @@
     [[cell.contentView viewWithTag:30] removeFromSuperview];
     [[cell.contentView viewWithTag:31] removeFromSuperview];
     [[cell.contentView viewWithTag:32] removeFromSuperview];
-    
-    //For gift box
-    /*
     [[cell.contentView viewWithTag:33] removeFromSuperview];
-    [[cell.contentView viewWithTag:34] removeFromSuperview];
-    [[cell.contentView viewWithTag:35] removeFromSuperview];
-    [[cell.contentView viewWithTag:36] removeFromSuperview];
-    [[cell.contentView viewWithTag:37] removeFromSuperview];
-     */
     
     cell.textLabel.text=@"";
     cell.detailTextLabel.text = @"";
@@ -182,7 +174,6 @@
     
     
     //Profile picture in circle
-    
     NSString* tempNameHelper = [[masterArrayOfDictionaries objectAtIndex:indexPath.row]objectForKey:@"friendName"];
     NSString* firstName = [NSString stringWithFormat:@"%@",[[tempNameHelper componentsSeparatedByString:@" "]objectAtIndex:0]];
     NSString* imageNameHelper = [NSString stringWithFormat:@"%@.jpg",[firstName lowercaseString]];
@@ -190,8 +181,6 @@
     imageView.frame = CGRectMake(10,5,110,110);
     imageView.layer.cornerRadius = imageView.frame.size.height*0.5;;
     imageView.layer.masksToBounds = YES;
-    //imageView.layer.borderWidth = 10.0f;
-    //imageView.layer.borderColor = [UIColor whiteColor].CGColor;
     imageView.layer.shadowRadius=10.0f;
     imageView.layer.shadowColor = [UIColor blackColor].CGColor;
     imageView.tag=32;
@@ -211,44 +200,15 @@
     achievement.tag=31;
     [cell.contentView addSubview:achievement];
     
-    /*
-    if([[[masterArrayOfDictionaries objectAtIndex:indexPath.row]objectForKey:@"giftOpened"] isEqualToString:@"n"]
-       && [cellToGiftView objectForKey:[NSNumber numberWithInteger:indexPath.row]] == nil){
-        //[self loadCellGiftView:cell :indexPath];
-        NSLog(@"Index path row: %li",(long)indexPath.row);
-        UIView* bigGiftBox = [[UIView alloc]initWithFrame:cell.contentView.frame];
-        [bigGiftBox setBackgroundColor:[UIColor whiteColor]];
-        
-        UIView* topLeft = [[UIView alloc]initWithFrame:CGRectMake(0,0, cell.frame.size.width*0.3, kCellHeight*0.4)];
-        UIView* topRight = [[UIView alloc]initWithFrame:CGRectMake(cell.frame.size.width*0.4,0, cell.frame.size.width*0.6, kCellHeight*0.4)];
-        UIView* bottomLeft = [[UIView alloc]initWithFrame:CGRectMake(0,kCellHeight*0.6, cell.frame.size.width*0.3, kCellHeight*0.4)];
-        UIView* bottomRight = [[UIView alloc]initWithFrame:CGRectMake(cell.frame.size.width*0.4,kCellHeight*0.6, cell.frame.size.width*0.6, kCellHeight*0.4)];
-        
-        [topLeft setBackgroundColor:UIColorFromRGB(kSupportingColor)];
-        [topRight setBackgroundColor:UIColorFromRGB(kSupportingColor)];
-        [bottomLeft setBackgroundColor:UIColorFromRGB(kSupportingColor)];
-        [bottomRight setBackgroundColor:UIColorFromRGB(kSupportingColor)];
-        
-        [bigGiftBox addSubview:topLeft];
-        [bigGiftBox addSubview:topRight];
-        [bigGiftBox addSubview:bottomLeft];
-        [bigGiftBox addSubview:bottomRight];
-        
-        bigGiftBox.tag=33;
-        topLeft.tag=34;
-        topRight.tag=35;
-        bottomLeft.tag=36;
-        bottomRight.tag=37;
-        
-        bigGiftBox.alpha=0.98;
-        bigGiftBox.tag=33;
-        [cell.contentView addSubview:bigGiftBox];
-        [cellToGiftView setObject:@[bigGiftBox,topLeft,topRight,bottomLeft,bottomRight] forKey:[NSNumber numberWithInteger:indexPath.row]];
-        //[[masterArrayOfDictionaries objectAtIndex:indexPath.row]setObject:@"y" forKey:@"giftOpened"];
-        NSLog(@"Adding gift background at row: %li",(long)indexPath.row);
+    //Add small gift-type icon
+    if([[[masterArrayOfDictionaries objectAtIndex:indexPath.row]objectForKey:@"giftOpened"] isEqualToString:@"y"]){
+        UIView* grayTableCloth = [[UIView alloc] initWithFrame:cell.contentView.frame];
+        [grayTableCloth setBackgroundColor:[UIColor grayColor]];
+        grayTableCloth.alpha = 0.5;
+        grayTableCloth.tag = 33;
+        //[cell.contentView addSubview:grayTableCloth];
     }
-     */
-    
+
     return cell;
 }
 
@@ -327,14 +287,23 @@
         
     }else{
         
-        NSString* giftType = [[masterArrayOfDictionaries objectAtIndex:indexPath.row] objectForKey:@"giftType"];
+       // NSString* giftType = [[masterArrayOfDictionaries objectAtIndex:indexPath.row] objectForKey:@"giftType"];
         
+        GiftHandlingView *giftHandlingScreen = [[GiftHandlingView alloc] initWithFrame:self.view.frame andADictionary:[masterArrayOfDictionaries objectAtIndex:indexPath.row]];
+        [self.view addSubview:giftHandlingScreen];
+        
+        //UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        //[giftHandlingScreen addGestureRecognizer:pan];
+        
+        self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+        
+        /*
         if([giftType isEqualToString:@"flower"]){
-            RoseGiftScreen *roseGiftScreen = [[RoseGiftScreen alloc] initWithFrame:self.view.frame andADictionary:[masterArrayOfDictionaries objectAtIndex:indexPath.row]];
-            [self.view addSubview:roseGiftScreen];
+            GiftHandlingView *giftHandlingScreen = [[GiftHandlingView alloc] initWithFrame:self.view.frame andADictionary:[masterArrayOfDictionaries objectAtIndex:indexPath.row]];
+            [self.view addSubview:giftHandlingScreen];
             
             UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-            [roseGiftScreen addGestureRecognizer:pan];
+            [giftHandlingScreen addGestureRecognizer:pan];
             
             self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
         }else if([giftType isEqualToString:@"chocolate"]){
@@ -354,6 +323,7 @@
             
             self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
         }
+         */
     }
     
 }
@@ -406,12 +376,6 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 }
 
 -(void)profilePictureButtonPressed:(id)sender{
-    /*
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
-    //vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:vc animated:YES completion:NULL];
-     */
-    
     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
     vc.startingIndex = @"1";
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -460,47 +424,10 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 
 //SCROLLING RELATED
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    
     aScrollView.showsVerticalScrollIndicator=NO;
-    
-    //Disappearing trick!
-    CGPoint offset = aScrollView.contentOffset;
-    CGRect bounds = aScrollView.bounds;
-    CGSize size = aScrollView.contentSize;
-    UIEdgeInsets inset = aScrollView.contentInset;
-    float y = offset.y + bounds.size.height - inset.bottom;
-    float h = size.height;
-    
-    
-    float numerator = offset.y;
-    int denominator = bounds.size.height;
-    float percentHidden = (numerator*1.0)/(denominator*1.0);
-    /*
-     if(percentHidden>-20.0){
-     
-     mainNavBar.frame = CGRectMake(mainNavBar.frame.origin.x,
-     mainNavBarOriginY-(mainNavBar.frame.size.height*(5*percentHidden)),
-     mainNavBar.frame.size.width,
-     mainNavBar.frame.size.height);
-     mainNavBar.alpha=1-percentHidden;
-     
-     CGRect tvbounds = [self.infoTable bounds];
-     float new = tableHomeY*(1-(3*percentHidden));
-     float bottomCorrection = screenRect.size.height - fixedBottomDistance - self.infoTable.frame.size.height - new;
-     
-     if(tvbounds.origin.y<300 && new>20) self.infoTable.frame =CGRectMake(tvbounds.origin.x, new, tvbounds.size.width, tvbounds.size.height+bottomCorrection);
-     }
-     */
-    float reload_distance = 10;
-    if(y > h + reload_distance) {
-        // NSLog(@"load more rows");
-    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    //Logic for dynamic heights
-    
     return kCellHeight;
 }
 

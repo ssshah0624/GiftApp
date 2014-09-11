@@ -1,12 +1,12 @@
 //
-//  DrinkGiftScreen.m
+//  GiftHandlingView.m
 //  BarTab
 //
-//  Created by Sunny Shah on 8/18/14.
+//  Created by Sunny Shah on 9/1/14.
 //  Copyright (c) 2014 Sunny Shah. All rights reserved.
 //
 
-#import "DrinkGiftScreen.h"
+#import "GiftHandlingView.h"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define kSending 0
@@ -26,11 +26,12 @@
 #define kAchievementFont 20.0f
 #define kAchievementFontType @"GillSans-Light"
 
-@implementation DrinkGiftScreen
+@implementation GiftHandlingView
 {
     CGRect screenRect;
     UILabel* description;
     UITextView *myTextView;
+    UILabel* myTextLabel;
     UILabel* characterCount;
     CGFloat origin_x;
     CGFloat origin_y;
@@ -48,6 +49,15 @@
     CGFloat firstX;
     CGFloat firstY;
     
+    NSDictionary* theDictionary;
+    
+    //Address
+    UIView* addressView;
+    KLCPopup* addressPopup;
+    UITextField *nameField;
+    UITextField *deliveryAddress;
+    UITextField *cityStateZipField;
+    
 }
 
 
@@ -64,6 +74,8 @@
         }else{
             self.firstName = [[label.text componentsSeparatedByString:@" "]objectAtIndex:0];
         }
+        
+        theDictionary = dict;
         
         origin_x = frame.origin.x;
         origin_y = frame.origin.y;
@@ -85,7 +97,11 @@
 
 -(void)handleLayout:(NSDictionary*)dict
 {
-    [self setBackgroundImage:@"bar bg image.png"];
+    NSString* tempNameHelper = [dict objectForKey:@"friendName"];
+    NSString* firstName = [NSString stringWithFormat:@"%@",[[tempNameHelper componentsSeparatedByString:@" "]objectAtIndex:0]];
+    NSString* imageNameHelper = [NSString stringWithFormat:@"%@.jpg",[firstName lowercaseString]];
+    //UIImageView* imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageNameHelper]];
+    [self setBackgroundImage:imageNameHelper];
     switch ([[dict objectForKey:@"giftStatus"] intValue]) {
         case kSending:
             [self addDrawerImage:@"drawer.png"];
@@ -99,16 +115,16 @@
             [self addDrawerImage:@"drawer.png"];
             [self addNavBar:dict];
             [self addDescription:[NSString stringWithFormat:@"Sent $%@ bar tab to %@",[dict objectForKey:@"giftQuantity"],[dict objectForKey:@"friendName"]]];
-            [self addTextView:[dict objectForKey:@"customMessage"]];
-            [self addIdleButtons];
+            [self addTextView:[dict objectForKey:@"customMessage"] :dict];
+            //[self addIdleButtons];
             break;
         case kReceived:
             NSLog(@"Received");
             [self addDrawerImage:@"drawer.png"];
             [self addNavBar:dict];
             [self addDescription:[NSString stringWithFormat:@"Received $%@ bar tab from %@",[dict objectForKey:@"giftQuantity"],[dict objectForKey:@"friendName"]]];
-            [self addTextView:[dict objectForKey:@"customMessage"]];
-            [self addIdleButtons];
+            [self addTextView:[dict objectForKey:@"customMessage"] :dict];
+            //[self addIdleButtons];
             break;
         default:
             break;
@@ -119,7 +135,7 @@
 
 -(void)setBackgroundImage:(NSString*)name
 {
-    UIImageView* backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.origin.x,-screenRect.origin.y-35,self.frame.size.width,self.frame.size.height)];
+    UIImageView* backgroundImage = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.origin.x,60,self.frame.size.width,self.frame.size.height*0.4)];
     [backgroundImage setImage:[UIImage imageNamed:name]];
     [self addSubview:backgroundImage];
 }
@@ -156,6 +172,13 @@
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [mainNavBar addSubview:backButton];
     
+    UILabel *firstName = [[UILabel alloc] initWithFrame:CGRectMake(half-40, stdYoffset, 80, 40)];
+    firstName.text = self.firstName;
+    firstName.textAlignment = UITextAlignmentCenter;
+    firstName.font = [UIFont fontWithName:kAchievementFontType size:kAchievementFont];
+    [firstName setTextColor:[UIColor whiteColor]];
+    [mainNavBar addSubview:firstName];
+    
     /*
      UIButton *giftButton = [UIButton buttonWithType:UIButtonTypeCustom];
      giftButton.frame = CGRectMake(half-20, stdYoffset, 40, 40);
@@ -190,13 +213,15 @@
     description.backgroundColor = [UIColor clearColor];
     description.textColor = UIColorFromRGB(kSupportingColor);
     description.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:description];
+    //[self addSubview:description];
 }
 
 
 -(void)addTextView
 {
-    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.60, screenRect.size.width, screenRect.size.height*0.12)];
+    //myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.60, screenRect.size.width, screenRect.size.height*0.12)];
+    
+    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0,screenRect.size.height*0.47,screenRect.size.width, screenRect.size.height*0.1)];
     myTextView.text = @"Custom Message";
     myTextView.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:16.0];
     myTextView.textColor = [UIColor grayColor];
@@ -209,21 +234,106 @@
     characterCount.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0f]; //Mess with font
     characterCount.textColor = UIColorFromRGB(kSupportingColor);
     characterCount.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:characterCount];
+    //[self addSubview:characterCount];
     
     
     //[myTextView sizeToFit];
 }
 
--(void)addTextView:(NSString*)withText
+-(void)addTextView:(NSString*)withText :(NSDictionary*)dict
 {
-    myTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, screenRect.size.height*0.60, screenRect.size.width, screenRect.size.height*0.12)];
-    myTextView.text = withText;
-    myTextView.font = [UIFont fontWithName:@"HelveticaNeue-Italic" size:16.0];
-    myTextView.textColor = [UIColor grayColor];
-    [myTextView setEditable:NO];
-    myTextView.delegate = self;
-    [self addSubview:myTextView];
+    myTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,screenRect.size.height*0.47,screenRect.size.width, screenRect.size.height*0.1)];
+    myTextLabel.text = [NSString stringWithFormat:@"\"%@\"",withText];
+    myTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    myTextLabel.numberOfLines = 0;
+    myTextLabel.textAlignment = UITextAlignmentCenter;
+    int fontSize = [self sizeLabel:myTextLabel toRect:myTextLabel.frame];
+    [myTextLabel setFont:[UIFont fontWithName:@"GillSans-Light" size:fontSize]];
+    myTextLabel.textColor = UIColorFromRGB(kMasterColor);
+    [self addSubview:myTextLabel];
+    
+    UILabel* item = [[UILabel alloc] initWithFrame:CGRectMake(4,screenRect.size.height*0.60, screenRect.size.width, 20)];
+    if([[dict objectForKey:@"giftType"] isEqualToString:@"flower"]){
+        item.text = [NSString stringWithFormat:@"Item: %@ dozen roses",[dict objectForKey:@"giftQuantity"]];
+    }else if([[dict objectForKey:@"giftType"] isEqualToString:@"drink"]){
+        item.text = [NSString stringWithFormat:@"Item: $%@ bar tab",[dict objectForKey:@"giftQuantity"]];
+    }else if([[dict objectForKey:@"giftType"] isEqualToString:@"chocolate"]){
+        switch ([[dict objectForKey:@"giftQuantity"] intValue]) {
+            case kQuantity0:
+                item.text =@"Item: 12-pack chocolates";
+                break;
+            case kQuantity1:
+                item.text =@"Item: 24-pack chocolates";
+                break;
+            case kQuantity2:
+                item.text =@"Item: 48-pack chocolates";
+                break;
+            default:
+                break;
+        }
+    }
+    [item setFont:[UIFont fontWithName:@"GillSans-Light" size:16]];
+    item.textColor = [UIColor blackColor];
+    [self addSubview:item];
+    
+    BOOL hasAddress = NO;
+    if(hasAddress){
+        UILabel* address = [[UILabel alloc] initWithFrame:CGRectMake(4,screenRect.size.height*0.60 + 25, screenRect.size.width, 20)];
+        address.text = @"Address: SERVER FILL IN PROPER ADDRESS";
+        [address setFont:[UIFont fontWithName:@"GillSans-Light" size:16]];
+        address.textColor = [UIColor blackColor];
+        [self addSubview:address];
+    }else{
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self
+                   action:@selector(addressButtonPressed:)
+         forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"Address: Please enter desired delivery address" forState:UIControlStateNormal];
+        button.frame = CGRectMake(-5,screenRect.size.height*0.60 + 25, screenRect.size.width, 20);
+        [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont fontWithName:@"GillSans-Light" size:16];
+        button.titleLabel.textAlignment = UITextAlignmentLeft;
+        [self addSubview:button];
+    }
+    
+    UILabel* deliveryDate = [[UILabel alloc] initWithFrame:CGRectMake(4,screenRect.size.height*0.60 + 50, screenRect.size.width, 20)];
+    deliveryDate.text = @"Delivery Date: N/A";
+    [deliveryDate setFont:[UIFont fontWithName:@"GillSans-Light" size:16]];
+    deliveryDate.textColor = [UIColor blackColor];
+    [self addSubview:deliveryDate];
+    
+    UIButton *thankButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [thankButton addTarget:self
+                    action:@selector(thankFriend:)
+          forControlEvents:UIControlEventTouchUpInside];
+    [thankButton setTitle:[NSString stringWithFormat:@"Thank %@",self.firstName] forState:UIControlStateNormal];
+    thankButton.frame = CGRectMake(screenRect.size.width*0.1,screenRect.size.height*0.77, screenRect.size.width*0.8, 50);
+    [thankButton setBackgroundColor:UIColorFromRGB(kMasterColor)];
+    [thankButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self addSubview:thankButton];
+    
+    UIButton *ignoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [ignoreButton addTarget:self
+                     action:@selector(backButtonPressed:)
+           forControlEvents:UIControlEventTouchUpInside];
+    [ignoreButton setTitle:[NSString stringWithFormat:@"Ignore %@",self.firstName] forState:UIControlStateNormal];
+    ignoreButton.frame = CGRectMake(screenRect.size.width*0.1,screenRect.size.height*0.77+55, screenRect.size.width*0.8, 50);
+    [ignoreButton setBackgroundColor:UIColorFromRGB(0xC4C4C4)];
+    [ignoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self addSubview:ignoreButton];
+    
+}
+
+-(void)thankFriend:(id)sender
+{
+    NSDictionary *tempDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              [theDictionary objectForKey:@"friendName"], @"friendName",
+                              @"0",@"giftStatus",
+                              @"Custom Message",@"customMessage",
+                              nil];
+    
+    DrinkGiftScreen *drinkScreen = [[DrinkGiftScreen alloc]initWithFrame:CGRectMake(0,30,screenRect.size.width,screenRect.size.height) andADictionary:tempDict];
+    [self addSubview:drinkScreen];
 }
 
 -(void)addButtons
@@ -347,35 +457,6 @@
 -(void)sendPressed:(id)sender
 {
     NSLog(@"Send pressed");
-    BOOL valid = YES;
-    if(valid){
-        NSLog(@"Bar tab sent");
-        // Create the HUD object; view can be a UIImageView, an icon... you name it
-        UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
-        BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
-                                                       text:@"Approved"];
-        hud.center = CGPointMake(self.center.x, self.center.y - 20);
-        
-        // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
-        [self addSubview:hud];
-        [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
-            [hud removeFromSuperview];
-            [self performSelector:@selector(backButtonPressed:) withObject:self];
-        }];
-    }else{
-        UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
-        BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
-                                                       text:@"Not Approved"];
-        hud.center = CGPointMake(self.center.x, self.center.y - 20);
-        
-        // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
-        [self addSubview:hud];
-        [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
-            [hud removeFromSuperview];
-            
-        }];
-        NSLog(@"Bar tab not sent");
-    }
 }
 
 //Textfield editing
@@ -499,55 +580,152 @@
                      }];
 }
 
-//INCLUDE QUICK PAYMENT HELPER
-/*
--(void)paymentSourcePressed:(id)sender
+-(void)addressButtonPressed:(id)sender
 {
-    NSLog(@"paymentSourcePressed");
+    NSLog(@"Enter your address here");
+    addressView = [[UIView alloc] init];
+    addressView.backgroundColor = [UIColor whiteColor];
+    addressView.frame = CGRectMake(0.0, screenRect.size.height*0.2, screenRect.size.width*0.87, screenRect.size.height*0.5);
     
-    UIView* contentView = [[UIView alloc] init];
-    contentView.backgroundColor = [UIColor clearColor];
-    contentView.frame = CGRectMake(0.0, screenRect.size.height*0.2, screenRect.size.width, screenRect.size.height*0.8);
+    UILabel* title = [[UILabel alloc]initWithFrame:CGRectMake(0,0,addressView.frame.size.width, 30)];
+    title.textAlignment = UITextAlignmentCenter;
+    title.text = @"Your Delivery Information";
+    title.backgroundColor = UIColorFromRGB(kMasterColor);
+    title.font = [UIFont fontWithName:kAchievementFontType size:24];
+    title.textColor = [UIColor whiteColor];
+    [addressView addSubview:title];
     
-    //Add privacy stuff
+    //    Name or attention line:	JANE L MILLER
+    //    Company:	MILLER ASSOCIATES
+    //    Delivery address:	1960 W CHELSEA AVE STE 2006
+    //    City, state, ZIP Code:	ALLENTOWN PA 18104
+    nameField = [[UITextField alloc] initWithFrame:CGRectMake(5,addressView.frame.size.height*0.15,addressView.frame.size.width*0.94, addressView.frame.size.height*0.15)];
+    nameField.borderStyle = UITextBorderStyleRoundedRect;
+    nameField.font = [UIFont systemFontOfSize:15];
+    nameField.placeholder = @"Address Nickname i.e. Home";
+    nameField.autocorrectionType = UITextAutocorrectionTypeNo;
+    nameField.keyboardType = UIKeyboardTypeDefault;
+    nameField.returnKeyType = UIReturnKeyDone;
+    nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    nameField.delegate = self;
+    [addressView addSubview:nameField];
     
-    self.stripeView = [[STPView alloc] initWithFrame:CGRectMake(15,0,290,55)
-                                              andKey:@"pk_test_6pRNASCoBOKtIshFeQd4XMUh"];
-    self.stripeView.delegate = self;
-    [contentView addSubview:self.stripeView];
+    deliveryAddress = [[UITextField alloc] initWithFrame:CGRectMake(5,addressView.frame.size.height*0.35,addressView.frame.size.width*0.94, addressView.frame.size.height*0.15)];
+    deliveryAddress.borderStyle = UITextBorderStyleRoundedRect;
+    deliveryAddress.font = [UIFont systemFontOfSize:15];
+    deliveryAddress.placeholder = @"Delivery Address";
+    deliveryAddress.autocorrectionType = UITextAutocorrectionTypeNo;
+    deliveryAddress.keyboardType = UIKeyboardTypeDefault;
+    deliveryAddress.returnKeyType = UIReturnKeyDone;
+    deliveryAddress.clearButtonMode = UITextFieldViewModeWhileEditing;
+    deliveryAddress.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    deliveryAddress.delegate = self;
+    [addressView addSubview:deliveryAddress];
     
-    //Add money images
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(screenRect.size.width*0.2,screenRect.size.height*0.2,screenRect.size.width*0.6,screenRect.size.height*0.1)];
-    imgView.image = [UIImage imageNamed:@"cardtypes.png"];
-    imgView.alpha=0.98;
-    [contentView addSubview:imgView];
+    cityStateZipField = [[UITextField alloc] initWithFrame:CGRectMake(5,addressView.frame.size.height*0.55,addressView.frame.size.width*0.94, addressView.frame.size.height*0.15)];
+    cityStateZipField.borderStyle = UITextBorderStyleRoundedRect;
+    cityStateZipField.font = [UIFont systemFontOfSize:15];
+    cityStateZipField.placeholder = @"City, State, Zip";
+    cityStateZipField.autocorrectionType = UITextAutocorrectionTypeNo;
+    cityStateZipField.keyboardType = UIKeyboardTypeDefault;
+    cityStateZipField.returnKeyType = UIReturnKeyDone;
+    cityStateZipField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    cityStateZipField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    cityStateZipField.delegate = self;
+    [addressView addSubview:cityStateZipField];
     
-    //Add Save + Cancel Buttons
-    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [cancelButton addTarget:self
-                     action:@selector(cancelPaymentManagement:)
-           forControlEvents:UIControlEventTouchUpInside];
-    [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    cancelButton.frame = CGRectMake(0,screenRect.size.height-216-100,screenRect.size.width*0.5,50);
-    [cancelButton setBackgroundColor:UIColorFromRGB(kBoxColor2)];
-    [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [contentView addSubview:cancelButton];
+    UIButton *submitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    submitButton.frame = CGRectMake(5,addressView.frame.size.height*0.75,addressView.frame.size.width*0.94, addressView.frame.size.height*0.2);
+    [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
+    [submitButton setBackgroundColor:UIColorFromRGB(kMasterColor)];
+    [submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [submitButton addTarget:self action:@selector(addressSubmitted:) forControlEvents:UIControlEventTouchUpInside];
+    submitButton.alpha = 0.7;
+    [addressView addSubview:submitButton];
     
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [saveButton addTarget:self
-                   action:@selector(save:)
-         forControlEvents:UIControlEventTouchUpInside];
-    [saveButton setTitle:@"Save" forState:UIControlStateNormal];
-    saveButton.frame = CGRectMake(screenRect.size.width*0.5,screenRect.size.height-216-100,screenRect.size.width*0.5,50);
-    [saveButton setBackgroundColor:UIColorFromRGB(kBoxColor1)];
-    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [contentView addSubview:saveButton];
-    
-    
-    paymentPopup = [KLCPopup popupWithContentView:contentView];
-    [paymentPopup show];
+    addressPopup = [KLCPopup popupWithContentView:addressView];
+    [addressPopup show];
 }
- */
 
+-(void)addressSubmitted:(id)sender
+{
+    NSLog(@"SERVER CALL TO SAVE ADDRESS \n %@ \n %@ \n %@",nameField.text, deliveryAddress.text, cityStateZipField.text);
+}
+
+-(BOOL)verifyDeliveryAddress:(NSString*)address
+{
+    return YES;
+}
+
+-(BOOL)verifyCityStateZip:(NSString*)cityStateZip
+{
+    return YES;
+}
+
+
+//EXPERIMENT
+- (int) sizeLabel: (UILabel *) label toRect: (CGRect) labelRect  {
+    
+    // Set the frame of the label to the targeted rectangle
+    label.frame = labelRect;
+    
+    // Try all font sizes from largest to smallest font size
+    int fontSize = 300;
+    int minFontSize = 5;
+    
+    // Fit label width wize
+    CGSize constraintSize = CGSizeMake(label.frame.size.width, MAXFLOAT);
+    
+    do {
+        // Set current font size
+        label.font = [UIFont fontWithName:label.font.fontName size:fontSize];
+        
+        // Find label size for current font size
+        CGRect textRect = [[label text] boundingRectWithSize:constraintSize
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{NSFontAttributeName:label.font}
+                                                     context:nil];
+        
+        CGSize labelSize = textRect.size;
+        
+        // Done, if created label is within target size
+        if( labelSize.height <= label.frame.size.height )
+            break;
+        
+        // Decrease the font size and try again
+        fontSize -= 2;
+        
+    } while (fontSize > minFontSize);
+    
+    return fontSize;
+}
+
+- (BOOL) quickCheckSizeLabel: (UILabel *) label toRect: (CGRect) labelRect  {
+    
+    // Set the frame of the label to the targeted rectangle
+    label.frame = labelRect;
+    
+    // Try all font sizes from largest to smallest font size
+    int fontSize = kAchievementFont;
+    
+    // Fit label width wize
+    CGSize constraintSize = CGSizeMake(label.frame.size.width, MAXFLOAT);
+    
+    // Set current font size
+    label.font = [UIFont fontWithName:label.font.fontName size:fontSize];
+    
+    // Find label size for current font size
+    CGRect textRect = [[label text] boundingRectWithSize:constraintSize
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:@{NSFontAttributeName:label.font}
+                                                 context:nil];
+    
+    CGSize labelSize = textRect.size;
+    
+    if(labelSize.height <= label.frame.size.height) return true;
+    
+    return false;
+}
 
 @end

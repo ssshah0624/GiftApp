@@ -12,6 +12,7 @@
 #import "PageContentViewController.h"
 #import "GivingViewController.h"
 #import "MasterRootViewController.h"
+#import "ServerCalls.h"
 
 
 @interface BarTabViewController : UIViewController <FBLoginViewDelegate>

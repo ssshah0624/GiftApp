@@ -14,6 +14,7 @@
 #import "ChocolateGiftScreen.h"
 #import "DrinkGiftScreen.h"
 #import "MasterRootViewController.h"
+#import "GiftHandlingView.h"
 
 @interface ReceivingViewController : UIViewController
 

@@ -56,9 +56,17 @@
          annotation:(id)annotation {
     
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
-    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    //BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
     
     // You can add your app-specific url handling code here if needed
+    
+    BOOL wasHandled = [FBAppCall handleOpenURL:url
+                                sourceApplication:sourceApplication
+                                  fallbackHandler:^(FBAppCall *call) {
+                                      NSLog(@"Unhandled deep link: %@", url);
+                                      // Here goes the code to handle the links
+                                      // Use the links to show a relevant view of your app to the user
+                                  }];
     
     return wasHandled;
 }

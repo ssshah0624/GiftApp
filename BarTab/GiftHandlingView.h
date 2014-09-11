@@ -1,16 +1,15 @@
 //
-//  DrinkGiftScreen.h
+//  GiftHandlingView.h
 //  BarTab
 //
-//  Created by Sunny Shah on 8/18/14.
+//  Created by Sunny Shah on 9/1/14.
 //  Copyright (c) 2014 Sunny Shah. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <BDKNotifyHUD.h>
-#import "MasterRootViewController.h"
+#import "DrinkGiftScreen.h"
 
-@interface DrinkGiftScreen : UIView <UITextViewDelegate>
+@interface GiftHandlingView : UIView <UITextViewDelegate>
 
 @property NSString* firstName;
 
