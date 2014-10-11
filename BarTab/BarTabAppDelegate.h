@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface BarTabAppDelegate : UIResponder <UIApplicationDelegate>
 

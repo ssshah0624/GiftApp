@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-BarTab-CMDQueryStringSerialization.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BarTab-MBAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,7 +39,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-BarTab-SSKeychain.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-BarTab-Stripe.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BarTab-VENCore.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BarTab-Venmo-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,47 +72,67 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>265A0CE450574B40A143A88C</key>
+		<key>099EA26BFAF448D28E8A97FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27D4A84EB1F5422AB9311508</key>
+		<key>26A7795F98DB4333AAB59239</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>82032B11C7164DF7B8AD0282</key>
+		<key>2D074C2DB70345519918CD3C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8800F9E622E040C394FC05B2</key>
+		<key>399621680B2C4594A7580778</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>888147D8760B43A5829CFF7E</key>
+		<key>3FBBCFCB4B824137AED09773</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8F2FA1AD59E84344B25BFF17</key>
+		<key>50C245D95C7F4FAD9054356A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A6502A94BE20463CBE1AB439</key>
+		<key>6BF0ED2CC7D8482BA9AF9EC1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DC2EA95E07C24B2A8CD5826D</key>
+		<key>821CA9EAB97643F5A302ACBB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E5BE1C8C345D480D894C6261</key>
+		<key>8C87264D63F44529BFDB797D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B750E73798EC409FA16C9CE1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BA4AA493D2454D038FB9659F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C65FCFF5ADE344C3985FE8BE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA574BE17D824DAF8A7426B8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -10,7 +10,13 @@
 
 @interface ServerCalls : UIViewController
 
+@property NSString *userAuthToken;
 
 -(void)postFBAuthToken:(NSString*)authToken;
+-(void)postGift:(NSString*)authToken :(NSString*)giftType :(NSString*)amount;
+-(void)getAllSentGifts:(NSString*)authToken;
+-(void)getAllReceivedGifts:(NSString*)authToken;
+
+-(NSString*)getAuthToken;
 
 @end

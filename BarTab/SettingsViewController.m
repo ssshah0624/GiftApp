@@ -467,6 +467,8 @@
 - (void)handleToken:(STPToken *)token
 {
     NSLog(@"Received token %@", token.tokenId);
+    [paymentPopup dismiss:YES];
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://example.com"]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];

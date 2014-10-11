@@ -33,10 +33,14 @@
     [self.view setBackgroundColor:UIColorFromRGB(kMasterColor)];
     
     // Create the data model
-    _pageTitles = @[@"Settings View Controller", @"Giving View Controller", @"Receiving View Controller"];
-    _pageImages = @[@"paris2.jpg", @"paris2.jpg", @"paris3.jpg"];
+   // _pageTitles = @[@"Settings View Controller", @"Giving View Controller", @"Receiving View Controller"];
+    _pageTitles = @[@"Giving View Controller"];
+    _pageImages = @[@"paris2.jpg"];
+    //_pageImages = @[@"paris2.jpg", @"paris2.jpg", @"paris3.jpg"];
     
     // Create page view controller
+
+    /*
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterPageViewController"];
     self.pageViewController.dataSource = self;
     
@@ -46,7 +50,7 @@
     //potential override for starting VC
     if(self.startingIndex == nil){
         NSLog(@"THIS STRING IS EMPTY");
-        GivingViewController* startingViewController = (GivingViewController*)[self viewControllerAtIndex:1];
+        GivingViewController* startingViewController = (GivingViewController*)[self viewControllerAtIndex:0];
         NSArray *viewControllers = @[startingViewController];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
         self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height+100);
@@ -62,7 +66,9 @@
         //[self loadMainNavBar];
         [self.view addSubview:splashView];
         [splashView startAnimation];
-    }else if([self.startingIndex intValue] == 0)
+    }
+    
+    /*else if([self.startingIndex intValue] == 0)
     {
         SettingsViewController* startingViewController = (SettingsViewController*)[self viewControllerAtIndex:0];
         NSArray *viewControllers = @[startingViewController];
@@ -93,6 +99,8 @@
         [self.pageViewController didMoveToParentViewController:self];
         [self.view sendSubviewToBack:self.pageViewController.view];
     }
+     
+     */
     
     /*
     NSArray *viewControllers = @[startingViewController];
@@ -106,6 +114,8 @@
     
     [self.view sendSubviewToBack:self.pageViewController.view];
      */
+    
+    
     
 }
 
@@ -163,6 +173,7 @@
         return nil;
     }
 
+    /*
     
     if(index==0){
         SettingsViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
@@ -179,6 +190,7 @@
     }else{
         NSLog(@"Not sure wtf is happening...");
     }
+     */
 
     
     /*

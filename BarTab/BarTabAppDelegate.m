@@ -20,6 +20,11 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
     
+    
+    //Venmo Integration
+    [Venmo startWithAppId:@"1985" secret:@"QWAgSUbKs4QJeZzmRZCcu8yeL5LZJGFg" name:@"Treat"];
+    
+    
     return YES;
 }
 							
@@ -59,6 +64,12 @@
     //BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
     
     // You can add your app-specific url handling code here if needed
+    
+    
+    //VENMO
+    if ([[Venmo sharedInstance] handleOpenURL:url]) {
+        return YES;
+    }
     
     BOOL wasHandled = [FBAppCall handleOpenURL:url
                                 sourceApplication:sourceApplication

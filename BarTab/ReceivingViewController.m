@@ -376,10 +376,18 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
 }
 
 -(void)profilePictureButtonPressed:(id)sender{
+    
+    /*
     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
     vc.startingIndex = @"1";
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:vc animated:YES completion:NULL];
+     */
+    
+    NSString * storyboardName = @"MainStoryboard";
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)searchButtonPressed:(id)sender{

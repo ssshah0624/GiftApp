@@ -21,7 +21,13 @@
 #import "DrinkGiftScreen.h"
 #import "MasterRootViewController.h"
 
-@interface GivingViewController : UIViewController <STPViewDelegate>
+//AddressBook stuff
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import "ContactsData.h"
+
+
+@interface GivingViewController : UIViewController <STPViewDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 
 //FOR PAGE CONTENT VIEW CONTROLLER
@@ -51,5 +57,16 @@
 @property NSIndexPath* selectedRowIndex;
 
 @property UIDynamicAnimator* animator;
+
+//ADDRESS BOOK
+@property (nonatomic, strong) ABPeoplePickerNavigationController *addressBookController;
+-(void)showAddressBook;
+@property (nonatomic, strong) NSMutableArray *arrContactsData;
+@property (nonatomic, strong) NSDictionary *dictContactDetails;
+@property (nonatomic, weak) IBOutlet UILabel *lblContactName;
+@property (nonatomic, weak) IBOutlet UIImageView *imgContactImage;
+@property (nonatomic, weak) IBOutlet UITableView *tblContactDetails;
+
+@property (strong, nonatomic) IBOutlet UIView *homeDrinkView;
 
 @end

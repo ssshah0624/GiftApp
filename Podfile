@@ -8,6 +8,7 @@ pod 'AMWaveTransition'
 pod 'Stripe'
 pod 'CBZSplashView', '~> 0.1.1'
 pod 'BDKNotifyHUD'
+pod 'Venmo-iOS-SDK', '~>1.3'
 end
 
 target "BarTabTests" do

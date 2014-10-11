@@ -78,6 +78,12 @@
     NSDictionary* selectedCellInfo;
     
     
+    /**NEW GIVING SCREEN--WITH CONTACTS**/
+    UIImageView* martiniImageView1;
+    UIImageView* martiniImageView2;
+    UIImageView* martiniImageView3;
+    UILabel* description;
+    
 }
 
 @end
@@ -99,6 +105,8 @@
     [super viewDidLoad];
     //[self startActivityIndicator];
     //[self populateFriendIDFromStatus]; //sets off a chain of events
+    
+    /*
     tableData =  [NSMutableArray arrayWithObjects:
                   @"Abhi Ramesh",
                   @"Edward Lando",
@@ -154,21 +162,6 @@
     tableHomeY = self.infoTable.frame.origin.y;
     screenRect = [[UIScreen mainScreen] bounds];
     fixedBottomDistance = screenRect.size.height - tableHomeY - self.infoTable.frame.size.height;
-    
-    /*
-    BOOL newUser = true;
-    if(newUser) [self promptPaymentInfo];
-     */
-    
-    //Splash View
-    /*
-    UIImage *icon = [UIImage imageNamed:@"gift.png"];
-    UIColor *color = [UIColor blueColor];
-    CBZSplashView *splashView = [[CBZSplashView alloc] initWithIcon:icon backgroundColor:color];
-    [self.view addSubview:splashView];
-    [splashView startAnimation];
-     */
-    
     [self loadMainNavBar];
     
     //Configure new gift giving screen
@@ -181,7 +174,209 @@
     
     cellToViewItems = [[NSMutableDictionary alloc]init];
     selectedCellInfo = [[NSDictionary alloc]init];
+     */
+    
+    /***NEW GIFT GIVING SCREEN***/
+    self.view.backgroundColor = UIColorFromRGB(kBackgroundColor);
+    
+    originalY=0.0;
+    originalTableFrameY=0.0;
+    fixedOriginalY=false;
+    tableHomeY = self.infoTable.frame.origin.y;
+    screenRect = [[UIScreen mainScreen] bounds];
+    fixedBottomDistance = screenRect.size.height - tableHomeY - self.infoTable.frame.size.height;
+    [self loadMainNavBar];
+    tableData = [[NSMutableArray alloc]init];
+
+    NSLog(@"LEGEND STATUS: %@",[self getAllContacts]);
+    
+    //Add Home Drink View
+    [self setBackgroundImage:@"bar bg image.png"];
+    //[self addDescription:[NSString stringWithFormat:@"Fill %@'s bar tab",@"Sunny"]];
+    [self addDescription:[NSString stringWithFormat:@"$0"]];
+    [self addButtons];
+    
+    //Add contacts
+    NSArray* temp = [self getAllContacts];
+    for(int i=0; i<temp.count; i++){
+        [tableData addObject:[NSString stringWithFormat:@"%@ %@",[[temp objectAtIndex:i] firstNames],[[temp objectAtIndex:i] lastNames]]];
+    }
+    
+     
 }
+
+-(void)setBackgroundImage:(NSString*)name
+{
+    UIImageView* backgroundImage = [[UIImageView alloc]initWithFrame:self.homeDrinkView.frame];
+    [backgroundImage setImage:[UIImage imageNamed:name]];
+    [self.homeDrinkView addSubview:backgroundImage];
+}
+
+-(void)addButtons
+{
+    
+    /*UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, screenRect.size.height*0.85, screenRect.size.width*0.85, screenRect.size.height*0.10);
+    NSString *imageName = [NSString stringWithFormat:@"send_button.png"];
+    UIImage *btnImage = [UIImage imageNamed:imageName];
+    [button setImage:btnImage forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
+     */
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(0, screenRect.size.height*0.87, screenRect.size.width, screenRect.size.height*0.09);
+    [button setTitle:@"Send Gift Now" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTintColor:[UIColor whiteColor]];
+    button.titleLabel.font = [UIFont fontWithName:kAchievementFontType size:30];
+    [button setBackgroundColor:UIColorFromRGB(kMasterColor)];
+    [self.homeDrinkView addSubview:button];
+    
+    UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(20,self.homeDrinkView.frame.size.height*0.85,self.homeDrinkView.frame.size.width*0.7,60)];
+    [martiniSlider addTarget:self action:@selector(martiniValueChanged:) forControlEvents:UIControlEventValueChanged];
+    martiniSlider.minimumValue = 0;
+    martiniSlider.maximumValue = 100;
+    martiniSlider.continuous = YES;
+    martiniSlider.tintColor = UIColorFromRGB(kSupportingColor);
+    martiniSlider.thumbTintColor = UIColorFromRGB(kSupportingColor);
+    [self.homeDrinkView addSubview:martiniSlider];
+    
+    martiniImageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
+    martiniImageView1.frame = CGRectMake((self.homeDrinkView.frame.size.width/2)-(0.5*100),screenRect.size.height*0.18,100,100);
+    [self.homeDrinkView addSubview:martiniImageView1];
+    
+    martiniImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
+    martiniImageView2.frame = CGRectMake(screenRect.size.width,screenRect.size.height*0.18,100,100);
+    [self.homeDrinkView addSubview:martiniImageView2];
+    
+    martiniImageView3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"martini_icon1.png"]];
+    martiniImageView3.frame = CGRectMake(screenRect.size.width,screenRect.size.height*0.18,100,100);
+    [self.homeDrinkView addSubview:martiniImageView3];
+}
+
+-(void)martiniValueChanged:(id)sender
+{
+    UISlider* martiniSliderHelper = (UISlider*)sender;
+    description.text = [NSString stringWithFormat:@"$%.0f",martiniSliderHelper.value];
+    
+    if(martiniSliderHelper.value < 33){
+        NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value];
+        NSString* imageName = [NSString stringWithFormat:@"martini_icon%@.png",iconNumber];
+        martiniImageView1.image = [UIImage imageNamed:imageName];
+        
+        //Get the second martini out of the picture!
+        if(martiniImageView2.frame.origin.x < screenRect.size.width){
+            martiniImageView2.frame = CGRectMake(martiniImageView2.frame.origin.x+10,
+                                                 martiniImageView2.frame.origin.y,
+                                                 martiniImageView2.frame.size.width,
+                                                 martiniImageView2.frame.size.height);
+        }
+        
+        //move first martini glass towards center
+        if(martiniImageView1.frame.origin.x < 110){
+            martiniImageView1.frame = CGRectMake(martiniImageView1.frame.origin.x+4,
+                                                 martiniImageView1.frame.origin.y,
+                                                 martiniImageView1.frame.size.width,
+                                                 martiniImageView1.frame.size.height);
+        }
+    }else if(martiniSliderHelper.value >= 33 && martiniSliderHelper.value < 66){
+        //Start moving the first martini glass to the left
+        if(martiniImageView1.frame.origin.x > 25){
+            martiniImageView1.frame = CGRectMake(martiniImageView1.frame.origin.x-4,
+                                                 martiniImageView1.frame.origin.y,
+                                                 martiniImageView1.frame.size.width,
+                                                 martiniImageView1.frame.size.height);
+        }
+        //Get the second martini glass to the first glass's old position
+        if(martiniImageView2.frame.origin.x > 110){
+            martiniImageView2.frame = CGRectMake(martiniImageView2.frame.origin.x-10,
+                                                 martiniImageView2.frame.origin.y,
+                                                 martiniImageView2.frame.size.width,
+                                                 martiniImageView2.frame.size.height);
+        }
+        //Start filling the second glass
+        NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value-33];
+        NSString* imageName = [NSString stringWithFormat:@"martini_icon%@.png",iconNumber];
+        martiniImageView2.image = [UIImage imageNamed:imageName];
+        
+        //Get the third glass out of here!
+        if(martiniImageView3.frame.origin.x < screenRect.size.width){
+            martiniImageView3.frame = CGRectMake(martiniImageView3.frame.origin.x+10,
+                                                 martiniImageView3.frame.origin.y,
+                                                 martiniImageView3.frame.size.width,
+                                                 martiniImageView3.frame.size.height);
+        }
+        
+    }else{
+        //Move third glass in
+        if(martiniImageView3.frame.origin.x > 200){
+            martiniImageView3.frame = CGRectMake(martiniImageView3.frame.origin.x-10,
+                                                 martiniImageView3.frame.origin.y,
+                                                 martiniImageView3.frame.size.width,
+                                                 martiniImageView3.frame.size.height);
+        }
+        
+        //Fill the third glass
+        NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value-66];
+        NSString* imageName = [NSString stringWithFormat:@"martini_icon%@.png",iconNumber];
+        martiniImageView3.image = [UIImage imageNamed:imageName];
+    }
+    
+}
+
+-(void)sendPressed:(id)sender
+{
+    NSLog(@"Send pressed");
+    BOOL valid = YES;
+    if(valid){
+        
+        /*
+         NSLog(@"Bar tab sent");
+         // Create the HUD object; view can be a UIImageView, an icon... you name it
+         UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
+         BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
+         text:@"Approved"];
+         hud.center = CGPointMake(self.center.x, self.center.y - 20);
+         
+         // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
+         [self addSubview:hud];
+         [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
+         [hud removeFromSuperview];
+         [self performSelector:@selector(backButtonPressed:) withObject:self];
+         }];
+         
+         */
+    }else{
+        UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
+        BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
+                                                       text:@"Not Approved"];
+        hud.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
+        
+        // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
+        [self.view addSubview:hud];
+        [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
+            [hud removeFromSuperview];
+            
+        }];
+        NSLog(@"Bar tab not sent");
+    }
+}
+
+-(void)addDescription:(NSString*)text
+{
+    description = [[UILabel alloc]initWithFrame:CGRectMake(screenRect.size.width*0.68,screenRect.size.height*0.4,screenRect.size.width*0.4, screenRect.size.height*0.1)];
+    description.text = text;
+    description.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f]; //Mess with font
+    description.numberOfLines = 1;
+    description.adjustsFontSizeToFitWidth = YES;
+    description.adjustsLetterSpacingToFitWidth = YES;
+    description.minimumScaleFactor = 10.0f/12.0f;
+    description.clipsToBounds = YES;
+    description.backgroundColor = [UIColor clearColor];
+    description.textColor = [UIColor whiteColor];
+    description.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:description];
+}
+
 
 
 -(void)chocolateButtonPressed:(id)sender
@@ -413,7 +608,7 @@
     UILabel *friendName = [[UILabel alloc] initWithFrame:CGRectMake(whiteTableCloth.frame.origin.x,95,screenRect.size
                                                                     .width,20)];
     NSString* nameHelper = [tableData objectAtIndex:indexPath.row];
-    friendName.text = [NSString stringWithFormat:@"%@",[[nameHelper componentsSeparatedByString:@" "]objectAtIndex:0]];
+    friendName.text = [tableData objectAtIndex:indexPath.row];
     friendName.textColor = [UIColor whiteColor];
     friendName.backgroundColor=UIColorFromRGB(kSupportingColor);
     friendName.numberOfLines = 1;
@@ -530,7 +725,8 @@
     [cell.contentView addSubview:martiniImageView3];
     
     //Martini Slider
-    UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(60, martiniImageView.frame.size.height+martiniImageView.frame.origin.y+10, screenRect.size.width-120, 40)];
+   // UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(60, martiniImageView.frame.size.height+martiniImageView.frame.origin.y+10, screenRect.size.width-120, 40)];
+    UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(60, martiniImageView.frame.size.height+martiniImageView.frame.origin.y+100, screenRect.size.width-120, 40)];
     [martiniSlider addTarget:self action:@selector(martiniValueChanged:) forControlEvents:UIControlEventValueChanged];
     martiniSlider.minimumValue = 0;
     martiniSlider.maximumValue = 100;
@@ -958,6 +1154,132 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if(labelSize.height <= label.frame.size.height) return true;
     
     return false;
+}
+
+//ADDRESS
+-(NSArray *)getAllContacts
+{
+    
+    CFErrorRef *error = nil;
+    
+    
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    
+    __block BOOL accessGranted = NO;
+    if (ABAddressBookRequestAccessWithCompletion != NULL) { // we're on iOS 6
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            accessGranted = granted;
+            dispatch_semaphore_signal(sema);
+        });
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        
+    }
+    else { // we're on iOS 5 or older
+        accessGranted = YES;
+    }
+    
+    if (accessGranted) {
+        
+#ifdef DEBUG
+        NSLog(@"Fetching contact info ----> ");
+#endif
+        
+        
+        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+        ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+        CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName);
+        CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+        NSMutableArray* items = [NSMutableArray arrayWithCapacity:nPeople];
+        
+        
+        for (int i = 0; i < nPeople; i++)
+        {
+            ContactsData *contacts = [ContactsData new];
+            
+            ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
+            
+            //get First Name and Last Name
+            
+            contacts.firstNames = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+            
+            contacts.lastNames =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+            
+            if (!contacts.firstNames) {
+                contacts.firstNames = @"";
+            }
+            if (!contacts.lastNames) {
+                contacts.lastNames = @"";
+            }
+            
+            // get contacts picture, if pic doesn't exists, show standart one
+            
+            NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
+            contacts.image = [UIImage imageWithData:imgData];
+            if (!contacts.image) {
+                contacts.image = [UIImage imageNamed:@"NOIMG.png"];
+            }
+            //get Phone Numbers
+            
+            NSMutableArray *phoneNumbers = [[NSMutableArray alloc] init];
+            
+            ABMultiValueRef multiPhones = ABRecordCopyValue(person, kABPersonPhoneProperty);
+            for(CFIndex i=0;i<ABMultiValueGetCount(multiPhones);i++) {
+                
+                CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(multiPhones, i);
+                NSString *phoneNumber = (__bridge NSString *) phoneNumberRef;
+                [phoneNumbers addObject:phoneNumber];
+                
+                //NSLog(@"All numbers %@", phoneNumbers);
+                
+            }
+            
+            
+            [contacts setNumbers:phoneNumbers];
+            
+            //get Contact email
+            
+            NSMutableArray *contactEmails = [NSMutableArray new];
+            ABMultiValueRef multiEmails = ABRecordCopyValue(person, kABPersonEmailProperty);
+            
+            for (CFIndex i=0; i<ABMultiValueGetCount(multiEmails); i++) {
+                CFStringRef contactEmailRef = ABMultiValueCopyValueAtIndex(multiEmails, i);
+                NSString *contactEmail = (__bridge NSString *)contactEmailRef;
+                
+                [contactEmails addObject:contactEmail];
+                // NSLog(@"All emails are:%@", contactEmails);
+                
+            }
+            
+            [contacts setEmails:contactEmails];
+            
+            
+            
+            [items addObject:contacts];
+            
+#ifdef DEBUG
+            //NSLog(@"Person is: %@", contacts.firstNames);
+            //NSLog(@"Phones are: %@", contacts.numbers);
+            //NSLog(@"Email is:%@", contacts.emails);
+#endif
+            
+            
+            
+            
+        }
+        return items;
+        
+        
+        
+    } else {
+#ifdef DEBUG
+        NSLog(@"Cannot fetch Contacts :( ");
+#endif
+        return NO;
+        
+        
+    }
+    
 }
 
 

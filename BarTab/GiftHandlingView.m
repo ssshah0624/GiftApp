@@ -387,7 +387,8 @@
 -(void)martiniValueChanged:(id)sender
 {
     UISlider* martiniSliderHelper = (UISlider*)sender;
-    description.text = [NSString stringWithFormat:@"Fill %@'s bar tab ($%.0f)",self.firstName,martiniSliderHelper.value];
+    //description.text = [NSString stringWithFormat:@"Fill %@'s bar tab ($%.0f)",self.firstName,martiniSliderHelper.value];
+    description.text = [NSString stringWithFormat:@"($%.0f)",martiniSliderHelper.value];
     
     if(martiniSliderHelper.value < 33){
         NSString* iconNumber = [NSString stringWithFormat:@"%.f", martiniSliderHelper.value];

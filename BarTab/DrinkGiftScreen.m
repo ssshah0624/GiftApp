@@ -236,6 +236,7 @@
     [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:button];
     
+    //UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(20,screenRect.size.height*0.72,screenRect.size.width-50,60)];
     UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(20,screenRect.size.height*0.72,screenRect.size.width-50,60)];
     [martiniSlider addTarget:self action:@selector(martiniValueChanged:) forControlEvents:UIControlEventValueChanged];
     martiniSlider.minimumValue = 0;
@@ -349,6 +350,8 @@
     NSLog(@"Send pressed");
     BOOL valid = YES;
     if(valid){
+        
+        /*
         NSLog(@"Bar tab sent");
         // Create the HUD object; view can be a UIImageView, an icon... you name it
         UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
@@ -362,6 +365,8 @@
             [hud removeFromSuperview];
             [self performSelector:@selector(backButtonPressed:) withObject:self];
         }];
+         
+         */
     }else{
         UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
         BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView

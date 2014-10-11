@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5BE1C8C345D480D894C6261"
+               BlueprintIdentifier = "821CA9EAB97643F5A302ACBB"
                BuildableName = "libPods-BarTab-Stripe.a"
                BlueprintName = "Pods-BarTab-Stripe"
                ReferencedContainer = "container:Pods.xcodeproj">

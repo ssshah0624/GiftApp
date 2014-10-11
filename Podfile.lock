@@ -2,13 +2,21 @@ PODS:
   - AMWaveTransition (0.5.2)
   - BDKNotifyHUD (1.1.0)
   - CBZSplashView (0.1.1)
+  - CMDQueryStringSerialization (0.2.0)
   - MBAlertView (1.1.0)
   - PaymentKit (1.0.5)
   - pop (1.0.6)
   - RCLighting (0.1):
     - pop
+  - SSKeychain (1.2.2)
   - Stripe (1.1.4):
     - PaymentKit (~> 1.0.4)
+  - VENCore (3.0.1):
+    - CMDQueryStringSerialization (~> 0.2.0)
+  - Venmo-iOS-SDK (1.3.0):
+    - CMDQueryStringSerialization (~> 0.2.0)
+    - SSKeychain (~> 1.2.2)
+    - VENCore (~> 3.0.0)
 
 DEPENDENCIES:
   - AMWaveTransition
@@ -17,15 +25,20 @@ DEPENDENCIES:
   - MBAlertView (~> 1.1.0)
   - RCLighting
   - Stripe
+  - Venmo-iOS-SDK (~> 1.3)
 
 SPEC CHECKSUMS:
   AMWaveTransition: bb1ee1c4d55d88c9ebda9e69b3ece78d150d20c4
   BDKNotifyHUD: dd7c23043da457c72056fb4a0c8bae9967acff28
   CBZSplashView: 010064ee72396c6d9c9293b72416152ca1636c27
+  CMDQueryStringSerialization: e53570ccbce6004acba30b1c1210e254644cdb92
   MBAlertView: 0044095d026308882a807e55dd2b4f89f8be5702
   PaymentKit: 14b54835f57ae9e2bf5628140fcd67001740cba2
   pop: e518794da38942c05255eb64b36d894e70cb4f00
   RCLighting: eb725aa0d4ece8b43b80123e2cf2734d0322a478
+  SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
   Stripe: a0ed1c0675a3c36f6e8d575820cfec1dc9335f53
+  VENCore: 944d7fc21a27670cf57342b35ce3d715ce514ca5
+  Venmo-iOS-SDK: 2915f7c1df71c51025409be9f507a341248b8735
 
 COCOAPODS: 0.33.1
