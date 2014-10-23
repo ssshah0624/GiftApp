@@ -305,7 +305,7 @@
                         <outlet property="homeDrinkView" destination="dPB-pL-N5K" id="m4Z-eu-MO3"/>
                         <outlet property="infoTable" destination="aRC-bY-Jv7" id="4E8-cT-uEV"/>
                         <outlet property="profilePictureView" destination="utx-Yu-v5Y" id="ahT-4g-Jhm"/>
-                        <outlet property="searchBar" destination="ISH-RJ-t2E" id="2hT-oT-Mck"/>
+                        <outlet property="searchBar" destination="ISH-RJ-t2E" id="x2t-YU-uAS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdI-vL-GrI" userLabel="First Responder" sceneMemberID="firstResponder"/>

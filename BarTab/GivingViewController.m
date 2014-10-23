@@ -123,76 +123,6 @@
     //[self startActivityIndicator];
     //[self populateFriendIDFromStatus]; //sets off a chain of events
     
-    /*
-    tableData =  [NSMutableArray arrayWithObjects:
-                  @"Abhi Ramesh",
-                  @"Edward Lando",
-                  @"Varshil Patel",
-                  @"Nisha Shah",
-                  @"Shiv Patel",
-                  @"Nilesh Kavthekar",
-                  @"Max Wolff",
-                  @"Krishan Nagin",
-                  @"Apoorva Shah",
-                  nil];
-    friendPictures = [NSMutableArray arrayWithObjects:
-                      @"sampleAbhiSunny.jpg",
-                      @"sampleEdward.jpg",
-                      @"sampleVarshil.jpg",
-                      @"sampleNisha.jpg",
-                      @"shiv.jpg",
-                      @"nilesh.jpg",
-                      @"max.jpg",
-                      @"krishan.jpg",
-                      @"apoorva.jpg",
-                      nil];
-    friendEvents = [NSMutableArray arrayWithObjects:
-                    @"Voting has officially begun. Abhi Ramesh for President. Make the Abhious Choice!!!",
-                    @"You asked for flying cars and eternal youth. We made Notice 2.0. Under-promise, over-deliver.",
-                    @"Goodbye New York, hello San Francisco. Cheers to a new chapter!",
-                    @"Congradulations to me...can't believe it's been 4 years",
-                    @"Finally legal, 18 years strong. #SigRho18",
-                    @"Welcome to Dorm Room Fund Lauren Reeder, Matthew Gibstein, Nilesh Kavthekar and Tim Miller!!",
-                    @"Signed @ Insight",
-                    @"Bittersweet.. so sad to leave all my wonderful friends at penn, but glad to go home. It's been the four best months of my life",
-                    @"First day of dental school! And so begins my addiction to coffee",
-                    nil];
-    eventTimes = [NSMutableArray arrayWithObjects:@"Today",@"Today",@"Yesterday",@"2 days ago", nil];
-    selectedVenues = [NSMutableArray arrayWithObjects:@"City Tap House",@"Churrasco",@"Stroller Pizza",@"Quizne",@"KFC",@"Fabio",@"Excelente", nil];
-    
-    popTipShowing=false;
-    
-    self.view.backgroundColor = UIColorFromRGB(kBackgroundColor);
-    self.infoTable.backgroundColor = self.view.backgroundColor;
-    self.infoTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.infoTable.separatorColor = [UIColor clearColor];
-    self.infoTable.frame = CGRectMake(self.infoTable.frame.origin.x,
-                                      self.infoTable.frame.origin.y,
-                                      self.infoTable.frame.size.width,
-                                      self.infoTable.frame.size.height+self.infoCell.frame.size.height);
-    
-    self.interactive = [[AMWaveTransition alloc] init];
-    
-    originalY=0.0;
-    originalTableFrameY=0.0;
-    fixedOriginalY=false;
-    tableHomeY = self.infoTable.frame.origin.y;
-    screenRect = [[UIScreen mainScreen] bounds];
-    fixedBottomDistance = screenRect.size.height - tableHomeY - self.infoTable.frame.size.height;
-    [self loadMainNavBar];
-    
-    //Configure new gift giving screen
-    tableRowSelected = [[NSMutableArray alloc]init];
-    int temp = 0;
-    while(temp<tableData.count){
-        [tableRowSelected addObject:[NSNumber numberWithBool:NO]];
-        temp++;
-    }
-    
-    cellToViewItems = [[NSMutableDictionary alloc]init];
-    selectedCellInfo = [[NSDictionary alloc]init];
-     */
-    
     /***NEW GIFT GIVING SCREEN***/
     self.view.backgroundColor = UIColorFromRGB(kBackgroundColor);
     allContacts = [[NSMutableDictionary alloc]init];
@@ -205,9 +135,8 @@
     fixedBottomDistance = screenRect.size.height - tableHomeY - self.infoTable.frame.size.height;
     [self loadMainNavBar];
     tableData = [[NSMutableArray alloc]init];
-
+    
     [self getAllContacts];
-    //NSLog(@"LEGEND STATUS: %@",[self getAllContacts]);
     
     //Add Home Drink View
     [self setBackgroundImage:@"bar bg image.png"];
@@ -220,8 +149,13 @@
     for(int i=0; i<temp.count; i++){
         [tableData addObject:[NSString stringWithFormat:@"%@ %@",[[temp objectAtIndex:i] firstNames],[[temp objectAtIndex:i] lastNames]]];
     }
-    objects = tableData;
-     
+    //objects = tableData;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+    
 }
 
 -(void)setBackgroundImage:(NSString*)name
@@ -235,11 +169,11 @@
 {
     
     /*UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, screenRect.size.height*0.85, screenRect.size.width*0.85, screenRect.size.height*0.10);
-    NSString *imageName = [NSString stringWithFormat:@"send_button.png"];
-    UIImage *btnImage = [UIImage imageNamed:imageName];
-    [button setImage:btnImage forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
+     button.frame = CGRectMake(0, screenRect.size.height*0.85, screenRect.size.width*0.85, screenRect.size.height*0.10);
+     NSString *imageName = [NSString stringWithFormat:@"send_button.png"];
+     UIImage *btnImage = [UIImage imageNamed:imageName];
+     [button setImage:btnImage forState:UIControlStateNormal];
+     [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
      */
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = CGRectMake(0, screenRect.size.height*0.91, screenRect.size.width, screenRect.size.height*0.09);
@@ -386,47 +320,47 @@
     
     
     /*
-    BOOL valid = YES;
-    if(valid){
-        //Convert desc to int
-        NSString *originalString = description.text;
-        NSString *numberString;
-        NSScanner *scanner = [NSScanner scannerWithString:originalString];
-        NSCharacterSet *numbers = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-        [scanner scanUpToCharactersFromSet:numbers intoString:NULL];
-        [scanner scanCharactersFromSet:numbers intoString:&numberString];
-         NSLog(@"Bar tab sent to %@ at %@ worth $%li", selectedContactFirstName, selectedContactPhoneNumber, (long)[numberString integerValue]);
-         // Create the HUD object; view can be a UIImageView, an icon... you name it
-         UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
-         BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
-         text:@"Approved"];
-         hud.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
-        
-        //SEND THE REQUEST
-        ServerCalls *drinkGiftRequest = [[ServerCalls alloc]init];
-        NSLog(@"User auth: %@", [drinkGiftRequest userAuthToken]);
-        [drinkGiftRequest postGift:[drinkGiftRequest userAuthToken] :@"drinks" :selectedContactPhoneNumber :numberString];
-        
-         // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
-         [self.view addSubview:hud];
-         [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
-         [hud removeFromSuperview];
-         //[self performSelector:@selector(backButtonPressed:) withObject:self];
-         }];
-    }else{
-        UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
-        BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
-                                                       text:@"Not Approved"];
-        hud.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
-        
-        // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
-        [self.view addSubview:hud];
-        [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
-            [hud removeFromSuperview];
-            
-        }];
-        NSLog(@"Bar tab not sent");
-    }
+     BOOL valid = YES;
+     if(valid){
+     //Convert desc to int
+     NSString *originalString = description.text;
+     NSString *numberString;
+     NSScanner *scanner = [NSScanner scannerWithString:originalString];
+     NSCharacterSet *numbers = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+     [scanner scanUpToCharactersFromSet:numbers intoString:NULL];
+     [scanner scanCharactersFromSet:numbers intoString:&numberString];
+     NSLog(@"Bar tab sent to %@ at %@ worth $%li", selectedContactFirstName, selectedContactPhoneNumber, (long)[numberString integerValue]);
+     // Create the HUD object; view can be a UIImageView, an icon... you name it
+     UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
+     BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
+     text:@"Approved"];
+     hud.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
+     
+     //SEND THE REQUEST
+     ServerCalls *drinkGiftRequest = [[ServerCalls alloc]init];
+     NSLog(@"User auth: %@", [drinkGiftRequest userAuthToken]);
+     [drinkGiftRequest postGift:[drinkGiftRequest userAuthToken] :@"drinks" :selectedContactPhoneNumber :numberString];
+     
+     // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
+     [self.view addSubview:hud];
+     [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
+     [hud removeFromSuperview];
+     //[self performSelector:@selector(backButtonPressed:) withObject:self];
+     }];
+     }else{
+     UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
+     BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
+     text:@"Not Approved"];
+     hud.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
+     
+     // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
+     [self.view addSubview:hud];
+     [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
+     [hud removeFromSuperview];
+     
+     }];
+     NSLog(@"Bar tab not sent");
+     }
      */
 }
 
@@ -472,8 +406,8 @@
     RoseGiftScreen *roseGiftScreen = [[RoseGiftScreen alloc] initWithFrame:self.view.frame andADictionary:selectedCellInfo];
     [self.view addSubview:roseGiftScreen];
     
-//    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-//    [roseGiftScreen addGestureRecognizer:pan];
+    //    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    //    [roseGiftScreen addGestureRecognizer:pan];
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
@@ -486,8 +420,8 @@
     DrinkGiftScreen* drinkGiftScreen = [[DrinkGiftScreen alloc] initWithFrame:CGRectMake(0,mainNavBar.frame.size.height * 0.5,screenRect.size.width,screenRect.size.height) andADictionary:selectedCellInfo];
     [self.view addSubview:drinkGiftScreen];
     
-//    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-//    [drinkGiftScreen addGestureRecognizer:pan];
+    //    UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    //    [drinkGiftScreen addGestureRecognizer:pan];
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 }
@@ -540,10 +474,10 @@
 -(void)profilePictureButtonPressed:(id)sender{
     
     /*
-    MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
-    vc.startingIndex = @"0";
-    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:vc animated:YES completion:NULL];
+     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+     vc.startingIndex = @"0";
+     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+     [self presentViewController:vc animated:YES completion:NULL];
      */
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
@@ -552,10 +486,10 @@
 
 -(void)searchButtonPressed:(id)sender{
     /*
-    MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
-    vc.startingIndex = @"2";
-    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:vc animated:YES completion:NULL];
+     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
+     vc.startingIndex = @"2";
+     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+     [self presentViewController:vc animated:YES completion:NULL];
      */
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
@@ -637,7 +571,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return [tableData count];
-    return isFiltered ? searchedData.count : objects.count;
+    return isFiltered ? searchedData.count : tableData.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -683,7 +617,6 @@
     //Locked in CGRect position
     
     cell.textLabel.text=@"";
-    //cell.textLabel.text = isFiltered ? searchedData[indexPath.row] : objects[indexPath.row];
     cell.detailTextLabel.text = @"";
     
     //Rounded tablecloth
@@ -701,17 +634,18 @@
     //UILabel *friendName = [[UILabel alloc] initWithFrame:CGRectMake(whiteTableCloth.frame.origin.x,95,screenRect.size.width,20)];
     UILabel *friendName = [[UILabel alloc] initWithFrame:CGRectMake(whiteTableCloth.frame.origin.x,0,screenRect.size.width*0.5,30)];
     NSString* nameHelper = [tableData objectAtIndex:indexPath.row];
-    friendName.text = [tableData objectAtIndex:indexPath.row];
+    //friendName.text = [tableData objectAtIndex:indexPath.row];
+    friendName.text = isFiltered ? searchedData[indexPath.row] : tableData[indexPath.row];
     friendName.textColor = UIColorFromRGB(kMasterColor);
     //friendName.textColor = [UIColor whiteColor];
     
     /*
-    float red = arc4random() % 255 / 255.0;
-    float green = arc4random() % 255 / 255.0;
-    float blue = arc4random() % 255 / 255.0;
-    UIColor *color = [UIColor colorWithRed:0 green:green blue:blue alpha:1.0];
+     float red = arc4random() % 255 / 255.0;
+     float green = arc4random() % 255 / 255.0;
+     float blue = arc4random() % 255 / 255.0;
+     UIColor *color = [UIColor colorWithRed:0 green:green blue:blue alpha:1.0];
      */
-   // UIColor *color = UIColorFromRGB(kCellColor);
+    // UIColor *color = UIColorFromRGB(kCellColor);
     //friendName.backgroundColor=UIColorFromRGB(kCellColor);
     
     
@@ -829,7 +763,7 @@
     [cell.contentView addSubview:martiniImageView3];
     
     //Martini Slider
-   // UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(60, martiniImageView.frame.size.height+martiniImageView.frame.origin.y+10, screenRect.size.width-120, 40)];
+    // UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(60, martiniImageView.frame.size.height+martiniImageView.frame.origin.y+10, screenRect.size.width-120, 40)];
     UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(60, martiniImageView.frame.size.height+martiniImageView.frame.origin.y+100, screenRect.size.width-120, 40)];
     [martiniSlider addTarget:self action:@selector(martiniValueChanged:) forControlEvents:UIControlEventValueChanged];
     martiniSlider.minimumValue = 0;
@@ -928,7 +862,7 @@
     
     BOOL current = [[tableRowSelected objectAtIndex:indexPath.row]boolValue];
     [tableRowSelected replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:!current]];
-
+    
     finalName = [tableData objectAtIndex:indexPath.row];
     
     if([[tableRowSelected objectAtIndex:indexPath.row]boolValue]){
@@ -945,11 +879,16 @@
         [greenView removeFromSuperview];
     }
     
-    NSLog(@"TEST:::CONTACT::::%@ %@ @ %@",
-          [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] firstName],
-          [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] lastName],
-          [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] mobileNumber]
-          );
+    if(self.searchBar.text.length >0){
+        NSLog(@"Test contact: %@", [searchedData objectAtIndex:indexPath.row]);
+    }
+    else{
+        NSLog(@"Test contact %@ %@ @ %@",
+              [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] firstName],
+              [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] lastName],
+              [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] mobileNumber]
+              );
+    }
     
     selectedContactFirstName = [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] firstName];
     selectedContactLastName = [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] lastName];
@@ -977,8 +916,8 @@
     [UIView setAnimationDuration:0.5];
     [UIView setAnimationBeginsFromCurrentState:YES];
     //FOR POPUP VIEW!!!
-    popup.frame = CGRectMake(popup.frame.origin.x, (popup.frame.origin.y -bywhat), popup.frame.size.width, popup.frame.size.height);
-    //self.view.frame=CGRectMake(self.view.frame.origin.x, (self.view.frame.origin.y -bywhat), self.view.frame.size.width, self.view.frame.size.height);
+    //popup.frame = CGRectMake(popup.frame.origin.x, (popup.frame.origin.y -bywhat), popup.frame.size.width, popup.frame.size.height);
+    self.view.frame=CGRectMake(self.view.frame.origin.x, (self.view.frame.origin.y -bywhat), self.view.frame.size.width, self.view.frame.size.height);
     [UIView commitAnimations];
 }
 
@@ -1062,20 +1001,20 @@
     float percentHidden = (numerator*1.0)/(denominator*1.0);
     
     /*
-    if(percentHidden>-20.0){
-        
-        mainNavBar.frame = CGRectMake(mainNavBar.frame.origin.x,
-                                      mainNavBarOriginY-(mainNavBar.frame.size.height*(2*percentHidden)),
-                                      mainNavBar.frame.size.width,
-                                      mainNavBar.frame.size.height);
-        mainNavBar.alpha=1-percentHidden;
-        
-        CGRect tvbounds = [self.infoTable bounds];
-        float new = tableHomeY*(1-(1.8*percentHidden));
-        float bottomCorrection = screenRect.size.height - fixedBottomDistance - self.infoTable.frame.size.height - new;
-        
-        if(tvbounds.origin.y<300 && new>20) self.infoTable.frame =CGRectMake(tvbounds.origin.x, new, tvbounds.size.width, tvbounds.size.height+bottomCorrection);
-    }
+     if(percentHidden>-20.0){
+     
+     mainNavBar.frame = CGRectMake(mainNavBar.frame.origin.x,
+     mainNavBarOriginY-(mainNavBar.frame.size.height*(2*percentHidden)),
+     mainNavBar.frame.size.width,
+     mainNavBar.frame.size.height);
+     mainNavBar.alpha=1-percentHidden;
+     
+     CGRect tvbounds = [self.infoTable bounds];
+     float new = tableHomeY*(1-(1.8*percentHidden));
+     float bottomCorrection = screenRect.size.height - fixedBottomDistance - self.infoTable.frame.size.height - new;
+     
+     if(tvbounds.origin.y<300 && new>20) self.infoTable.frame =CGRectMake(tvbounds.origin.x, new, tvbounds.size.width, tvbounds.size.height+bottomCorrection);
+     }
      */
     
     float reload_distance = 10;
@@ -1409,6 +1348,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 //SEARCH
 #pragma mark - SearchBar Delegate -
+
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     
     if (searchText.length == 0)
@@ -1418,17 +1358,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSMutableArray *tmpSearched = [[NSMutableArray alloc] init];
     
-    for (NSString *string in objects) {
-        
-        //we are going for case insensitive search here
-        NSRange range = [string rangeOfString:searchText
-                                      options:NSCaseInsensitiveSearch];
-        
-        if (range.location != NSNotFound)
-            [tmpSearched addObject:string];
+    for (NSString *string in tableData) {
+        if(searchText.length <= string.length){
+            NSString* tempString = [string substringToIndex:searchText.length];
+            //we are going for case insensitive search here
+            NSRange range = [tempString rangeOfString:searchText
+                                              options:NSCaseInsensitiveSearch];
+            
+            if (range.location != NSNotFound)
+                [tmpSearched addObject:string];
+        }
     }
     
     searchedData = tmpSearched.copy;
+    
+    /*
+    [tableData removeAllObjects];
+    for(int i=0; i<searchedData.count; i++){
+        [tableData addObject:[NSString stringWithFormat:@"%@ %@",[[searchedData objectAtIndex:i] firstNames],[[searchedData objectAtIndex:i] lastNames]]];
+    }
+    */
     
     [self.infoTable reloadData];
 }
@@ -1437,9 +1386,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self dismissKeyboard];
 }
 
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    [self performAnimations:150];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    [self performAnimations:-150];
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
+
+
 
 
 
