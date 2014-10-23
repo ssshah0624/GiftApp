@@ -67,12 +67,12 @@
 {
     [super viewDidLoad];
     masterArrayOfDictionaries = [[NSMutableArray alloc]init];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Deepika P." giftType:@"flower" giftQuantity:@"1" giftStatus:@"2" customMessage:@"Congrats on the new movie, Sunny! Shahrukh doesn't stand a chance with you on the set." deliveryDate:@"9/2/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Deepika P." giftType:@"flower" giftQuantity:@"1" giftStatus:@"2" customMessage:@"Go Sunny!" deliveryDate:@"9/2/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
     [masterArrayOfDictionaries addObject:[self fillDictionary:@"Dilip" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"1" customMessage:@"I'll trade you designs for chocolates. Not a bad deal?" deliveryDate:@"9/1/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Kishan Shah" giftType:@"drink" giftQuantity:@"100" giftStatus:@"1" customMessage:@"Good luck in India! Come visit SF when you get a chance." deliveryDate:@"8/31/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ronak Gandhi" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"2" customMessage:@"WOOO NEW APT" deliveryDate:@"8/30/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ankur Goyal" giftType:@"drink" giftQuantity:@"1" giftStatus:@"1" customMessage:@"Living in NJ 4ever" deliveryDate:@"8/29/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
-    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ricky Hong" giftType:@"flower" giftQuantity:@"1" giftStatus:@"1" customMessage:@"Nice job on the Salsa award Jungwoo" deliveryDate:@"8/25/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Kishan Shah" giftType:@"drink" giftQuantity:@"100" giftStatus:@"1" customMessage:@"TEST" deliveryDate:@"8/31/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"n"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ronak Gandhi" giftType:@"chocolate" giftQuantity:@"2" giftStatus:@"2" customMessage:@"TEST" deliveryDate:@"8/30/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ankur Goyal" giftType:@"drink" giftQuantity:@"1" giftStatus:@"1" customMessage:@"TEST" deliveryDate:@"8/29/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
+    [masterArrayOfDictionaries addObject:[self fillDictionary:@"Ricky Hong" giftType:@"flower" giftQuantity:@"1" giftStatus:@"1" customMessage:@"TEST" deliveryDate:@"8/25/2014" gifterImage:@"N/A" venueImage:@"N/A" giftOpened:@"y"]];
     
     cellToGiftView = [[NSMutableDictionary alloc]init];
     
@@ -384,9 +384,15 @@ forRowAtIndexPath: (NSIndexPath*)indexPath
     [self presentViewController:vc animated:YES completion:NULL];
      */
     
+    /*
     NSString * storyboardName = @"MainStoryboard";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
     UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
+     */
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
     [self presentViewController:vc animated:YES completion:nil];
 }
 

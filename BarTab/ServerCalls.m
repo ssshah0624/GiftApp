@@ -77,13 +77,13 @@
 
 }
 
--(void)postGift:(NSString*)authToken :(NSString*)giftType :(NSString*)amount
+-(void)postGift:(NSString*)authToken :(NSString*)giftType :(NSString*)phoneNumber :(NSString*)amount
 {
     NSError *error;
     NSDictionary *requestParameters =  [[NSDictionary alloc] initWithObjectsAndKeys:
                                         authToken, @"user_token",
                                         giftType, @"name",
-                                        @"9737695622",@"phone",
+                                        phoneNumber,@"phone",
                                         amount, @"amount",
                                         nil];
     NSData *JSONData = [NSJSONSerialization dataWithJSONObject:requestParameters

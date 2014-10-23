@@ -12,7 +12,8 @@
 #define kMasterColor 0x51B0BD
 #define kBackgroundColor 0xE9E9E9
 #define kSupportingColor 0x51bdb8
-#define kCellHeight 120
+#define kCellColor 0xbd5e51
+#define kCellHeight 60
 #define kAchievementFont 20.0f
 #define kAchievementFontType @"GillSans-Light"
 
@@ -51,6 +52,7 @@
     BOOL popTipShowing;
     
     //Tab value
+    NSString* finalName;
     UILabel *giftValue;
     UITextField* tabValueHere;
     
@@ -84,6 +86,21 @@
     UIImageView* martiniImageView3;
     UILabel* description;
     
+    
+    //Contact related
+    NSMutableDictionary* allContacts;
+    NSString *selectedContactFirstName;
+    NSString *selectedContactLastName;
+    NSString *selectedContactPhoneNumber;
+    
+    //Transaction MGMT
+    KLCPopup* confirmTransaction;
+    
+    //SEARCH STUFF
+@private
+    NSArray *objects;
+    NSArray *searchedData;
+    BOOL isFiltered;
 }
 
 @end
@@ -178,6 +195,7 @@
     
     /***NEW GIFT GIVING SCREEN***/
     self.view.backgroundColor = UIColorFromRGB(kBackgroundColor);
+    allContacts = [[NSMutableDictionary alloc]init];
     
     originalY=0.0;
     originalTableFrameY=0.0;
@@ -188,7 +206,8 @@
     [self loadMainNavBar];
     tableData = [[NSMutableArray alloc]init];
 
-    NSLog(@"LEGEND STATUS: %@",[self getAllContacts]);
+    [self getAllContacts];
+    //NSLog(@"LEGEND STATUS: %@",[self getAllContacts]);
     
     //Add Home Drink View
     [self setBackgroundImage:@"bar bg image.png"];
@@ -201,7 +220,7 @@
     for(int i=0; i<temp.count; i++){
         [tableData addObject:[NSString stringWithFormat:@"%@ %@",[[temp objectAtIndex:i] firstNames],[[temp objectAtIndex:i] lastNames]]];
     }
-    
+    objects = tableData;
      
 }
 
@@ -223,13 +242,13 @@
     [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
      */
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(0, screenRect.size.height*0.87, screenRect.size.width, screenRect.size.height*0.09);
+    button.frame = CGRectMake(0, screenRect.size.height*0.91, screenRect.size.width, screenRect.size.height*0.09);
     [button setTitle:@"Send Gift Now" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(sendPressed:) forControlEvents:UIControlEventTouchUpInside];
     [button setTintColor:[UIColor whiteColor]];
     button.titleLabel.font = [UIFont fontWithName:kAchievementFontType size:30];
     [button setBackgroundColor:UIColorFromRGB(kMasterColor)];
-    [self.homeDrinkView addSubview:button];
+    [self.view addSubview:button];
     
     UISlider *martiniSlider = [[UISlider alloc] initWithFrame:CGRectMake(20,self.homeDrinkView.frame.size.height*0.85,self.homeDrinkView.frame.size.width*0.7,60)];
     [martiniSlider addTarget:self action:@selector(martiniValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -326,25 +345,74 @@
 -(void)sendPressed:(id)sender
 {
     NSLog(@"Send pressed");
+    //check if credit card is linked to account- if not, prompt for info
+    
+    //Pop up confirmation screen
+    UIView* contentView = [[UIView alloc] init];
+    contentView.backgroundColor = UIColorFromRGB(kCellColor);
+    contentView.frame = CGRectMake(20, screenRect.size.height*0.3, screenRect.size.width-40, screenRect.size.height*0.22);
+    
+    UILabel* confirmationText = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, contentView.frame.size.width-40, contentView.frame.size.height*0.4)];
+    confirmationText.text = [NSString stringWithFormat:@"Would you like to send %@ a %@ bar tab?",selectedContactFirstName, description.text];
+    [confirmationText setFont:[UIFont fontWithName:kAchievementFontType size:20]];
+    [confirmationText setTextColor:[UIColor whiteColor]];
+    confirmationText.numberOfLines=0;
+    confirmationText.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:confirmationText];
+    
+    //Add Save + Cancel Buttons
+    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [cancelButton addTarget:self
+                     action:@selector(cancelTransaction:)
+           forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    cancelButton.frame = CGRectMake(contentView.frame.origin.x,screenRect.size.height*0.13,contentView.frame.size.width*0.5,50);
+    //[cancelButton setBackgroundColor:UIColorFromRGB(kBoxColor2)];
+    [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [contentView addSubview:cancelButton];
+    
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [saveButton addTarget:self
+                   action:@selector(continueTransaction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setTitle:@"Continue" forState:UIControlStateNormal];
+    saveButton.frame = CGRectMake(contentView.frame.size.width*0.5,screenRect.size.height*0.13,contentView.frame.size.width*0.5,50);
+    //[saveButton setBackgroundColor:UIColorFromRGB(kBoxColor1)];
+    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [contentView addSubview:saveButton];
+    
+    confirmTransaction = [KLCPopup popupWithContentView:contentView];
+    [confirmTransaction show];
+    
+    
+    /*
     BOOL valid = YES;
     if(valid){
-        
-        /*
-         NSLog(@"Bar tab sent");
+        //Convert desc to int
+        NSString *originalString = description.text;
+        NSString *numberString;
+        NSScanner *scanner = [NSScanner scannerWithString:originalString];
+        NSCharacterSet *numbers = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+        [scanner scanUpToCharactersFromSet:numbers intoString:NULL];
+        [scanner scanCharactersFromSet:numbers intoString:&numberString];
+         NSLog(@"Bar tab sent to %@ at %@ worth $%li", selectedContactFirstName, selectedContactPhoneNumber, (long)[numberString integerValue]);
          // Create the HUD object; view can be a UIImageView, an icon... you name it
          UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
          BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
          text:@"Approved"];
-         hud.center = CGPointMake(self.center.x, self.center.y - 20);
-         
+         hud.center = CGPointMake(self.view.center.x, self.view.center.y - 20);
+        
+        //SEND THE REQUEST
+        ServerCalls *drinkGiftRequest = [[ServerCalls alloc]init];
+        NSLog(@"User auth: %@", [drinkGiftRequest userAuthToken]);
+        [drinkGiftRequest postGift:[drinkGiftRequest userAuthToken] :@"drinks" :selectedContactPhoneNumber :numberString];
+        
          // Animate it, then get rid of it. These settings last 1 second, takes a half-second fade.
-         [self addSubview:hud];
+         [self.view addSubview:hud];
          [hud presentWithDuration:1.0f speed:0.5f inView:self completion:^{
          [hud removeFromSuperview];
-         [self performSelector:@selector(backButtonPressed:) withObject:self];
+         //[self performSelector:@selector(backButtonPressed:) withObject:self];
          }];
-         
-         */
     }else{
         UIView* tempView = [[UIView alloc]initWithFrame:CGRectMake(0,0,50,20)];
         BDKNotifyHUD *hud = [BDKNotifyHUD notifyHUDWithView:tempView
@@ -359,11 +427,22 @@
         }];
         NSLog(@"Bar tab not sent");
     }
+     */
+}
+
+-(void)continueTransaction:(id)sender{
+    //Send Abhi Stripe token
+    
+}
+
+-(void)cancelTransaction:(id)sender{
+    //Future: Store details to help with future transactions
+    [confirmTransaction removeFromSuperview];
 }
 
 -(void)addDescription:(NSString*)text
 {
-    description = [[UILabel alloc]initWithFrame:CGRectMake(screenRect.size.width*0.68,screenRect.size.height*0.4,screenRect.size.width*0.4, screenRect.size.height*0.1)];
+    description = [[UILabel alloc]initWithFrame:CGRectMake(screenRect.size.width*0.68,screenRect.size.height*0.43,screenRect.size.width*0.4, screenRect.size.height*0.1)];
     description.text = text;
     description.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:20.0f]; //Mess with font
     description.numberOfLines = 1;
@@ -459,17 +538,29 @@
 
 //NAV BAR BUTTON FUNCTIONS
 -(void)profilePictureButtonPressed:(id)sender{
+    
+    /*
     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
     vc.startingIndex = @"0";
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:vc animated:YES completion:NULL];
+     */
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)searchButtonPressed:(id)sender{
+    /*
     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
     vc.startingIndex = @"2";
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:vc animated:YES completion:NULL];
+     */
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"ReceivingViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 //STRIPE INTEGRATION
@@ -545,7 +636,8 @@
 //TABLE SETUP
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [tableData count];
+    //return [tableData count];
+    return isFiltered ? searchedData.count : objects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -591,6 +683,7 @@
     //Locked in CGRect position
     
     cell.textLabel.text=@"";
+    //cell.textLabel.text = isFiltered ? searchedData[indexPath.row] : objects[indexPath.row];
     cell.detailTextLabel.text = @"";
     
     //Rounded tablecloth
@@ -601,21 +694,32 @@
     //[cell.contentView addSubview:whiteRoundedCloth];
     
     //White Tablecloth
-    UIView* whiteTableCloth = [[UIView alloc]initWithFrame:CGRectMake(70,0,screenRect.size.width,150)];
+    UIView* whiteTableCloth = [[UIView alloc]initWithFrame:CGRectMake(0,0,screenRect.size.width,150)];
     [whiteTableCloth setBackgroundColor:[UIColor whiteColor]];
     [cell.contentView addSubview:whiteTableCloth];
     
-    UILabel *friendName = [[UILabel alloc] initWithFrame:CGRectMake(whiteTableCloth.frame.origin.x,95,screenRect.size
-                                                                    .width,20)];
+    //UILabel *friendName = [[UILabel alloc] initWithFrame:CGRectMake(whiteTableCloth.frame.origin.x,95,screenRect.size.width,20)];
+    UILabel *friendName = [[UILabel alloc] initWithFrame:CGRectMake(whiteTableCloth.frame.origin.x,0,screenRect.size.width*0.5,30)];
     NSString* nameHelper = [tableData objectAtIndex:indexPath.row];
     friendName.text = [tableData objectAtIndex:indexPath.row];
-    friendName.textColor = [UIColor whiteColor];
-    friendName.backgroundColor=UIColorFromRGB(kSupportingColor);
-    friendName.numberOfLines = 1;
+    friendName.textColor = UIColorFromRGB(kMasterColor);
+    //friendName.textColor = [UIColor whiteColor];
+    
+    /*
+    float red = arc4random() % 255 / 255.0;
+    float green = arc4random() % 255 / 255.0;
+    float blue = arc4random() % 255 / 255.0;
+    UIColor *color = [UIColor colorWithRed:0 green:green blue:blue alpha:1.0];
+     */
+   // UIColor *color = UIColorFromRGB(kCellColor);
+    //friendName.backgroundColor=UIColorFromRGB(kCellColor);
+    
+    
+    friendName.numberOfLines = 2;
     //friendName.transform = CGAffineTransformMakeRotation((M_PI)/2);
     friendName.textAlignment = UITextAlignmentCenter;
-    int fontSize = [self sizeLabel:friendName toRect:CGRectMake(whiteTableCloth.frame.origin.x,95,screenRect.size
-                                                                .width,20)];
+    int fontSize = [self sizeLabel:friendName toRect:cell.contentView.frame];
+    //int fontSize= 20;
     friendName.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize];
     friendName.tag=30;
     [cell.contentView addSubview:friendName];
@@ -824,6 +928,8 @@
     
     BOOL current = [[tableRowSelected objectAtIndex:indexPath.row]boolValue];
     [tableRowSelected replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:!current]];
+
+    finalName = [tableData objectAtIndex:indexPath.row];
     
     if([[tableRowSelected objectAtIndex:indexPath.row]boolValue]){
         
@@ -838,6 +944,16 @@
         greenView.hidden=YES;
         [greenView removeFromSuperview];
     }
+    
+    NSLog(@"TEST:::CONTACT::::%@ %@ @ %@",
+          [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] firstName],
+          [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] lastName],
+          [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] mobileNumber]
+          );
+    
+    selectedContactFirstName = [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] firstName];
+    selectedContactLastName = [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] lastName];
+    selectedContactPhoneNumber = [(Contact*)[allContacts objectForKey:[NSString stringWithFormat:@"%li",(long)indexPath.row]] mobileNumber];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -884,6 +1000,7 @@
 
 -(void)dismissKeyboard {
     //Nothing yet =)
+    [self.view endEditing:YES];
 }
 
 //FOR TRANSITION EFFECTS!!
@@ -1262,7 +1379,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             //NSLog(@"Phones are: %@", contacts.numbers);
             //NSLog(@"Email is:%@", contacts.emails);
 #endif
+            //Initialize Contact Object
+            Contact *newContact = [[Contact alloc]init];
+            newContact.firstName = contacts.firstNames;
+            newContact.lastName = contacts.lastNames;
+            newContact.otherNumbers = contacts.numbers;
             
+            //UNCLEAR HOW TO GET MOBILE NUMBER!!!!
+            if(newContact.otherNumbers.count > 0) newContact.mobileNumber=[newContact.otherNumbers objectAtIndex:0];
+            [allContacts setObject:newContact forKey:[NSString stringWithFormat:@"%i",i]];
             
             
             
@@ -1281,6 +1406,41 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
 }
+
+//SEARCH
+#pragma mark - SearchBar Delegate -
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    if (searchText.length == 0)
+        isFiltered = NO;
+    else
+        isFiltered = YES;
+    
+    NSMutableArray *tmpSearched = [[NSMutableArray alloc] init];
+    
+    for (NSString *string in objects) {
+        
+        //we are going for case insensitive search here
+        NSRange range = [string rangeOfString:searchText
+                                      options:NSCaseInsensitiveSearch];
+        
+        if (range.location != NSNotFound)
+            [tmpSearched addObject:string];
+    }
+    
+    searchedData = tmpSearched.copy;
+    
+    [self.infoTable reloadData];
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    NSLog(@"searchBar button clicked");
+    [self dismissKeyboard];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
 
 
 /*****MEMORY RELATED******/

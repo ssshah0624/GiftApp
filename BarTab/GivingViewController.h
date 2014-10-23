@@ -25,6 +25,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "ContactsData.h"
+#import "Contact.h"
 
 
 @interface GivingViewController : UIViewController <STPViewDelegate, ABPeoplePickerNavigationControllerDelegate>
@@ -68,5 +69,6 @@
 @property (nonatomic, weak) IBOutlet UITableView *tblContactDetails;
 
 @property (strong, nonatomic) IBOutlet UIView *homeDrinkView;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

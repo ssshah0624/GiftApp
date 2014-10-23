@@ -178,6 +178,7 @@
 		41BDB3511980B5F10043AA8A /* RootTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BDB3501980B5F10043AA8A /* RootTutorialViewController.m */; };
 		41D3F62519C1086E009839D3 /* ServerCalls.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D3F62419C1086E009839D3 /* ServerCalls.m */; };
 		41F1E7BA19DE654A00CBE3B5 /* ContactsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F1E7B919DE654A00CBE3B5 /* ContactsData.m */; };
+		41F1E7C019ECEE2C00CBE3B5 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F1E7BF19ECEE2C00CBE3B5 /* Contact.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -379,6 +380,8 @@
 		41D3F62419C1086E009839D3 /* ServerCalls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCalls.m; sourceTree = "<group>"; };
 		41F1E7B819DE654A00CBE3B5 /* ContactsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsData.h; sourceTree = "<group>"; };
 		41F1E7B919DE654A00CBE3B5 /* ContactsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsData.m; sourceTree = "<group>"; };
+		41F1E7BE19ECEE2C00CBE3B5 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		41F1E7BF19ECEE2C00CBE3B5 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		8517FA205CD94502B6FFBD5C /* Pods-BarTab.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BarTab.xcconfig"; path = "Pods/Pods-BarTab.xcconfig"; sourceTree = "<group>"; };
 		B4A21F952E16429881E041A7 /* libPods-BarTab.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BarTab.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -707,6 +710,8 @@
 				414D4EA31981613900FBE74C /* ReceivingViewController.m */,
 				41BDB335197A10530043AA8A /* GivingViewController.h */,
 				41BDB336197A10530043AA8A /* GivingViewController.m */,
+				41F1E7BE19ECEE2C00CBE3B5 /* Contact.h */,
+				41F1E7BF19ECEE2C00CBE3B5 /* Contact.m */,
 				41F1E7B819DE654A00CBE3B5 /* ContactsData.h */,
 				41F1E7B919DE654A00CBE3B5 /* ContactsData.m */,
 				4120C52F19A27D41004704F5 /* DrinkGiftScreen.h */,
@@ -1032,6 +1037,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4120C53119A27D41004704F5 /* DrinkGiftScreen.m in Sources */,
+				41F1E7C019ECEE2C00CBE3B5 /* Contact.m in Sources */,
 				41310B0A1983136900ABCC0D /* KLCPopup.m in Sources */,
 				41F1E7BA19DE654A00CBE3B5 /* ContactsData.m in Sources */,
 				4120C529199EB0BB004704F5 /* RoseGiftScreen.m in Sources */,

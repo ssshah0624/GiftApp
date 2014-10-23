@@ -112,10 +112,16 @@
 
 -(void)homeButtonPressed:(id)sender
 {
+    /*
     MasterRootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MasterRootViewController"];
     vc.startingIndex = @"1";
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:vc animated:YES completion:NULL];
+     */
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"GivingViewController"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)loadPaymentSourceButton
